@@ -4,6 +4,7 @@ import TextField from '../Components/TextField/TextField';
 import Button from '../Components/Button/Button';
 import DetailCard from '../Components/DetailCard/DetailCard';
 import IconCard from '../Components/IconCard/IconCard';
+import TreeCard from '../Components/TreeCard/TreeCard';
 
 const Components = ({ navigation }: {navigation: any}) => {
   return (
@@ -18,9 +19,13 @@ const Components = ({ navigation }: {navigation: any}) => {
         <Text>===================================================</Text>
         <Button label='Sample Button' icon={require('../assets/icons/home.png')} />
         <Text>===================================================</Text>
-        <DetailCard header='Sample Title' description='balla' />
+        <DetailCard header='Sample Title' description='sample' />
         <Text>===================================================</Text>
         <IconCard icon={require('../assets/icons/eco.png')} title='Plants' />
+        <Text>===================================================</Text>
+        <TreeCard treeName='sample' style='filled' />
+        <Text>===================================================</Text>
+        <TreeCard treeName='sample' style='outlined' />
     </View>
   )
 }
