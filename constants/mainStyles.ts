@@ -5,6 +5,7 @@ const mainStyles = StyleSheet.create({
     main: {
         backgroundColor: COLOR_PALETTE.secondary,
         paddingTop: 44,
+        paddingHorizontal: 12,
         height: '100%'
     }
 });

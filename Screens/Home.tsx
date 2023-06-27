@@ -5,7 +5,7 @@ import { APP_COMPONENTS } from "../constants/appComponents";
 
 const Home = ({ changeTab }: {changeTab: (number: number) => void}) => {
   return (
-    <View style={{ paddingHorizontal: 12 }}>
+    <View>
       <View
         style={{
           display: "flex",
