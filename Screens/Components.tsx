@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import TextField from '../Components/TextField/TextField';
 import Button from '../Components/Button/Button';
 import DetailCard from '../Components/DetailCard/DetailCard';
@@ -8,10 +8,13 @@ import TreeCard from '../Components/TreeCard/TreeCard';
 
 const Components = ({ navigation }: {navigation: any}) => {
   return (
-    <View>
+    <ScrollView>
         <Text>Components</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Main')}>
             <Text>Main App</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text>Auth Pages</Text>
         </TouchableOpacity>
         <Text>===================================================</Text>
         <Text style={{fontWeight: 'bold'}}>===================Components===================</Text>
@@ -26,7 +29,7 @@ const Components = ({ navigation }: {navigation: any}) => {
         <TreeCard treeName='sample' style='filled' />
         <Text>===================================================</Text>
         <TreeCard treeName='sample' style='outlined' />
-    </View>
+    </ScrollView>
   )
 }
 
