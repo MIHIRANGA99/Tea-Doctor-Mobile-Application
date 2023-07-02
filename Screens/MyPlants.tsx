@@ -13,6 +13,9 @@ const MyPlants = (props: Props) => {
     },
     {
       treeName: 'Second Tree'
+    },
+    {
+      treeName: 'Third Tree'
     }
   ]
   return (
@@ -33,6 +36,9 @@ const MyPlants = (props: Props) => {
         <View style={{paddingTop: 12}}>
         {SAMPLE_TREES.map((tree, index) => (
           <TreeCard key={index} treeName={tree.treeName} style='filled' />
+        ))}
+        {Array(4 - SAMPLE_TREES.length).fill(0).map((tree, index) => (
+          <TreeCard key={index} style='outlined' treeName='+' />
         ))}
         </View>
     </View>
