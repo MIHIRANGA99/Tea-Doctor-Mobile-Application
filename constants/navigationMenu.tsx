@@ -1,11 +1,11 @@
 import Home from "../Screens/Home";
-import MyPlants from "../Screens/MyPlants";
+import Index from "../Screens/MyPlants/Index";
 
 export const NAVIGATION_MENU = [
     {
         name: 'plant',
         iconPath: require('../assets/icons/plant.png'),
-        screen: <MyPlants />
+        screen: <Index />
     },
     {
         name: 'messages',
@@ -15,7 +15,7 @@ export const NAVIGATION_MENU = [
     {
         name: 'home',
         iconPath: require('../assets/icons/home.png'),
-        screen: <Home />
+        screen: <Home changeTab={() => null} />
     },
     {
         name: 'report',

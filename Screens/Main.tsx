@@ -3,11 +3,10 @@ import { View } from "react-native";
 import NavContainer from "../Components/BottomNav/NavContainer/NavContainer";
 import { NAVIGATION_MENU } from "../constants/navigationMenu";
 import NavItem from "../Components/BottomNav/NavItem/NavItem";
-import MyPlants from "./MyPlants";
 import Home from "./Home";
 import Settings from "./Settings";
 import mainStyles from "../constants/mainStyles";
-import TreeDetails from "./TreeDetails";
+import Index from "./MyPlants/Index";
 
 const Main = () => {
   const [selectedID, setSelectedID] = useState<number>(
@@ -17,13 +16,13 @@ const Main = () => {
   const componentNavigation = () => {
     switch (selectedID) {
       case 0:
-        return <MyPlants />;
+        return <Index />;
       case 1:
         return <Home changeTab={(n: number) => setSelectedID(n)} />;
       case 2:
         return <Home changeTab={(n: number) => setSelectedID(n)} />;
       case 3:
-        return <TreeDetails />;
+        return <Home changeTab={(n: number) => setSelectedID(n)} />;
       case 4:
         return <Settings />;
       default:

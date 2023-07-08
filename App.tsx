@@ -5,7 +5,7 @@ import Components from "./Screens/Components";
 import Main from "./Screens/Main";
 import Register from "./Screens/Auth/Register";
 import Login from "./Screens/Auth/Login";
-import Details from "./Screens/TreeDetails"
+import Details from "./Screens/MyPlants/TreeDetails"
 
 export default function App() {
   const Stack = createNativeStackNavigator();
