@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, ScrollView } from 'react-native';
 import TextField from '../Components/TextField/TextField';
 import Button from '../Components/Button/Button';
 import DetailCard from '../Components/DetailCard/DetailCard';
@@ -23,6 +23,7 @@ const Components = ({ navigation }: {navigation: any}) => {
         <Button label='Sample Button' icon={require('../assets/icons/home.png')} />
         <Text>===================================================</Text>
         <DetailCard header='Sample Title' description='sample' />
+        <DetailCard header='Sample Title' description='sample' button={{label: 'Sample', onClick: () => console.log('text'), icon: require('../assets/icons/home.png')}} />
         <Text>===================================================</Text>
         <IconCard icon={require('../assets/icons/eco.png')} title='Plants' />
         <Text>===================================================</Text>
