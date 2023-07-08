@@ -7,6 +7,7 @@ import MyPlants from "./MyPlants";
 import Home from "./Home";
 import Settings from "./Settings";
 import mainStyles from "../constants/mainStyles";
+import TreeDetails from "./TreeDetails";
 
 const Main = () => {
   const [selectedID, setSelectedID] = useState<number>(
@@ -22,7 +23,7 @@ const Main = () => {
       case 2:
         return <Home changeTab={(n: number) => setSelectedID(n)} />;
       case 3:
-        return <Home changeTab={(n: number) => setSelectedID(n)} />;
+        return <TreeDetails />;
       case 4:
         return <Settings />;
       default:
@@ -32,7 +33,7 @@ const Main = () => {
 
   return (
     <>
-      <View style ={ mainStyles.main}>{componentNavigation()}</View>
+      <View style={mainStyles.main}>{componentNavigation()}</View>
       <NavContainer>
         {NAVIGATION_MENU.map((item, index) => (
           <NavItem
