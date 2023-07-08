@@ -1,11 +1,9 @@
 import React from "react";
 import { View, Image, ScrollView } from "react-native";
-import DetailCard from "../Components/DetailCard/DetailCard";
-import Button from "../Components/Button/Button";
+import DetailCard from "../../Components/DetailCard/DetailCard";
+import Button from "../../Components/Button/Button";
 
-type Props = {};
-
-const TreeDetails = (props: Props) => {
+const TreeDetails = () => {
   return (
     <ScrollView>
       <View>
@@ -18,7 +16,7 @@ const TreeDetails = (props: Props) => {
         >
           <Image
             style={{ width: "100%", resizeMode: "contain" }}
-            source={require("../assets/tea-doctor-logo.png")}
+            source={require("../../assets/tea-doctor-logo.png")}
           />
         </View>
 
@@ -34,12 +32,12 @@ const TreeDetails = (props: Props) => {
             />
 
             <Button
-              icon={require("../assets/icons/eco.png")}
+              icon={require("../../assets/icons/eco.png")}
               label="Rescan Leaves"
             />
             <DetailCard header="Condition of Branches">
               <Button
-                icon={require("../assets/icons/eco.png")}
+                icon={require("../../assets/icons/eco.png")}
                 label="Scan Branches"
               />
             </DetailCard>

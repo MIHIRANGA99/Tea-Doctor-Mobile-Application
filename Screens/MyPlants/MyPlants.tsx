@@ -1,11 +1,10 @@
 import React from 'react'
 import { View, Image } from 'react-native';
-import DetailCard from '../Components/DetailCard/DetailCard';
-import TreeCard from '../Components/TreeCard/TreeCard';
+import DetailCard from '../../Components/DetailCard/DetailCard';
+import TreeCard from '../../Components/TreeCard/TreeCard';
+import mainStyles from '../../constants/mainStyles';
 
-type Props = {}
-
-const MyPlants = (props: Props) => {
+const MyPlants = ({ navigation }: {navigation: any}) => {
 
   const SAMPLE_TREES = [
     {
@@ -19,7 +18,7 @@ const MyPlants = (props: Props) => {
     }
   ]
   return (
-    <View>
+    <View style={mainStyles.main}>
         <View
           style={{
             display: "flex",
@@ -27,7 +26,7 @@ const MyPlants = (props: Props) => {
             alignItems: "center",
           }}
         >
-          <Image style={{width: '100%', resizeMode: 'contain'}} source={require("../assets/tea-doctor-logo.png")} />
+          <Image style={{width: '100%', resizeMode: 'contain'}} source={require("../../assets/tea-doctor-logo.png")} />
         </View>
         <DetailCard
           header="Suggestions"
@@ -35,9 +34,9 @@ const MyPlants = (props: Props) => {
         />
         <View style={{paddingTop: 12}}>
         {SAMPLE_TREES.map((tree, index) => (
-          <TreeCard key={index} treeName={tree.treeName} style='filled' />
+          <TreeCard key={index} treeName={tree.treeName} style='filled' onClick={() => navigation.navigate('Details')} />
         ))}
-        {Array(4 - SAMPLE_TREES.length).fill(0).map((tree, index) => (
+        {Array(4 - SAMPLE_TREES.length).fill(0).map((_tree, index) => (
           <TreeCard key={index} style='outlined' treeName='+' />
         ))}
         </View>
