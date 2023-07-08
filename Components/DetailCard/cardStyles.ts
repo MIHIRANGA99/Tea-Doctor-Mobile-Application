@@ -20,6 +20,12 @@ const cardStyles = StyleSheet.create({
         paddingHorizontal: 12,
         color: 'rgba(0, 0, 0, 0.58)',
         fontStyle: 'italic'
+    },
+    buttonContainer: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'flex-end',
+        paddingVertical: 12
     }
 });
 

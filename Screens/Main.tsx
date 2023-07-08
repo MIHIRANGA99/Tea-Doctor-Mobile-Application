@@ -32,7 +32,7 @@ const Main = () => {
 
   return (
     <>
-      <View style={mainStyles.main}>{componentNavigation()}</View>
+      <View style = {mainStyles.main}>{componentNavigation()}</View>
       <NavContainer>
         {NAVIGATION_MENU.map((item, index) => (
           <NavItem
