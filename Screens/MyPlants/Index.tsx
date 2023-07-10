@@ -3,16 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react'
 import MyPlants from './MyPlants';
 import TreeDetails from './TreeDetails';
+import Scan from './Scan';
 
 function Index() {
-    const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer independent>
-        <Stack.Navigator>
-            <Stack.Screen name='MyPlants' component={MyPlants} options={{headerShown: false}} />
-            <Stack.Screen name='Details' component={TreeDetails} options={{headerShown: false}} />
-        </Stack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name='MyPlants' component={MyPlants} options={{ headerShown: false }} />
+        <Stack.Screen name='Details' component={TreeDetails} options={{ headerShown: false }} />
+        <Stack.Screen name='Scan' component={Scan} options={{ headerShown: false }} />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }
