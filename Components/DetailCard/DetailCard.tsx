@@ -17,16 +17,16 @@ type Props = {
 const DetailCard = ({ header, children, description, button }: Props) => {
   return (
     <>
-    <View style={{...cardStyles.card}}>
-      <Text style={cardStyles.title}>{header}</Text>
-      {description && <Text style={cardStyles.description}>{description}</Text>}
-      {children && <View>{children}</View>}
-    </View>
-    {button &&
-      <View style={cardStyles.buttonContainer}>
-        <Button extraStyles={{ width: '45%', marginRight: 12, marginTop: -36 }} label={button.label} icon={button.icon&& button.icon} />
+      <View style={{ ...cardStyles.card }}>
+        <Text style={cardStyles.title}>{header}</Text>
+        {description && <Text style={cardStyles.description}>{description}</Text>}
+        {children && <View>{children}</View>}
       </View>
-    }
+      {button &&
+        <View style={cardStyles.buttonContainer}>
+          <Button extraStyles={{ width: '45%', marginRight: 12, marginTop: -36 }} onClick={button.onClick} label={button.label} icon={button.icon && button.icon} />
+        </View>
+      }
     </>
   );
 };

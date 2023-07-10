@@ -33,7 +33,7 @@ const TreeDetails = ({ route, navigation }: { route: any, navigation: any }) => 
           description="Check the tea leaves"
           button={{
             label: 'Rescan Leaves',
-            onClick: () => null,
+            onClick: () => navigation.navigate('Scan'),
             icon: require('../../assets/icons/eco.png')
           }}
         />
@@ -53,8 +53,8 @@ const TreeDetails = ({ route, navigation }: { route: any, navigation: any }) => 
           }}
         />
       </View>
-      <View style = {{paddingVertical: 12}}>
-        <Button onClick={() => null} extraStyles={{backgroundColor: '#AD0000'}} label="Delete Tree" />
+      <View style={{ paddingVertical: 12 }}>
+        <Button onClick={() => null} extraStyles={{ backgroundColor: '#AD0000' }} label="Delete Tree" />
       </View>
     </ScrollView>
   );
