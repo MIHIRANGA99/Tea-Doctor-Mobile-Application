@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, ScrollView, Text } from 'react-native';
 import mainStyles from '../../constants/mainStyles';
 import TextField from '../../Components/TextField/TextField';
 import Button from '../../Components/Button/Button';
 import { Link } from '@react-navigation/native';
 import { COLOR_PALETTE } from '../../constants/colors';
+import { registerUser } from '../../firebase/utils/authentication/authentication';
 
-type Props = {}
+const Register = ({navigation}: {navigation: any}) => {
 
-const Register = (props: Props) => {
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [confPassword, setConfPassword] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+
+    const onSubmit = async () => {
+        const res = await registerUser(username, email, password);
+
+        if (res) {
+            console.log(res.response);
+            navigation.navigate('Main');
+        }
+    }
     return (
         <View style={mainStyles.main}>
             <ScrollView>
@@ -22,13 +35,13 @@ const Register = (props: Props) => {
                     <Image style={{ width: '80%', resizeMode: 'contain' }} source={require("../../assets/tea-doctor-logo.png")} />
                 </View>
                 <View>
-                    <TextField dense placeholder='Your Name Here' label='Username' />
-                    <TextField dense placeholder='Your Email Here' label='E - main Address' />
-                    <TextField dense placeholder='Enter Password' label='Password' />
-                    <TextField dense placeholder='Confirm Password' label='Confirm Password' />
+                    <TextField onChange={(text) => setUsername(text)} dense placeholder='Your Name Here' label='Username' />
+                    <TextField onChange={(text) => setEmail(text)} dense placeholder='Your Email Here' label='E - main Address' />
+                    <TextField onChange={(text) => setPassword(text)} dense placeholder='Enter Password' label='Password' />
+                    <TextField onChange={(text) => setConfPassword(text)} dense placeholder='Confirm Password' label='Confirm Password' />
                     <View style={{ display: 'flex', width: '100%', alignItems: 'flex-end', paddingVertical: 8 }}>
                         <View style={{ width: '40%' }}>
-                            <Button label='Register' />
+                            <Button onClick={() => onSubmit()} label='Register' />
                         </View>
                     </View>
                 </View>
