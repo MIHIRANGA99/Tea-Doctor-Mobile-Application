@@ -9,11 +9,12 @@ type Props = {
     icon?: ImageSourcePropType;
     color?: string;
     extraStyles?: object;
+    disabled?: boolean;
 }
 
-const Button = ({icon, label, onClick, color = COLOR_PALETTE.primary, extraStyles = {}}: Props) => {
+const Button = ({icon, label, onClick, color = COLOR_PALETTE.primary, extraStyles = {}, disabled = false}: Props) => {
   return (
-    <TouchableOpacity style={{...buttonStyles.button, backgroundColor: color, ...extraStyles}} onPress={onClick}>
+    <TouchableOpacity disabled = {disabled} style={{...buttonStyles.button, backgroundColor: color, ...extraStyles}} onPress={onClick}>
         {icon&& <Image style={{height: 18, width: 18}} source={icon} />}
         <Text style={{color: 'white', paddingLeft: icon&& 12}}>{label}</Text>
     </TouchableOpacity>

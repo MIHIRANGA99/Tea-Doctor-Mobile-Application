@@ -6,9 +6,11 @@ import Button from '../Button/Button';
 
 type Props = {
   camRef?: any;
+  onCapture?: () => void;
+  captureLoading?: boolean;
 }
 
-const ScanCam = ({ camRef }: Props) => {
+const ScanCam = ({ camRef, onCapture, captureLoading = false }: Props) => {
 
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -40,10 +42,10 @@ const ScanCam = ({ camRef }: Props) => {
         <Camera ref={camRef && camRef} style={CameraStyles.camera} type={type}>
           <View style={CameraStyles.buttonContainer}>
             <View style={{ flex: 1, paddingHorizontal: 8 }}>
-              <Button label='Flip' onClick={() => setType(current => (current === CameraType.back ? CameraType.front : CameraType.back))} />
+              <Button disabled = {captureLoading} label='Flip' onClick={() => setType(current => (current === CameraType.back ? CameraType.front : CameraType.back))} />
             </View>
             <View style={{ flex: 1, paddingHorizontal: 8 }}>
-              <Button label='Capture' onClick={() => null} />
+              <Button disabled = {captureLoading} label='Capture' onClick={onCapture&& onCapture} />
             </View>
           </View>
         </Camera>
