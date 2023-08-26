@@ -1,7 +1,9 @@
 import { View, Image } from "react-native";
+import { EXPO_PUBLIC_API_KEY } from '@env';
 import DetailCard from "../Components/DetailCard/DetailCard";
 import IconCard from "../Components/IconCard/IconCard";
 import { APP_COMPONENTS } from "../constants/appComponents";
+import Button from "../Components/Button/Button";
 
 const Home = ({ changeTab }: {changeTab: (number: number) => void}) => {
   return (
@@ -23,6 +25,7 @@ const Home = ({ changeTab }: {changeTab: (number: number) => void}) => {
         header="Suggestions"
         description="Check the tea leaves and scan if you see any odd spots"
       />
+      <Button label="obanna" onClick={() => console.log(EXPO_PUBLIC_API_KEY)} />
       <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 12}}>
         {APP_COMPONENTS.map((comp, index) => (
           <IconCard key={index} onClick={() => changeTab(0)} icon={comp.icon} title={comp.title} />
