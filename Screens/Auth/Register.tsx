@@ -18,7 +18,6 @@ const Register = ({navigation}: {navigation: any}) => {
         const res = await registerUser(username, email, password);
 
         if (res) {
-            console.log(res.response);
             navigation.navigate('Main');
         }
     }
