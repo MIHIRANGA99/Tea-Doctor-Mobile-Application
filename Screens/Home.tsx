@@ -25,7 +25,6 @@ const Home = ({ changeTab }: {changeTab: (number: number) => void}) => {
         header="Suggestions"
         description="Check the tea leaves and scan if you see any odd spots"
       />
-      <Button label="obanna" onClick={() => console.log(EXPO_PUBLIC_API_KEY)} />
       <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 12}}>
         {APP_COMPONENTS.map((comp, index) => (
           <IconCard key={index} onClick={() => changeTab(0)} icon={comp.icon} title={comp.title} />

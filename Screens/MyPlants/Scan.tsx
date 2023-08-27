@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Camera } from 'expo-camera';
+import * as DocumentPicker from 'expo-document-picker';
 import mainStyles from "../../constants/mainStyles";
 import ScanCam from "../../Components/ScanCam/ScanCam";
 import DetailCard from "../../Components/DetailCard/DetailCard";
@@ -14,6 +15,11 @@ const Scan = (props: Props) => {
 
   const [isTakingPicture, setIsTakingPicture] = useState<boolean>(false);
   const [capturedPic, setCapturedPic] = useState<object | null>(null);
+
+  const pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({});
+    setCapturedPic(result);
+  }
 
   const takePicture = async () => {
     if (cameraRef.current) {
@@ -44,7 +50,7 @@ const Scan = (props: Props) => {
         OR
       </Text>
       <View style={{ display: "flex", alignItems: "center" }}>
-        <Button label="Select an Image" extraStyles={{ width: "40%" }} />
+        <Button onClick={pickDocument} label="Select an Image" extraStyles={{ width: "40%" }} />
       </View>
       <View style={{ paddingVertical: 12 }}>
         <DetailCard

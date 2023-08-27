@@ -16,7 +16,6 @@ const Login = ({navigation}: {navigation: any}) => {
         const res = await loginUser(email, password);
 
         if (res) {
-            console.log(res.response);
             navigation.navigate('Main');
         }
     }
@@ -33,8 +32,8 @@ const Login = ({navigation}: {navigation: any}) => {
                     <Image style={{ width: '80%', resizeMode: 'contain' }} source={require("../../assets/tea-doctor-logo.png")} />
                 </View>
                 <View style={{ paddingVertical: 20 }}>
-                    <TextField onChange={(text) => setEmail(text)} dense placeholder='Your Email Here' label='E - main Address' />
-                    <TextField onChange={(text) => setPassword(text)} dense placeholder='Enter Password' label='Password' />
+                    <TextField type='email-address' onChange={(text) => setEmail(text)} dense placeholder='Your Email Here' label='E - main Address' />
+                    <TextField onChange={(text) => setPassword(text)} dense placeholder='Enter Password' label='Password' isPassword />
                     <View style={{ display: 'flex', width: '100%', alignItems: 'flex-end', paddingVertical: 8 }}>
                         <View style={{ width: '40%' }}>
                             <Button onClick={() => onSubmit()} label='Login' />
