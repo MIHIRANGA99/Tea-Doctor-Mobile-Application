@@ -17,6 +17,12 @@ const Components = ({ navigation }: { navigation: any }) => {
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text>Auth Pages</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Weather')}>
+        <Text>Weather</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Insect')}>
+        <Text>Insect</Text>
+      </TouchableOpacity>
       <Text>===================================================</Text>
       <Text style={{ fontWeight: 'bold' }}>===================Components===================</Text>
       <TextField label='Name' placeholder='Sample Name' />
