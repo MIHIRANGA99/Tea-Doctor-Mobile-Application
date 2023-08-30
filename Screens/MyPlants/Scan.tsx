@@ -8,10 +8,12 @@ import DetailCard from "../../Components/DetailCard/DetailCard";
 import { COLOR_PALETTE } from "../../constants/colors";
 import Button from "../../Components/Button/Button";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
+import useCurrentLocation from "../../hooks/useCurrentLocation";
 
 const Scan = ({ navigation, route }: any) => {
   const cameraRef = useRef<Camera | null>(null);
   const currentUser = useCurrentUser();
+  const currentLocation = useCurrentLocation();
 
   const [isTakingPicture, setIsTakingPicture] = useState<boolean>(false);
   const [capturedPic, setCapturedPic] = useState<CameraCapturedPicture | null>(null);
@@ -31,13 +33,14 @@ const Scan = ({ navigation, route }: any) => {
   const scanPicture = () => {
     const payload = new FormData();
 
-    if (currentUser && (capturedPic != null || selectedPic != null)) {
+    if (currentUser && currentLocation && (capturedPic != null || selectedPic != null)) {
       payload.append('req_type', route.params.scanType);
       capturedPic&& payload.append('file', capturedPic.uri);
       selectedPic&& payload.append('file', selectedPic.uri);
       payload.append('user_Id', currentUser.uid);
+      payload.append('lang', currentLocation.coords.latitude.toFixed(2));
+      payload.append('long', currentLocation.coords.longitude.toFixed(2));
 
-      console.log(payload);
     }
   }
 
