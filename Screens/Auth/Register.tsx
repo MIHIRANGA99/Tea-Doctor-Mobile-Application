@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, ScrollView, Text } from 'react-native';
+import { View, Image, ScrollView, Text, ToastAndroid } from 'react-native';
 import mainStyles from '../../constants/mainStyles';
 import TextField from '../../Components/TextField/TextField';
 import Button from '../../Components/Button/Button';
@@ -13,12 +13,19 @@ const Register = ({navigation}: {navigation: any}) => {
     const [password, setPassword] = useState<string>('');
     const [confPassword, setConfPassword] = useState<string>('');
     const [username, setUsername] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const onSubmit = async () => {
+        setIsLoading(true);
         const res = await registerUser(username, email, password);
 
-        if (res) {
+        if (res.isSuccess) {
+            setIsLoading(false);
             navigation.navigate('Main');
+        } else {
+            setIsLoading(false);
+            // TODO: Add Alert Message
+            ToastAndroid.show(res.response.message, ToastAndroid.SHORT);
         }
     }
     return (
@@ -40,7 +47,7 @@ const Register = ({navigation}: {navigation: any}) => {
                     <TextField onChange={(text) => setConfPassword(text)} dense placeholder='Confirm Password' label='Confirm Password' />
                     <View style={{ display: 'flex', width: '100%', alignItems: 'flex-end', paddingVertical: 8 }}>
                         <View style={{ width: '40%' }}>
-                            <Button onClick={() => onSubmit()} label='Register' />
+                            <Button isLoading = {isLoading} onClick={() => onSubmit()} label='Register' />
                         </View>
                     </View>
                 </View>

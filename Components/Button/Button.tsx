@@ -10,13 +10,14 @@ type Props = {
     color?: string;
     extraStyles?: object;
     disabled?: boolean;
+    isLoading?: boolean;
 }
 
-const Button = ({icon, label, onClick, color = COLOR_PALETTE.primary, extraStyles = {}, disabled = false}: Props) => {
+const Button = ({icon, label, onClick, color = COLOR_PALETTE.primary, extraStyles = {}, disabled = false, isLoading = false}: Props) => {
   return (
-    <TouchableOpacity disabled = {disabled} style={{...buttonStyles.button, backgroundColor: color, ...extraStyles}} onPress={onClick}>
+    <TouchableOpacity disabled = {disabled || isLoading} style={disabled? buttonStyles.disabled: {...buttonStyles.button, backgroundColor: color, ...extraStyles}} onPress={onClick}>
         {icon&& <Image style={{height: 18, width: 18}} source={icon} />}
-        <Text style={{color: 'white', paddingLeft: icon&& 12}}>{label}</Text>
+        <Text style={{color: 'white', paddingLeft: icon&& 12}}>{isLoading? 'Loading...': label}</Text>
     </TouchableOpacity>
   )
 }
