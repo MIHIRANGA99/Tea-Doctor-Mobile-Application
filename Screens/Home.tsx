@@ -5,7 +5,6 @@ import IconCard from "../Components/IconCard/IconCard";
 import { APP_COMPONENTS } from "../constants/appComponents";
 import Button from "../Components/Button/Button";
 import { COLOR_PALETTE } from "../constants/colors";
-import { checkUserLoggedIn } from "../firebase/utils/authentication/authentication";
 import useCurrentUser from "../firebase/hooks/useCurrentUser";
 
 const Home = ({ changeTab }: {changeTab: (number: number) => void}) => {
