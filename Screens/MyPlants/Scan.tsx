@@ -25,6 +25,7 @@ const Scan = ({ navigation, route }: any) => {
   useEffect(() => {
     setCapturedPic(null);
     setSelectedPic(null);
+
     if (capturedPic != null || selectedPic != null) {
       scanPicture();
     }
@@ -41,11 +42,15 @@ const Scan = ({ navigation, route }: any) => {
       currentLocation &&
       (capturedPic != null || selectedPic != null)
     ) {
+      const imageBlob = await fetch(capturedPic ? capturedPic.uri : "").then(
+        (response) => response.blob()
+      );
+
       const payload = new FormData();
       payload.append("req_type", route.params.scanType);
       capturedPic != null && payload.append("file", capturedPic.uri);
       // selectedPic != null && payload.append("file", selectedPic.uri, selectedPic.name);
-      payload.append("user_Id", currentUser.uid);
+      payload.append("user_Id", imageBlob, "image.jpg");
       payload.append("lang", currentLocation.coords.latitude.toFixed(2));
       payload.append("long", currentLocation.coords.longitude.toFixed(2));
 
