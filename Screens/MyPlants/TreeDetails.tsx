@@ -33,7 +33,7 @@ const TreeDetails = ({ route, navigation }: { route: any, navigation: any }) => 
           description="Check the tea leaves"
           button={{
             label: 'Rescan Leaves',
-            onClick: () => navigation.navigate('Scan'),
+            onClick: () => navigation.navigate('Scan', {scanType: 'blister'}),
             icon: require('../../assets/icons/eco.png')
           }}
         />
@@ -41,14 +41,14 @@ const TreeDetails = ({ route, navigation }: { route: any, navigation: any }) => 
           header="Condition of Branches"
           button={{
             label: 'Scan Branches',
-            onClick: () => null,
+            onClick: () => navigation.navigate('Scan', {scanType: 'stem'}),
             icon: require('../../assets/icons/eco.png')
           }} />
         <DetailCard
           header="Existence of Bugs"
           button={{
             label: 'Scan Bugs',
-            onClick: () => null,
+            onClick: () => navigation.navigate('Bugs', {scanType: 'insect'}),
             icon: require('../../assets/icons/bug_report.png')
           }}
         />

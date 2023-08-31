@@ -4,6 +4,7 @@ import React from 'react'
 import MyPlants from './MyPlants';
 import TreeDetails from './TreeDetails';
 import Scan from './Scan';
+import Bugs from './Bugs';
 
 function Index() {
   const Stack = createNativeStackNavigator();
@@ -14,6 +15,7 @@ function Index() {
         <Stack.Screen name='MyPlants' component={MyPlants} options={{ headerShown: false }} />
         <Stack.Screen name='Details' component={TreeDetails} options={{ headerShown: false }} />
         <Stack.Screen name='Scan' component={Scan} options={{ headerShown: false }} />
+        <Stack.Screen name='Bugs' component={Bugs} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
