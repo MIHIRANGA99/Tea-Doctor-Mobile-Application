@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import NavContainer from "../Components/BottomNav/NavContainer/NavContainer";
 import { NAVIGATION_MENU } from "../constants/navigationMenu";
@@ -7,11 +7,23 @@ import Home from "./Home";
 import Settings from "./Settings";
 import mainStyles from "../constants/mainStyles";
 import Index from "./MyPlants/Index";
+import { auth } from "../firebase/config";
 
 const Main = () => {
   const [selectedID, setSelectedID] = useState<number>(
     Math.round(NAVIGATION_MENU.length / 2) - 1
   );
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("logged In");
+      } else {
+        // TODO: Move to login page
+        console.log("logged out");
+      }
+    });
+  }, []);
 
   const componentNavigation = () => {
     switch (selectedID) {
@@ -32,7 +44,7 @@ const Main = () => {
 
   return (
     <>
-      <View style = {mainStyles.main}>{componentNavigation()}</View>
+      <View style={mainStyles.main}>{componentNavigation()}</View>
       <NavContainer>
         {NAVIGATION_MENU.map((item, index) => (
           <NavItem

@@ -63,16 +63,3 @@ export const loginUser = async (
 
   return response;
 };
-
-export const checkUserLoggedIn = () => {
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      // User Signed In
-      console.log("User Signed In!!");
-    } else {
-      // User is signed out
-      console.log("User Signed out!!");
-      // ...
-    }
-  });
-}

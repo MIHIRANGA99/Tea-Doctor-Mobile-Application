@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
+import axios from "axios";
 import { Camera, CameraCapturedPicture } from "expo-camera";
 import * as DocumentPicker from "expo-document-picker";
 import mainStyles from "../../constants/mainStyles";
@@ -16,10 +17,14 @@ const Scan = ({ navigation, route }: any) => {
   const currentLocation = useCurrentLocation();
 
   const [isTakingPicture, setIsTakingPicture] = useState<boolean>(false);
-  const [capturedPic, setCapturedPic] = useState<CameraCapturedPicture | null>(null);
+  const [capturedPic, setCapturedPic] = useState<CameraCapturedPicture | null>(
+    null
+  );
   const [selectedPic, setSelectedPic] = useState<any | null>(null);
 
   useEffect(() => {
+    setCapturedPic(null);
+    setSelectedPic(null);
     if (capturedPic != null || selectedPic != null) {
       scanPicture();
     }
@@ -28,21 +33,40 @@ const Scan = ({ navigation, route }: any) => {
   const clearPics = () => {
     setCapturedPic(null);
     setSelectedPic(null);
-  }
+  };
 
-  const scanPicture = () => {
-    const payload = new FormData();
+  const scanPicture = async () => {
+    if (
+      currentUser &&
+      currentLocation &&
+      (capturedPic != null || selectedPic != null)
+    ) {
+      const payload = new FormData();
+      payload.append("req_type", route.params.scanType);
+      capturedPic != null && payload.append("file", capturedPic.uri);
+      // selectedPic != null && payload.append("file", selectedPic.uri, selectedPic.name);
+      payload.append("user_Id", currentUser.uid);
+      payload.append("lang", currentLocation.coords.latitude.toFixed(2));
+      payload.append("long", currentLocation.coords.longitude.toFixed(2));
 
-    if (currentUser && currentLocation && (capturedPic != null || selectedPic != null)) {
-      payload.append('req_type', route.params.scanType);
-      capturedPic&& payload.append('file', capturedPic.uri);
-      selectedPic&& payload.append('file', selectedPic.uri);
-      payload.append('user_Id', currentUser.uid);
-      payload.append('lang', currentLocation.coords.latitude.toFixed(2));
-      payload.append('long', currentLocation.coords.longitude.toFixed(2));
-
+      await axios
+        .post("http://3.112.233.148:8091/detection/uproute", payload)
+        .then((res) => {
+          console.log("result", res);
+        })
+        .catch((e) => {
+          console.error("error", e);
+        });
+    } else {
+      console.log(
+        "error with payload",
+        currentUser,
+        currentLocation,
+        capturedPic,
+        selectedPic
+      );
     }
-  }
+  };
 
   const pickDocument = async () => {
     clearPics();
@@ -67,17 +91,20 @@ const Scan = ({ navigation, route }: any) => {
         <DetailCard header="Suggestions" description="sample suggestion" />
       </View>
       <View style={{ height: 412 }}>
-        <ScanCam
-          label={
-            route.params.scanType === "blister"
-              ? "Scanning Leaves"
-              : "Scanning Stem"
-          }
-          captureLoading={isTakingPicture}
-          camRef={cameraRef}
-          onCapture={takePicture}
-        />
+        {currentLocation && (
+          <ScanCam
+            label={
+              route.params.scanType === "blister"
+                ? "Scanning Leaves"
+                : "Scanning Stem"
+            }
+            captureLoading={isTakingPicture}
+            camRef={cameraRef}
+            onCapture={takePicture}
+          />
+        )}
       </View>
+      <Text>{capturedPic ? capturedPic.uri : ""}</Text>
       <Text
         style={{
           textAlign: "center",
