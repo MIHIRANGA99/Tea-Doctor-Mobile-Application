@@ -48,7 +48,7 @@ const TreeDetails = ({ route, navigation }: { route: any, navigation: any }) => 
           header="Existence of Bugs"
           button={{
             label: 'Scan Bugs',
-            onClick: () => navigation.navigate('Bugs'),
+            onClick: () => navigation.navigate('Bugs', {scanType: 'insect'}),
             icon: require('../../assets/icons/bug_report.png')
           }}
         />

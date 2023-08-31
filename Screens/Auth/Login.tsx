@@ -6,12 +6,23 @@ import Button from "../../Components/Button/Button";
 import { Link } from "@react-navigation/native";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { loginUser } from "../../firebase/utils/authentication/authentication";
-import useCurrentUser from "../../firebase/hooks/useCurrentUser";
+import { auth } from "../../firebase/config";
 
 const Login = ({ navigation }: { navigation: any }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("Main");
+      } else {
+        // TODO: Move to login page
+        console.log("logged out");
+      }
+    });
+  }, []);
 
   const onSubmit = async () => {
     setIsLoading(true);
@@ -25,6 +36,7 @@ const Login = ({ navigation }: { navigation: any }) => {
       ToastAndroid.show(res.response.message, ToastAndroid.SHORT);
     }
   };
+
   return (
     <View style={mainStyles.main}>
       <ScrollView>
