@@ -22,7 +22,7 @@ const Login = ({ navigation }: { navigation: any }) => {
         console.log("logged out");
       }
     });
-  }, []);
+  }, [navigation]);
 
   const onSubmit = async () => {
     setIsLoading(true);

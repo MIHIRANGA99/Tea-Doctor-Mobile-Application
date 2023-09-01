@@ -6,9 +6,10 @@ import mainStyles from "../../constants/mainStyles";
 import { getDataFromCollection } from "../../firebase/utils/firestore/firestore";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import ITree from "../../interfaces/ITree";
+import FullScreenLoader from "../../layouts/FullScreenLoader";
 
 const MyPlants = ({ navigation }: { navigation: any }) => {
-  const [trees, setTrees] = useState<ITree[]>();
+  const [trees, setTrees] = useState<ITree[]>([]);
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -41,39 +42,35 @@ const MyPlants = ({ navigation }: { navigation: any }) => {
         header="Suggestions"
         description="Check the tea leaves and scan if you see any odd spots"
       />
-      {trees ? (
-        <View style={{ paddingVertical: 12 }}>
-          {trees.map((tree, index) => (
+      <FullScreenLoader isLoading={trees.length === 0}>
+        {trees && (
+          <View
+            style={{
+              paddingVertical: 12,
+              height: trees.length === 0 ? 200 : "100%",
+            }}
+          >
+            {trees.map((tree, index) => (
+              <TreeCard
+                key={index}
+                treeName={tree.treeName}
+                style="filled"
+                onClick={() =>
+                  navigation.navigate("Details", {
+                    id: tree.id,
+                    name: tree.treeName,
+                  })
+                }
+              />
+            ))}
             <TreeCard
-              key={index}
-              treeName={tree.treeName}
-              style="filled"
-              onClick={() =>
-                navigation.navigate("Details", {
-                  id: tree.id,
-                  name: tree.treeName,
-                })
-              }
+              onClick={() => navigation.navigate("AddTree")}
+              style="outlined"
+              treeName="+ Add New Tree"
             />
-          ))}
-          <TreeCard
-            onClick={() => navigation.navigate("AddTree")}
-            style="outlined"
-            treeName="+ Add New Tree"
-          />
-        </View>
-      ) : (
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            height: 400,
-            width: "100%",
-          }}
-        >
-          <Text>Loading...</Text>
-        </View>
-      )}
+          </View>
+        )}
+      </FullScreenLoader>
     </ScrollView>
   );
 };
