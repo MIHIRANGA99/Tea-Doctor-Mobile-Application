@@ -18,7 +18,11 @@ const Scan = ({ navigation, route }) => {
   const currentLocation = useCurrentLocation();
 
   const [isTakingPicture, setIsTakingPicture] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState({
+    isLoading: false,
+    status: "",
+    image: "",
+  });
   const [capturedPic, setCapturedPic] = useState(null);
   const [selectedPic, setSelectedPic] = useState(null);
 
@@ -44,7 +48,11 @@ const Scan = ({ navigation, route }) => {
       currentLocation &&
       (capturedPic != null || selectedPic != null)
     ) {
-      setIsLoading(true);
+      setIsLoading({
+        isLoading: true,
+        status: "Scanning Picture",
+        image: capturedPic.uri,
+      });
       const formData = new FormData();
       formData.append("lang", currentLocation.coords.latitude.toFixed(2));
       formData.append("long", currentLocation.coords.longitude.toFixed(2));
@@ -63,6 +71,12 @@ const Scan = ({ navigation, route }) => {
         });
       formData.append("req_type", route.params.scanType);
 
+      setIsLoading({
+        isLoading: true,
+        status: "Preparing Data",
+        image: capturedPic.uri,
+      });
+
       await axios
         .post("http://3.112.233.148:8091/detection/uproute", formData, {
           headers: {
@@ -71,7 +85,7 @@ const Scan = ({ navigation, route }) => {
         })
         .then((res) => {
           setDetectedData(res.data);
-          setIsLoading(false);
+          setIsLoading({ isLoading: false, status: "", image: "" });
         })
         .catch((e) => {
           // TODO: Display Alert Message
@@ -107,7 +121,11 @@ const Scan = ({ navigation, route }) => {
   };
 
   return (
-    <FullScreenLoader isLoading = {isLoading} loadingText='Processing...' imageUri={capturedPic&& capturedPic.uri}>
+    <FullScreenLoader
+      isLoading={isLoading.isLoading}
+      loadingText={isLoading.status}
+      imageUri={isLoading.image}
+    >
       <View style={mainStyles.main}>
         <View style={{ paddingVertical: 12 }}>
           <DetailCard header="Suggestions" description="sample suggestion" />
