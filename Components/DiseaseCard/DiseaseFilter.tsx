@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { COLOR_PALETTE } from "../../constants/colors";
 
 interface DiseaseFiltersProps {
   categories: string[];
@@ -59,8 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#f2f2f2",
-    marginTop: 5,
+    backgroundColor: COLOR_PALETTE.secondary,
   },
   categoryItem: {
     paddingVertical: 8,
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 14,
-    color: "#333",
+    color: COLOR_PALETTE.primary,
   },
   activeCategory: {
-    backgroundColor: "rgba(39, 89, 0, 0.58)",
+    backgroundColor: COLOR_PALETTE.primary,
   },
   activeText: {
-    color: "#fff",
+    color: COLOR_PALETTE.secondary,
   },
 });
 

@@ -54,12 +54,7 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
         }}
       >
         {APP_COMPONENTS.map((comp, index) => (
-          <IconCard
-            key={index}
-            onClick={() => changeTab(0)}
-            icon={comp.icon}
-            title={comp.title}
-          />
+          <IconCard key={index} onClick={() => changeTab(comp.title === 'Weather Checker'? 3: 0)} icon={comp.icon} title={comp.title} />
         ))}
       </View>
       <View>

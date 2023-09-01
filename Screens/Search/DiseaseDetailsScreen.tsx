@@ -1,25 +1,8 @@
 import React, { ReactNode } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-import { RouteProp } from "@react-navigation/native";
+import { COLOR_PALETTE } from "../../constants/colors";
 
-type DiseaseDetailsRouteParams = {
-  DiseaseDetails: {
-    disease: {
-      description: ReactNode;
-      images: any;
-      symptoms: any;
-      name: string;
-    };
-  };
-};
-
-type DiseaseDetailsScreenProps = {
-  route: RouteProp<DiseaseDetailsRouteParams, "DiseaseDetails">;
-};
-
-const DiseaseDetailsScreen: React.FC<DiseaseDetailsScreenProps> = ({
-  route,
-}) => {
+const DiseaseDetailsScreen = ({ navigation, route }: {navigation: any, route: any}) => {
   const { disease } = route.params;
   const symptomsArray = disease.symptoms.split(", ");
 
@@ -52,25 +35,34 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 20,
+    backgroundColor: COLOR_PALETTE.secondary
   },
   image: {
     width: "100%",
     height: 300,
     borderRadius: 10,
-    marginBottom: 20,
     marginTop: 30,
   },
   diseaseName: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 30,
+    marginTop: -30,
     textAlign: "center",
+    color: COLOR_PALETTE.secondary,
+    backgroundColor: COLOR_PALETTE.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 24,
+    borderWidth: 4,
+    borderColor: COLOR_PALETTE.secondary
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
     alignSelf: "flex-start",
+    color: COLOR_PALETTE.primary
   },
   bulletList: {
     flexDirection: "column",
@@ -90,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 20,
     alignSelf: "flex-start",
-    textAlign: "justify"
+    textAlign: "justify",
   },
 });
 

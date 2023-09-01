@@ -8,6 +8,7 @@ import Settings from "./Settings";
 import mainStyles from "../constants/mainStyles";
 import Index from "./MyPlants/Index";
 import { auth } from "../firebase/config";
+import Weather from "./Weather/Weather";
 
 const Main = () => {
   const [selectedID, setSelectedID] = useState<number>(
@@ -34,7 +35,7 @@ const Main = () => {
       case 2:
         return <Home changeTab={(n: number) => setSelectedID(n)} />;
       case 3:
-        return <Home changeTab={(n: number) => setSelectedID(n)} />;
+        return <Weather changeTab={(n: number) => setSelectedID(n)} />;
       case 4:
         return <Settings />;
       default:

@@ -3,6 +3,7 @@ import { View, StyleSheet, FlatList, TextInput } from "react-native";
 import DiseaseCard from "../../Components/DiseaseCard/DiseaseCard";
 import DiseaseFilters from "../../Components/DiseaseCard/DiseaseFilter";
 import { diseaseDetails } from "../../lib/data";
+import { COLOR_PALETTE } from "../../constants/colors";
 
 const DiseaseDisplay = () => {
   const allCategories = Array.from(
@@ -41,6 +42,7 @@ const DiseaseDisplay = () => {
       />
       <FlatList
         data={filteredDiseasesWithSearch}
+        style={{backgroundColor: COLOR_PALETTE.secondary}}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
@@ -59,8 +61,8 @@ const styles = StyleSheet.create({
   searchBarContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: "#f2f2f2",
-    marginTop: 50,
+    backgroundColor: COLOR_PALETTE.secondary,
+    paddingTop: 50,
   },
   searchBar: {
     height: 40,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: "space-between",
-    marginBottom: 30, 
+    marginBottom: 30,
   },
 });
 
