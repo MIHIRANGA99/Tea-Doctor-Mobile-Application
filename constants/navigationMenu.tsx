@@ -18,8 +18,8 @@ export const NAVIGATION_MENU = [
         screen: <Home changeTab={() => null} />
     },
     {
-        name: 'report',
-        iconPath: require('../assets/icons/article.png'),
+        name: 'weather',
+        iconPath: require('../assets/icons/weather.png'),
         screen: ''
     },
     {

@@ -1,14 +1,17 @@
-import React from 'react'
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
+import FullScreenLoader from "../layouts/FullScreenLoader";
 
-type Props = {}
+type Props = {};
 
 const Settings = (props: Props) => {
   return (
-    <View>
+    <FullScreenLoader isLoading>
+      <View style={{height: 300}}>
         <Text>Settings</Text>
-    </View>
-  )
-}
+      </View>
+    </FullScreenLoader>
+  );
+};
 
-export default Settings
+export default Settings;

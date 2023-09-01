@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { COLOR_PALETTE } from "../../constants/colors";
 
 type Disease = {
   name: string
@@ -51,7 +52,7 @@ const DiseaseCard: React.FC<DiseaseCardProps> = ({ disease }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: 'white',
     borderRadius: 15,
     padding: 15,
     shadowColor: "#000",
@@ -68,16 +69,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
+    color: COLOR_PALETTE.primary,
     fontWeight: "bold",
     marginBottom: 8,
   },
   description: {
     fontSize: 12,
+    color: COLOR_PALETTE.darker,
     marginBottom: 8,
   },
   more: {
     fontSize: 10,
     marginBottom: 8,
+    color: COLOR_PALETTE.darker,
     fontWeight: "bold",
   },
   label: {
