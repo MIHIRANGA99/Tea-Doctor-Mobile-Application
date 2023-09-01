@@ -22,7 +22,7 @@ const Category = ({ navigation }) => {
             onPress={() =>
               navigation.navigate("HistoryDetails", {
                 category: category.name,
-                url: category.value,
+                url: category.value
               })
             }
           >

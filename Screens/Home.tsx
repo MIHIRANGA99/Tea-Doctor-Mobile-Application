@@ -69,7 +69,7 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
           color="rgba(39, 89, 0, 0.58)"
         />
       </View>
-      <View style={{marginTop: 10}}>
+      <View style={{ marginTop: 10 }}>
         <Button
           label="ඔබගේ අතීත රෝග හඳුනාගැනීම් බලන්න"
           onClick={navigateToDiseaseCategory}

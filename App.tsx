@@ -30,10 +30,6 @@ export default function App() {
           <Stack.Screen name="DiseaseDetails" component={DiseaseDetailsScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Category" component={Category} options={{ headerShown: false }}/>
           <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
-          <Stack.Screen name="Blister" component={Blister} options={{ headerShown: false }}/>
-          {/* <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
-          <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
-          <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/> */}
         </Stack.Navigator>
       </NavigationContainer>
     </>
