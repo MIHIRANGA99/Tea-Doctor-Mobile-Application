@@ -1,5 +1,4 @@
 import { View, Image, Text } from "react-native";
-import { EXPO_PUBLIC_API_KEY } from "@env";
 import DetailCard from "../Components/DetailCard/DetailCard";
 import IconCard from "../Components/IconCard/IconCard";
 import { APP_COMPONENTS } from "../constants/appComponents";
@@ -15,6 +14,10 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
 
   const navigateToDiseaseDetails = () => {
     navigation.navigate("DiseaseDisplay");
+  };
+
+  const navigateToDiseaseCategory = () => {
+    navigation.navigate("Category");
   };
 
   return (
@@ -63,6 +66,13 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
         <Button
           label="රෝග ගැන ඉගෙන ගන්න"
           onClick={navigateToDiseaseDetails}
+          color="rgba(39, 89, 0, 0.58)"
+        />
+      </View>
+      <View style={{ marginTop: 10 }}>
+        <Button
+          label="ඔබගේ අතීත රෝග හඳුනාගැනීම් බලන්න"
+          onClick={navigateToDiseaseCategory}
           color="rgba(39, 89, 0, 0.58)"
         />
       </View>
