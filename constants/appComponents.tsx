@@ -5,7 +5,7 @@ export const APP_COMPONENTS = [
     },
     {
         title: "Branch Scanner",
-        icon: require('../assets/icons/eco.png'),
+        icon: require('../assets/icons/branch.png'),
     },
     {
         title: "Bug Scanner",
