@@ -99,3 +99,36 @@ export const diseaseDetails = [
     ],
   },
 ];
+
+
+export const categories = [
+  {
+    id: 1,
+    name: "Blister Blight",
+    value:
+      "blister-detetions-by-user/23232323",
+  },
+  {
+    id: 2,
+    name: "Stem and Branch",
+    value:
+      "stem-detetions-by-user/23232323",
+  },
+  {
+    id: 3,
+    name: "Shot Hole Borer",
+    value: "insect-detetions-by-user/233",
+  },
+  {
+    id: 4,
+    name: "Weather",
+    value:
+      "weather-detetions-by-user/233",
+  },
+  {
+    id: 5,
+    name: "All",
+    value:
+      "weather-detetions-by-user/233",
+  },
+];

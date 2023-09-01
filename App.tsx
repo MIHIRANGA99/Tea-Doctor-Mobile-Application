@@ -9,6 +9,9 @@ import Weather from "./Screens/Weather/Weather";
 import Insect from "./Screens/Insect/Insect";
 import DiseaseDisplay from "./Screens/Search/DiseaseDisplay";
 import DiseaseDetailsScreen from "./Screens/Search/DiseaseDetailsScreen";
+import HistoryDetails from "./Screens/History/HistoryDetails";
+import Category from "./Screens/History/Category";
+import Blister from "./Screens/History/Component/Blister";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -25,6 +28,12 @@ export default function App() {
           <Stack.Screen name="Insect" component={Insect} options={{headerShown: false}} />
           <Stack.Screen name="DiseaseDisplay" component={DiseaseDisplay} options={{headerShown: false}}/>
           <Stack.Screen name="DiseaseDetails" component={DiseaseDetailsScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Category" component={Category} options={{ headerShown: false }}/>
+          <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
+          <Stack.Screen name="Blister" component={Blister} options={{ headerShown: false }}/>
+          {/* <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
+          <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
+          <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/> */}
         </Stack.Navigator>
       </NavigationContainer>
     </>
