@@ -123,6 +123,6 @@ export const categories = [
   {
     id: 4,
     name: "Weather",
-    value: "weather-detetions-by-user/233"
+    value: "weather-detetions"
   }
 ];

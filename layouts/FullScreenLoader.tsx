@@ -17,7 +17,7 @@ const FullScreenLoader = ({
   imageUri,
 }: Props) => {
   return (
-    <ScrollView>
+    <View style={{position: 'relative'}}>
       <View
         style={{
           height: "110%",
@@ -83,7 +83,7 @@ const FullScreenLoader = ({
         </Text>
       </View>
       {children}
-    </ScrollView>
+    </View>
   );
 };
 

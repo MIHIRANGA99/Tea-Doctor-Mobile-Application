@@ -4,7 +4,6 @@ import {
   Text,
   ActivityIndicator,
   Image,
-  Button,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
@@ -29,8 +28,10 @@ const HistoryDetails = ({ route }) => {
     featureList = ["healthy", "blister_blight"];
   } else if (category === "Stem and Branch") {
     featureList = ["healthy", "bark_cancer", "leaf_cancer"];
+  } else if (category === "Shot Hole Borer") {
+    featureList = ["healthy", "shhshsh"];
   } else {
-    featureList = ["healthy"];
+    featureList = ["rainy"];
   }
 
   useEffect(() => {
@@ -44,7 +45,11 @@ const HistoryDetails = ({ route }) => {
           setData(sortedData);
         } else {
           const filteredData = sortedData.filter((item) => {
-            return item.label && item.label.includes(selectedFeature);
+            return (
+              (item.label && item.label.includes(selectedFeature)) ||
+              (item.todayWeatherClass &&
+                item.todayWeatherClass.includes(selectedFeature))
+            );
           });
           setData(filteredData);
         }
@@ -69,7 +74,7 @@ const HistoryDetails = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
       {loading ? (
-        <ActivityIndicator style={styles.loader} size="large" color="#000" />
+        <ActivityIndicator style={styles.loader} size="large" />
       ) : (
         <View style={styles.historyContainer}>
           <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "700" }}>
@@ -112,16 +117,42 @@ const HistoryDetails = ({ route }) => {
           {data !== null && data.length > 0 ? (
             data.map((item) => (
               <View key={item._id} style={styles.cardContainer}>
-                <View style={styles.imageContainer}>
-                  <Image source={{ uri: item.imgURL }} style={styles.image} />
-                </View>
-                <View style={styles.detailsContainer}>
-                  <Text>Disease: {item.label}</Text>
-                  <Text>Score: {item.score}</Text>
-                  <Text>Ratio: {item.ratio}</Text>
-                  <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
-                  <Text>Time: {formatCreatedAt(item.createdAt).time}</Text>
-                </View>
+                {category === "Weather" ? (
+                  <>
+                    <View style={styles.imageContainer}>
+                      <Image
+                        source={require("../../assets/rain.jpeg")}
+                        style={styles.image}
+                      />
+                    </View>
+                    <View style={styles.detailsContainer}>
+                      <Text>
+                        Weather: {item.todayWeatherClass.charAt(0).toUpperCase() +
+                          item.todayWeatherClass.slice(1)}
+                      </Text>
+                      <Text>Wind Speed: {item.wind} km/h</Text>
+                      <Text>Humidity: {item.humidities[0]} %</Text>
+                      <Text>Rainfall: {item.rainfalls[0]} mm</Text>
+                      <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
+                    </View>
+                  </>
+                ) : (
+                  <>
+                    <View style={styles.imageContainer}>
+                      <Image
+                        source={{ uri: item.imgURL }}
+                        style={styles.image}
+                      />
+                    </View>
+                    <View style={styles.detailsContainer}>
+                      <Text>Disease: {item.label}</Text>
+                      <Text>Score: {item.score}</Text>
+                      <Text>Ratio: {item.ratio}</Text>
+                      <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
+                      <Text>Time: {formatCreatedAt(item.createdAt).time}</Text>
+                    </View>
+                  </>
+                )}
               </View>
             ))
           ) : (
@@ -145,8 +176,10 @@ const styles = StyleSheet.create({
   },
   loader: {
     flex: 1,
+    marginTop: 400,
     justifyContent: "center",
     alignItems: "center",
+    color: COLOR_PALETTE.primary,
   },
   countText: {
     fontSize: 16,
@@ -155,8 +188,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   rowContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
   },
   featureButton: {
     flex: 1,
@@ -166,7 +199,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 12,
     alignItems: "center",
-    margin: 2, 
+    margin: 2,
     marginBottom: 8,
   },
   label: {
