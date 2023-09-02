@@ -106,39 +106,54 @@ const Scan = ({ navigation, route }) => {
 
   const handleNext = () => {
     // setIsLoading({isLoading: true, status: 'Updating Tree'});
-    const diseaseData = route.params.scanType === "blister"? {
-      leaves: {
-        blisterBlight: true,
-        damageRatio: 0
-      }
-    }: {
-      stemAndBranches: {
-        stemCanker: true,
-        barkCanker: false,
-        damageRatio: 0
-      }
-    }
+    const diseaseData =
+      route.params.scanType === "blister"
+        ? {
+            leaves: {
+              blisterBlight: true,
+              damageRatio: detectedData.data.ratio,
+              score: detectedData.data.score,
+              updatedAt: detectedData.data.updatedAt,
+            },
+          }
+        : {
+            stemAndBranches: {
+              stemCanker: detectedData.data.label === "stem_cancer",
+              barkCanker: detectedData.data.label === "bark_cancer",
+              damageRatio: detectedData.data.ratio,
+              score: detectedData.data.score,
+              updatedAt: detectedData.data.updatedAt,
+            },
+          };
 
     const payload = {
       treeName: route.params.tree.treeName,
       treeAge: route.params.tree.treeAge,
       location: {
         lat: currentLocation.coords.latitude,
-        long: currentLocation.coords.longitude
+        long: currentLocation.coords.longitude,
       },
-      conditions: route.params.tree.conditions
-    }
+      conditions: route.params.tree.conditions,
+    };
 
-    route.params.scanType === "blister"? payload.conditions.leaves = diseaseData.leaves: payload.conditions.stemAndBranches = diseaseData.stemAndBranches;
+    route.params.scanType === "blister"
+      ? (payload.conditions.leaves = diseaseData.leaves)
+      : (payload.conditions.stemAndBranches = diseaseData.stemAndBranches);
 
-    updateFromCollection(currentUser.uid, payload, route.params.tree.id, (res) => {
-      console.log(res);
-      setIsLoading({isLoading: false, status: ''});
-    }, (error) => {
-      console.error(error);
-      setIsLoading({isLoading: false, status: ''});
-    })
-  }
+    updateFromCollection(
+      currentUser.uid,
+      payload,
+      route.params.tree.id,
+      (res) => {
+        console.log(res);
+        setIsLoading({ isLoading: false, status: "" });
+      },
+      (error) => {
+        console.error(error);
+        setIsLoading({ isLoading: false, status: "" });
+      }
+    );
+  };
 
   // const pickDocument = async () => {
   //   clearPics();
