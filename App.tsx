@@ -11,7 +11,6 @@ import DiseaseDisplay from "./Screens/Search/DiseaseDisplay";
 import DiseaseDetailsScreen from "./Screens/Search/DiseaseDetailsScreen";
 import HistoryDetails from "./Screens/History/HistoryDetails";
 import Category from "./Screens/History/Category";
-import Blister from "./Screens/History/Component/Blister";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
