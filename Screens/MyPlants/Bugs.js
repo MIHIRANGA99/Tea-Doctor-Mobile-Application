@@ -82,12 +82,32 @@ const Bugs = ({ navigation, route }) => {
         playsInSilentModeIOS: true,
       });
 
+      const recordingOptions = {
+        android: {
+          extension: ".wav",
+          outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_DEFAULT,
+          audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_DEFAULT,
+        },
+        ios: {
+          extension: ".wav",
+          outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_LINEARPCM,
+          audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
+          sampleRate: 44100,
+          numberOfChannels: 2,
+          bitRate: 128000,
+          linearPCMBitDepth: 16,
+          linearPCMIsBigEndian: false,
+          linearPCMIsFloat: false,
+        },
+      };
+
       toggleTimer();
       setIsRecording(true);
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
-      setRecording(recording);
+      const recordingObject = new Audio.Recording();
+      await recordingObject.prepareToRecordAsync(recordingOptions);
+      await recordingObject.startAsync();
+      setRecording(recordingObject);
+      console.log("obj", recordingObject);
       console.log("Recording started");
     } catch (err) {
       console.error("Failed to start recording", err);
@@ -116,7 +136,7 @@ const Bugs = ({ navigation, route }) => {
       payload.append("req_type", route.params.scanType);
       payload.append("file", {
         uri: audioFile._uri,
-        type: "audio/m4a",
+        type: "audio/wav",
         name: String(new Date().getTime()),
       });
       payload.append("user_Id", currentUser.uid);
