@@ -1,4 +1,4 @@
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import DetailCard from "../Components/DetailCard/DetailCard";
 import IconCard from "../Components/IconCard/IconCard";
 import { APP_COMPONENTS } from "../constants/appComponents";
@@ -18,6 +18,18 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
 
   const navigateToDiseaseCategory = () => {
     navigation.navigate("Category");
+  };
+
+  const navigateToBlisterMap = () => {
+    navigation.navigate("BlisterMap");
+  };
+
+  const navigateToStemMap = () => {
+    navigation.navigate("StemMap");
+  };
+
+  const navigateToBorerMap = () => {
+    navigation.navigate("BorerMap");
   };
 
   return (
@@ -54,7 +66,12 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
         }}
       >
         {APP_COMPONENTS.map((comp, index) => (
-          <IconCard key={index} onClick={() => changeTab(comp.title === 'Weather Checker'? 3: 0)} icon={comp.icon} title={comp.title} />
+          <IconCard
+            key={index}
+            onClick={() => changeTab(comp.title === "Weather Checker" ? 3 : 0)}
+            icon={comp.icon}
+            title={comp.title}
+          />
         ))}
       </View>
       <View>
@@ -71,8 +88,40 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
           color="rgba(39, 89, 0, 0.58)"
         />
       </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={navigateToBlisterMap}>
+          <Text style={styles.buttonText}>බුබුළු අංගමාරය ඇති ස්ථාන බලන්න</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={navigateToStemMap}>
+          <Text style={styles.buttonText}>කඳ අතු පිළිකාව ඇති ස්ථාන බලන්න</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={navigateToBorerMap}>
+          <Text style={styles.buttonText}>කද ගුල්ලා සිටින ස්ථාන බලන්න</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  button: {
+    backgroundColor: "rgba(39, 89, 0, 0.58)",
+    padding: 10,
+    borderRadius: 15,
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+  },
+});
 
 export default Home;
