@@ -11,6 +11,7 @@ import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import { detectTreeLevel } from "../../utils/detectTreeLevel";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
+import { updateFromCollection } from "../../firebase/utils/firestore/firestore";
 
 const Scan = ({ navigation, route }) => {
   const cameraRef = useRef(null);
@@ -103,11 +104,62 @@ const Scan = ({ navigation, route }) => {
     }
   };
 
-  const pickDocument = async () => {
-    clearPics();
-    let result = await DocumentPicker.getDocumentAsync({});
-    setSelectedPic(result);
+  const handleNext = () => {
+    // setIsLoading({isLoading: true, status: 'Updating Tree'});
+    const diseaseData =
+      route.params.scanType === "blister"
+        ? {
+            leaves: {
+              blisterBlight: true,
+              damageRatio: detectedData.data.ratio,
+              score: detectedData.data.score,
+              updatedAt: detectedData.data.updatedAt,
+            },
+          }
+        : {
+            stemAndBranches: {
+              stemCanker: detectedData.data.label === "stem_cancer",
+              barkCanker: detectedData.data.label === "bark_cancer",
+              damageRatio: detectedData.data.ratio,
+              score: detectedData.data.score,
+              updatedAt: detectedData.data.updatedAt,
+            },
+          };
+
+    const payload = {
+      treeName: route.params.tree.treeName,
+      treeAge: route.params.tree.treeAge,
+      location: {
+        lat: currentLocation.coords.latitude,
+        long: currentLocation.coords.longitude,
+      },
+      conditions: route.params.tree.conditions,
+    };
+
+    route.params.scanType === "blister"
+      ? (payload.conditions.leaves = diseaseData.leaves)
+      : (payload.conditions.stemAndBranches = diseaseData.stemAndBranches);
+
+    updateFromCollection(
+      currentUser.uid,
+      payload,
+      route.params.tree.id,
+      (res) => {
+        console.log(res);
+        setIsLoading({ isLoading: false, status: "" });
+      },
+      (error) => {
+        console.error(error);
+        setIsLoading({ isLoading: false, status: "" });
+      }
+    );
   };
+
+  // const pickDocument = async () => {
+  //   clearPics();
+  //   let result = await DocumentPicker.getDocumentAsync({});
+  //   setSelectedPic(result);
+  // };
 
   const takePicture = async () => {
     clearPics();
@@ -145,7 +197,8 @@ const Scan = ({ navigation, route }) => {
           )}
         </View>
         <Text>{capturedPic ? capturedPic.uri : ""}</Text>
-        <Text
+        {/* IMAGE PICKER COMMENTED */}
+        {/* <Text
           style={{
             textAlign: "center",
             fontWeight: "700",
@@ -161,16 +214,17 @@ const Scan = ({ navigation, route }) => {
             label="Select an Image"
             extraStyles={{ width: "40%" }}
           />
-        </View>
+        </View> */}
         {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
               header={detectTreeLevel(detectedData.data.label).heading}
               description={detectTreeLevel(detectedData.data.label).description}
+              error={!(detectedData.data.label === "healthy")}
               button={
                 detectedData.data.label === "healthy"
                   ? null
-                  : { label: "Next", onClick: () => null }
+                  : { label: "Next", onClick: () => handleNext() }
               }
             />
           </View>

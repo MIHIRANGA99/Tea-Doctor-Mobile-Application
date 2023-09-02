@@ -10,16 +10,20 @@ import FullScreenLoader from "../../layouts/FullScreenLoader";
 
 const MyPlants = ({ navigation }: { navigation: any }) => {
   const [trees, setTrees] = useState<ITree[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const currentUser = useCurrentUser();
 
   useEffect(() => {
     if (currentUser) {
+      setIsLoading(true);
       getDataFromCollection(currentUser.uid)
         .then((res: ITree[]) => {
           setTrees(res);
+          setIsLoading(false);
         })
         .catch((e) => {
           console.error(e);
+          setIsLoading(false);
         });
     }
   }, [currentUser]);
@@ -42,7 +46,7 @@ const MyPlants = ({ navigation }: { navigation: any }) => {
         header="Suggestions"
         description="Check the tea leaves and scan if you see any odd spots"
       />
-      <FullScreenLoader isLoading={trees.length === 0}>
+      <FullScreenLoader isLoading={isLoading}>
         {trees && (
           <View
             style={{
@@ -58,7 +62,7 @@ const MyPlants = ({ navigation }: { navigation: any }) => {
                 onClick={() =>
                   navigation.navigate("Details", {
                     id: tree.id,
-                    name: tree.treeName,
+                    tree: tree,
                   })
                 }
               />

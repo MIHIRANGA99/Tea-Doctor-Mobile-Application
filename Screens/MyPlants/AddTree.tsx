@@ -21,7 +21,11 @@ const AddTree = ({ navigation }: { navigation: any }) => {
       const payload: ITree = {
         treeName: name,
         treeAge: age,
-        condition: [],
+        conditions: {
+          leaves: {},
+          bugs: {},
+          stemAndBranches: {},
+        },
         location: {
           lat: currentLocation.coords.latitude,
           long: currentLocation.coords.latitude,
