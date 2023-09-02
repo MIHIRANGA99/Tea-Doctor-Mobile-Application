@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, ScrollView, Text } from "react-native";
 import DetailCard from "../../Components/DetailCard/DetailCard";
 import Button from "../../Components/Button/Button";
 import mainStyles from "../../constants/mainStyles";
 import { COLOR_PALETTE } from "../../constants/colors";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
-import { deleteFromCollection } from "../../firebase/utils/firestore/firestore";
+import {
+  deleteFromCollection,
+  getSingleDataFromCollection,
+} from "../../firebase/utils/firestore/firestore";
 
 const TreeDetails = ({
   route,
@@ -15,22 +18,38 @@ const TreeDetails = ({
   navigation: any;
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [treeDetails, setTreeDetails] = useState<any>();
 
   const currentUser = useCurrentUser();
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (currentUser) {
+      getSingleDataFromCollection(currentUser.uid, route.params.tree.id)
+        .then((res) => {
+          setTreeDetails(res);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          console.error(e);
+          setIsLoading(false);
+        });
+    }
+  }, [currentUser, route]);
 
   const handleDelete = () => {
     if (currentUser) {
       setIsLoading(true);
       deleteFromCollection(
         currentUser.uid,
-        route.params.id,
+        route.params.tree.id,
         (res) => {
           setIsLoading(false);
           navigation.pop();
         },
         (error) => {
           setIsLoading(false);
-          console.error(error)
+          console.error(error);
         }
       );
     }
@@ -58,7 +77,7 @@ const TreeDetails = ({
             color: COLOR_PALETTE.primary,
           }}
         >
-          {route.params.name}
+          {treeDetails && treeDetails.treeName}
         </Text>
       </View>
       <DetailCard
@@ -70,31 +89,54 @@ const TreeDetails = ({
           header="Condition of Leaves"
           description="Check the tea leaves"
           button={{
-            label: "Rescan Leaves",
-            onClick: () => navigation.navigate("Scan", { scanType: "blister" }),
+            label: `${
+              Object.keys(treeDetails ? treeDetails.conditions.leaves : {})
+                .length
+                ? "Rescan"
+                : "Scan"
+            } Leaves`,
+            onClick: () =>
+              navigation.navigate("Scan", {
+                scanType: "blister",
+                tree: route.params.tree,
+              }),
             icon: require("../../assets/icons/eco.png"),
           }}
         />
         <DetailCard
           header="Condition of Branches"
           button={{
-            label: "Scan Branches",
-            onClick: () => navigation.navigate("Scan", { scanType: "stem" }),
+            label: `${
+              Object.keys(
+                treeDetails ? treeDetails.conditions.stemAndBranches : {}
+              ).length
+                ? "Rescan"
+                : "Scan"
+            } Branches`,
+            onClick: () =>
+              navigation.navigate("Scan", {
+                scanType: "stem",
+                tree: route.params.tree,
+              }),
             icon: require("../../assets/icons/eco.png"),
           }}
         />
         <DetailCard
           header="Existence of Bugs"
           button={{
-            label: "Scan Bugs",
+            label: `${
+              Object.keys(treeDetails ? treeDetails.conditions.bugs : {}).length
+                ? "Rescan"
+                : "Scan"
+            } Bugs`,
             onClick: () => navigation.navigate("Bugs", { scanType: "insect" }),
             icon: require("../../assets/icons/bug_report.png"),
           }}
         />
       </View>
-      <View style={{ paddingVertical: 12 }}>
+      <View style={{ paddingTop: 32, paddingBottom: 12 }}>
         <Button
-          isLoading = {isLoading}
+          isLoading={isLoading}
           onClick={() => handleDelete()}
           extraStyles={{ backgroundColor: "#AD0000" }}
           label="Delete Tree"

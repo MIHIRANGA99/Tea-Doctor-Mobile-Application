@@ -29,12 +29,16 @@ export const getDataFromCollection = async (collectionName: string) => {
   let dataList: any = [];
 
   const q = query(collection(database, collectionName));
-  const documents = await getDocs(q);
-  documents.forEach((doc) => {
-    dataList.push({ ...doc.data(), id: doc.id });
-  });
+  try {
+    const documents = await getDocs(q);
+    documents.forEach((doc) => {
+      dataList.push({ ...doc.data(), id: doc.id });
+    });
 
-  return dataList;
+    return dataList;
+  } catch (e) {
+    return e;
+  }
 };
 
 export const getSingleDataFromCollection = async (
