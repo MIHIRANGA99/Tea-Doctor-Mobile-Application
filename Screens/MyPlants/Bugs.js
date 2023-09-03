@@ -11,11 +11,18 @@ import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import axios from "axios";
 import { default_URL } from "../../constants/url";
+import FullScreenLoader from "../../layouts/FullScreenLoader";
 
 const Bugs = ({ navigation, route }) => {
   const [recording, setRecording] = useState();
   const [isRecording, setIsRecording] = useState(false);
   const [audioFile, setAudioFile] = useState();
+  const [pickedAudioFile, setPickedAudioFile] = useState();
+  const [isLoading, setIsLoading] = useState({
+    isLoading: false,
+    status: "",
+    image: "",
+  });
 
   const [isRunning, setIsRunning] = useState(false);
   const timerDate = new Date();
@@ -47,16 +54,29 @@ const Bugs = ({ navigation, route }) => {
   useEffect(() => {
     setAudioFile(undefined);
     if (audioFile) {
+      setIsLoading({
+        isLoading: true,
+        status: "Scanning Recorded Audio",
+      });
       analyzeAudio();
     }
-  }, [audioFile]);
+
+    setPickedAudioFile(undefined);
+    if (pickedAudioFile) {
+      setIsLoading({
+        isLoading: true,
+        status: "Scanning Picked Audio",
+      });
+      analyzeAudio();
+    }
+  }, [audioFile, pickedAudioFile]);
 
   const currentUser = useCurrentUser();
   const currentLocation = useCurrentLocation();
 
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
-    console.log(result);
+    setPickedAudioFile(result);
   };
 
   const toggleTimer = () => {
@@ -107,7 +127,6 @@ const Bugs = ({ navigation, route }) => {
           linearPCMIsFloat: false, // Keep the same
         },
       };
-      
 
       toggleTimer();
       setIsRecording(true);
@@ -139,7 +158,11 @@ const Bugs = ({ navigation, route }) => {
   };
 
   const analyzeAudio = async () => {
-    if (currentUser && currentLocation && audioFile) {
+    setIsLoading({
+      isLoading: true,
+      status: "Analyzing Audio",
+    });
+    if (currentUser && currentLocation && (audioFile || pickedAudioFile)) {
       const formData = new FormData();
       formData.append("req_type", route.params.scanType);
       audioFile &&
@@ -148,11 +171,15 @@ const Bugs = ({ navigation, route }) => {
           name: audioFile._uri.split("/").pop(),
           type: "audio/wav",
         });
+      pickedAudioFile &&
+        formData.append("file", {
+          uri: pickedAudioFile.uri,
+          name: pickedAudioFile.uri.split("/").pop(),
+          type: "audio/wav",
+        });
       formData.append("user_Id", currentUser.uid);
       formData.append("lang", currentLocation.coords.latitude.toFixed(2));
       formData.append("long", currentLocation.coords.longitude.toFixed(2));
-
-      console.log(audioFile._uri);
 
       await axios
         .post(`${default_URL}/detection/uproute`, formData, {
@@ -162,20 +189,25 @@ const Bugs = ({ navigation, route }) => {
         })
         .then((res) => {
           console.log("result", res);
+          setIsLoading({
+            isLoading: false,
+            status: "",
+          });
         })
         .catch((e) => {
-          console.error("error", e);
-          console.error(formData, {
-            uri: audioFile._uri,
-            name: audioFile._uri.split("/").pop(),
-            type: "audio/wav",
+          setIsLoading({
+            isLoading: false,
+            status: "",
           });
-
           if (e.response) {
             console.log(e.response);
           }
         });
     } else {
+      setIsLoading({
+        isLoading: false,
+        status: "",
+      });
       console.log("error with payload");
       console.log("user", currentUser);
       console.log("loc", currentLocation);
@@ -184,58 +216,65 @@ const Bugs = ({ navigation, route }) => {
   };
 
   return (
-    <View
-      style={{ ...mainStyles.main, display: "flex", flexDirection: "column" }}
+    <FullScreenLoader
+      isLoading={isLoading.isLoading}
+      loadingText={isLoading.status}
     >
-      <View style={{ paddingVertical: 12 }}>
-        <DetailCard header="Suggestions" description="sample suggestion" />
-      </View>
       <View
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "70%",
-        }}
+        style={{ ...mainStyles.main, display: "flex", flexDirection: "column" }}
       >
-        <TouchableOpacity onPress={recording ? stopRecording : startRecording}>
-          <LottieView
-            style={{ width: 200, height: 200 }}
-            source={require("../../assets/lotties/record.json")}
-            autoPlay
-            loop
-          />
-        </TouchableOpacity>
+        <View style={{ paddingVertical: 12 }}>
+          <DetailCard header="Suggestions" description="sample suggestion" />
+        </View>
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "70%",
+          }}
+        >
+          <TouchableOpacity
+            onPress={recording ? stopRecording : startRecording}
+          >
+            <LottieView
+              style={{ width: 200, height: 200 }}
+              source={require("../../assets/lotties/record.json")}
+              autoPlay
+              loop
+            />
+          </TouchableOpacity>
 
-        <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "800" }}>
-          {timer.getMinutes()} : {timer.getSeconds()}
+          <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "800" }}>
+            {timer.getMinutes()} : {timer.getSeconds()}
+          </Text>
+        </View>
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "700",
+            color: COLOR_PALETTE.primary,
+            paddingVertical: 12,
+          }}
+        >
+          OR
         </Text>
+        <View style={{ display: "flex", alignItems: "center" }}>
+          {/* TODO: Restrict to choose only audio files */}
+          <Button
+            onClick={pickDocument}
+            label="Select an Audio File"
+            extraStyles={{ width: "60%" }}
+          />
+          {/* TODO: Remove below button after the integration */}
+          <Button
+            label="test recorded file"
+            extraStyles={{ width: "40%", marginVertical: 12 }}
+            onClick={() => console.log(audioFile)}
+          />
+        </View>
       </View>
-      <Text
-        style={{
-          textAlign: "center",
-          fontWeight: "700",
-          color: COLOR_PALETTE.primary,
-          paddingVertical: 12,
-        }}
-      >
-        OR
-      </Text>
-      <View style={{ display: "flex", alignItems: "center" }}>
-        {/* TODO: Restrict to choose only audio files */}
-        <Button
-          onClick={pickDocument}
-          label="Select an Audio File"
-          extraStyles={{ width: "60%" }}
-        />
-        {/* TODO: Remove below button after the integration */}
-        <Button
-          label="test recorded file"
-          extraStyles={{ width: "40%", marginVertical: 12 }}
-          onClick={() => console.log(audioFile)}
-        />
-      </View>
-    </View>
+    </FullScreenLoader>
   );
 };
 

@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import axios from "axios";
-import * as DocumentPicker from "expo-document-picker";
 import mainStyles from "../../constants/mainStyles";
 import ScanCam from "../../Components/ScanCam/ScanCam";
 import DetailCard from "../../Components/DetailCard/DetailCard";
-import { COLOR_PALETTE } from "../../constants/colors";
-import Button from "../../Components/Button/Button";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import { detectTreeLevel } from "../../utils/detectTreeLevel";
