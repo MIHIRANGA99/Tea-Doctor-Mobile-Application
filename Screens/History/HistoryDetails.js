@@ -20,7 +20,7 @@ const HistoryDetails = ({ route }) => {
   const user = useCurrentUser();
   const { url, category } = route.params;
 
-  const API_URL = `http://3.112.233.148:8091/detection/${url}`;
+  const API_URL = `http://35.77.105.18:8091/detection/${url}`;
 
   let featureList = [];
 
@@ -29,11 +29,15 @@ const HistoryDetails = ({ route }) => {
   } else if (category === "Stem and Branch") {
     featureList = ["healthy", "bark_cancer", "leaf_cancer"];
   } else if (category === "Shot Hole Borer") {
-    featureList = ["healthy", "shhshsh"];
+    featureList = [0, 1];
   } else {
-    featureList = ["rainy"];
+    featureList = ["rainy", "drizzle", "sun"];
   }
 
+  const handlePress = () => {
+    Linking.openURL(item.audioURL);
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,10 +51,13 @@ const HistoryDetails = ({ route }) => {
           const filteredData = sortedData.filter((item) => {
             return (
               (item.label && item.label.includes(selectedFeature)) ||
+              (item.status &&
+                item.status.toString().includes(selectedFeature)) ||
               (item.todayWeatherClass &&
                 item.todayWeatherClass.includes(selectedFeature))
             );
           });
+          console.log(filteredData);
           setData(filteredData);
         }
 
@@ -127,13 +134,42 @@ const HistoryDetails = ({ route }) => {
                     </View>
                     <View style={styles.detailsContainer}>
                       <Text>
-                        Weather: {item.todayWeatherClass.charAt(0).toUpperCase() +
+                        Weather:{" "}
+                        {item.todayWeatherClass.charAt(0).toUpperCase() +
                           item.todayWeatherClass.slice(1)}
                       </Text>
                       <Text>Wind Speed: {item.wind} km/h</Text>
                       <Text>Humidity: {item.humidities[0]} %</Text>
                       <Text>Rainfall: {item.rainfalls[0]} mm</Text>
                       <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
+                    </View>
+                  </>
+                ) : category === "Shot Hole Borer" ? (
+                  <>
+                    <View style={styles.imageContainer}>
+                      {item.status === 1 ? (
+                        <Image
+                          source={require("../../assets/shot.jpg")}
+                          style={styles.image}
+                        />
+                      ) : (
+                        <Image
+                          source={require("../../assets/no.png")}
+                          style={styles.image}
+                        />
+                      )}
+                    </View>
+                    <View style={styles.detailsContainer}>
+                      <Text>
+                        Status:{" "}
+                        {item.status === 0
+                          ? "No shot hole Borrer"
+                          : "Shot-hole Borer"}
+                      </Text>
+                      <Text>count: {item.count}</Text>
+                      <Text>Audio: <Text style={{ color: 'blue', textDecorationLine: 'underline',  }}>Play</Text> </Text>
+                      <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
+                      <Text>Time: {formatCreatedAt(item.createdAt).time}</Text>
                     </View>
                   </>
                 ) : (
