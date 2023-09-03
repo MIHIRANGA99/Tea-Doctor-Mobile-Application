@@ -144,9 +144,16 @@ const Scan = ({ navigation, route }) => {
       payload,
       route.params.tree.id,
       (res) => {
-        Toast.show("Successfully Updated", ToastOptions.succsess)
+        Toast.show("Successfully Updated", ToastOptions.succsess);
         setIsLoading({ isLoading: false, status: "" });
-        navigation.pop();
+        navigation.navigate("Treatments", {
+          percentage:
+            route.params.scanType === "blister"
+              ? (payload.conditions.leaves = diseaseData.leaves.damageRatio.split('%')[0])
+              : (payload.conditions.stemAndBranches =
+                  diseaseData.stemAndBranches.damageRatio.split('%')[0]),
+          scanType: route.params.scanType,
+        });
       },
       (error) => {
         Toast.show(error.message, ToastOptions.error);
