@@ -107,22 +107,22 @@ export const diseaseDetails = [
 export const categories = [
   {
     id: 1,
-    name: "Blister Blight",
+    name: "බුබුලු අංගමාරය",
     value: "blister-detetions-by-user/23232323"
   },
   {
     id: 2,
-    name: "Stem and Branch",
+    name: "කඳ අතු පිළිකාව",
     value: "stem-detetions-by-user/23232323"
   },
   {
     id: 3,
-    name: "Shot Hole Borer",
+    name: "කඳ ගුල්ලන්",
     value: "insect-detetions-by-user/23232323"
   },
   {
     id: 4,
-    name: "Weather",
+    name: "කාලගුණය",
     value: "weather-detetions"
   }
 ];

@@ -23,12 +23,12 @@ export default function BlisterMap({ changeTab }) {
     {
       name: "Blister Blight",
       key: "blister_blight",
-      icon: require("../../assets/icons/eco_green.png"),
+      icon: require("../../assets/icons/leaff.png"),
     },
     {
       name: "Stem and Branch Canker",
       key: "stem_canker",
-      icon: require("../../assets/icons/branch.png"),
+      icon: require("../../assets/icons/map-branch.png"),
     },
     {
       name: "Insects",
@@ -161,7 +161,7 @@ export default function BlisterMap({ changeTab }) {
                 latitude: location.lang,
                 longitude: location.long,
               }}
-              icon={require("../../assets/icons/branch.png")}
+              icon={require("../../assets/icons/map-branch.png")}
             >
               <Callout>
                 <View>

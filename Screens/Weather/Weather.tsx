@@ -108,32 +108,33 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           {weatherData && (
             <DetailCard header="Weather on Rathganga">
               <View style={styles.container}>
-                <Text style={styles.dateText}>Date: {formattedDate}</Text>
+                <Text style={styles.dateText}>දිනය: {formattedDate}</Text>
                 <View style={styles.infoContainer}>
                   <View style={styles.infoRow}>
-                    <Text style={styles.label}>Today's Weather:</Text>
+                    <Text style={styles.label}>අද කාලගුණය:</Text>
                     <Text style={styles.value}>
-                      {weatherData.todayWeatherClass}
+                      {weatherData.todayWeatherClass.charAt(0).toUpperCase() +
+                        weatherData.todayWeatherClass.slice(1)}
                     </Text>
                   </View>
                   <View style={styles.infoRow}>
-                    <Text style={styles.label}>Temperature:</Text>
+                    <Text style={styles.label}>උෂ්ණත්වය:</Text>
                     <Text style={styles.value}>{weatherData.temps[0]} °C</Text>
                   </View>
                   <View style={styles.infoRow}>
-                    <Text style={styles.label}>Humidity:</Text>
+                    <Text style={styles.label}>ආර්ද්රතාවය:</Text>
                     <Text style={styles.value}>
                       {weatherData.humidities[0]} %
                     </Text>
                   </View>
                   <View style={styles.infoRow}>
-                    <Text style={styles.label}>Rainfalls:</Text>
+                    <Text style={styles.label}>වැසි තත්වය:</Text>
                     <Text style={styles.value}>
                       {weatherData.rainfalls[0]} mm
                     </Text>
                   </View>
                   <View style={styles.infoRow}>
-                    <Text style={styles.label}>Wind Speed:</Text>
+                    <Text style={styles.label}>සුළඟේ වේගය:</Text>
                     <Text style={styles.value}>{weatherData.wind} km/h</Text>
                   </View>
                 </View>
