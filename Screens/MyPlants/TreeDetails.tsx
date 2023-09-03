@@ -9,6 +9,8 @@ import {
   deleteFromCollection,
   getSingleDataFromCollection,
 } from "../../firebase/utils/firestore/firestore";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../../constants/ToastOptions";
 
 const TreeDetails = ({
   route,
@@ -47,9 +49,12 @@ const TreeDetails = ({
           setIsLoading(false);
           navigation.pop();
         },
-        (error) => {
+        (error: any) => {
           setIsLoading(false);
           console.error(error);
+          if (error.message) {
+            Toast.show(error.message, ToastOptions.error);
+          }
         }
       );
     }

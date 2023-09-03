@@ -1,4 +1,4 @@
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Image, Text, ToastAndroid } from "react-native";
 import DetailCard from "../Components/DetailCard/DetailCard";
 import IconCard from "../Components/IconCard/IconCard";
 import { APP_COMPONENTS } from "../constants/appComponents";
@@ -6,11 +6,35 @@ import { COLOR_PALETTE } from "../constants/colors";
 import useCurrentUser from "../firebase/hooks/useCurrentUser";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../Components/Button/Button";
+import { useEffect, useState } from "react";
+import { getDataFromCollection } from "../firebase/utils/firestore/firestore";
+import ITree from "../interfaces/ITree";
+import { calculateConditions } from "../utils/calculateHealth";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../constants/ToastOptions";
 
 const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
+  const [stateHealth, setStateHealth] = useState<number>(0);
   const user = useCurrentUser();
 
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
+
+  useEffect(() => {
+    if (user) {
+      getDataFromCollection(user.uid).then((res: ITree[]) => {
+        let totalHealth = 0;
+        res.forEach((tree: ITree) => {
+          const value = calculateConditions(tree.id? tree.id: '', res);
+          totalHealth = totalHealth + value;
+        });
+
+        totalHealth = totalHealth / res.length;
+        setStateHealth(totalHealth);
+      }).catch((e) => {
+        console.error(e);
+      })
+    }
+  }, [changeTab, user]);
 
   const navigateToDiseaseDetails = () => {
     navigation.navigate("DiseaseDisplay");
@@ -18,18 +42,6 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
 
   const navigateToDiseaseCategory = () => {
     navigation.navigate("Category");
-  };
-
-  const navigateToBlisterMap = () => {
-    navigation.navigate("BlisterMap");
-  };
-
-  const navigateToStemMap = () => {
-    navigation.navigate("StemMap");
-  };
-
-  const navigateToBorerMap = () => {
-    navigation.navigate("BorerMap");
   };
 
   return (
@@ -51,11 +63,11 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <DetailCard
         header="About Your Tea State"
-        description="Choose a tea tree that you can see some diseases and let us decide the treatments."
+        description={`Your Overall State Health is ${stateHealth}%`}
       />
       <DetailCard
         header="Suggestions"
-        description="Check the tea leaves and scan if you see any odd spots"
+        description="Choose a tea tree that you can see some diseases and let us decide the treatments."
       />
       <View
         style={{
@@ -68,60 +80,28 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
         {APP_COMPONENTS.map((comp, index) => (
           <IconCard
             key={index}
-            onClick={() => changeTab(comp.title === "Weather Checker" ? 3 : 0)}
+            onClick={() => changeTab(comp.title === "Weather Condition" ? 3 : 0)}
             icon={comp.icon}
             title={comp.title}
           />
         ))}
       </View>
-      <View>
+      <View style={{display: 'flex', flexDirection: 'column'}}>
         <Button
           label="රෝග ගැන ඉගෙන ගන්න"
           onClick={navigateToDiseaseDetails}
-          color="rgba(39, 89, 0, 0.58)"
+          color={COLOR_PALETTE.primary}
+          extraStyles={{height: 72, borderRadius: 12, marginVertical: 4}}
         />
-      </View>
-      <View style={{ marginTop: 10 }}>
         <Button
           label="ඔබගේ අතීත රෝග හඳුනාගැනීම් බලන්න"
           onClick={navigateToDiseaseCategory}
-          color="rgba(39, 89, 0, 0.58)"
+          color={COLOR_PALETTE.primary}
+          extraStyles={{height: 72, borderRadius: 12, marginVertical: 4}}
         />
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={navigateToBlisterMap}>
-          <Text style={styles.buttonText}>බුබුළු අංගමාරය ඇති ස්ථාන බලන්න</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={navigateToStemMap}>
-          <Text style={styles.buttonText}>කඳ අතු පිළිකාව ඇති ස්ථාන බලන්න</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={navigateToBorerMap}>
-          <Text style={styles.buttonText}>කද ගුල්ලා සිටින ස්ථාන බලන්න</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-  },
-  button: {
-    backgroundColor: "rgba(39, 89, 0, 0.58)",
-    padding: 10,
-    borderRadius: 15,
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  buttonText: {
-    color: "white",
-    textAlign: "center",
-  },
-});
 
 export default Home;

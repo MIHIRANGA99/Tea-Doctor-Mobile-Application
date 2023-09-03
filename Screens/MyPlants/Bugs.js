@@ -12,6 +12,8 @@ import useCurrentLocation from "../../hooks/useCurrentLocation";
 import axios from "axios";
 import { default_URL } from "../../constants/url";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../../constants/ToastOptions";
 
 const Bugs = ({ navigation, route }) => {
   const [recording, setRecording] = useState();
@@ -218,8 +220,9 @@ const Bugs = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
+    Toast.show('Successfully Updated!', ToastOptions.succsess)
     // TODO: GO to treatments page
-    console.log('next')
+    navigation.pop();
   }
 
   return (

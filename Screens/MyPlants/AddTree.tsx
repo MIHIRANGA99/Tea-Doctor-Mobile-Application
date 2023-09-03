@@ -7,6 +7,8 @@ import { createData } from "../../firebase/utils/firestore/firestore";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import ITree from "../../interfaces/ITree";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../../constants/ToastOptions";
 
 const AddTree = ({ navigation }: { navigation: any }) => {
   const [name, setName] = useState<string>("");
@@ -40,14 +42,16 @@ const AddTree = ({ navigation }: { navigation: any }) => {
           setIsLoading(false);
           navigation.pop();
         },
-        (error) => {
+        (error: any) => {
           setIsLoading(false);
           console.error(error);
+          if (error.message) {
+            Toast.show(error.message, ToastOptions.error);
+          }
         }
       );
     } else {
-      // TODO: add an alert message here
-      console.log("Please fill required fields");
+      Toast.show('Please Fill Required Fields', ToastOptions.error);
     }
   };
   return (

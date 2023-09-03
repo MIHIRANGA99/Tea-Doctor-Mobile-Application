@@ -10,6 +10,8 @@ import { detectTreeLevel } from "../../utils/detectTreeLevel";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { updateFromCollection } from "../../firebase/utils/firestore/firestore";
 import { default_URL } from "../../constants/url";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../../constants/ToastOptions";
 
 const Scan = ({ navigation, route }) => {
   const cameraRef = useRef(null);
@@ -87,8 +89,7 @@ const Scan = ({ navigation, route }) => {
           setIsLoading({ isLoading: false, status: "", image: "" });
         })
         .catch((e) => {
-          // TODO: Display Alert Message
-          console.error("error", e.response.data);
+          Toast.show(e.response.data, ToastOptions.error);
           setIsLoading(false);
         });
     } else {
@@ -143,11 +144,12 @@ const Scan = ({ navigation, route }) => {
       payload,
       route.params.tree.id,
       (res) => {
-        console.log(res);
+        Toast.show("Successfully Updated", ToastOptions.succsess)
         setIsLoading({ isLoading: false, status: "" });
+        navigation.pop();
       },
       (error) => {
-        console.error(error);
+        Toast.show(error.message, ToastOptions.error);
         setIsLoading({ isLoading: false, status: "" });
       }
     );

@@ -5,18 +5,21 @@ const iconCardStyles = StyleSheet.create({
     card: {
         backgroundColor: COLOR_PALETTE.primary,
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        borderRadius: 14,
+        flex: 1,
+        borderRadius: 12,
         height: 82,
-        width: 82
+        marginHorizontal: 4,
+        width: '100%'
     },
     title: {
-        fontSize: 10,
+        fontSize: 16,
         paddingTop: 4,
         color: 'white',
-        fontStyle: 'italic',
-        fontWeight: '400'
+        width: '60%',
+        fontWeight: '600'
     }
 });
 

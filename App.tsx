@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootSiblingParent } from 'react-native-root-siblings';
 import Main from "./Screens/Main";
 import Register from "./Screens/Auth/Register";
 import Login from "./Screens/Auth/Login";
@@ -18,7 +19,7 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <>
+    <RootSiblingParent>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
@@ -35,7 +36,7 @@ export default function App() {
           <Stack.Screen name="BorerMap" component={BorerMap} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </RootSiblingParent>
   );
 }
 
