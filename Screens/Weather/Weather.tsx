@@ -16,6 +16,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [weatherData, setWeatherData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [day, setDay] = useState<Date>(new Date());
+  const [dummyIndex, setDummyIndex] = useState<number>(0);
   const currentLocation = useCurrentLocation();
   const currentUser = useCurrentUser();
 
@@ -29,14 +30,33 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
     formattedDate = detectionDate.toLocaleDateString();
   }
 
+  const dummyData = {
+    humidities: [86, 86, 85, 85, 86],
+    temps: [24.4, 24, 24.4, 24.4, 24.2],
+    rainfalls: [9.89, 5.86, 8.91, 7.88, 8.33],
+    class: [
+      { wind: 12.5, todayWeatherClass: "rainy" },
+
+      { wind: 12.7, todayWeatherClass: "rainy" },
+
+      { wind: 12.7, todayWeatherClass: "rainy" },
+
+      { wind: 13.5, todayWeatherClass: "rainy" },
+
+      { wind: 13.4, todayWeatherClass: "rainy" },
+    ],
+  };
+
   const handleNextDate = () => {
     const date = day;
+    setDummyIndex(dummyIndex + 1);
     date.setDate(day.getDate() + 1);
     getWeatherData(date.toLocaleDateString());
   };
 
   const handlePreviousDate = () => {
     const date = day;
+    setDummyIndex(dummyIndex - 1);
     date.setDate(day.getDate() - 1);
     getWeatherData(date.toLocaleDateString());
   };
@@ -101,10 +121,10 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <DetailCard
         header="Suggestions"
-        description="Check the tea leaves and scan if you see any odd spots"
+        description="පොහොර දැමීමට සුදුසු නැත"
       />
       <FullScreenLoader isLoading={isLoading}>
-        <View style={{ paddingVertical: 12, height: isLoading ? 200 : "100%" }}>
+        <View style={{ paddingVertical: 12, height: isLoading ? "60%" : "100%" }}>
           {weatherData && (
             <DetailCard header="Weather on Rathganga">
               <View style={styles.container}>
@@ -113,42 +133,42 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                   <View style={styles.infoRow}>
                     <Text style={styles.label}>අද කාලගුණය:</Text>
                     <Text style={styles.value}>
-                      {weatherData.todayWeatherClass.charAt(0).toUpperCase() +
-                        weatherData.todayWeatherClass.slice(1)}
+                      {dummyData.class[dummyIndex].todayWeatherClass}
                     </Text>
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.label}>උෂ්ණත්වය:</Text>
-                    <Text style={styles.value}>{weatherData.temps[0]} °C</Text>
+                    <Text style={styles.value}>{dummyData.temps[dummyIndex]} °C</Text>
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.label}>ආර්ද්රතාවය:</Text>
                     <Text style={styles.value}>
-                      {weatherData.humidities[0]} %
+                      {dummyData.humidities[dummyIndex]} %
                     </Text>
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.label}>වැසි තත්වය:</Text>
                     <Text style={styles.value}>
-                      {weatherData.rainfalls[0]} mm
+                      {dummyData.rainfalls[dummyIndex]} mm
                     </Text>
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.label}>සුළඟේ වේගය:</Text>
-                    <Text style={styles.value}>{weatherData.wind} km/h</Text>
+                    <Text style={styles.value}>{dummyData.class[dummyIndex].wind} km/h</Text>
                   </View>
                 </View>
                 <TouchableOpacity
                   onPress={() => handleNextDate()}
                   style={{
                     position: "absolute",
+                    display: dummyData.class.length === dummyIndex + 1? 'none': 'flex',
                     backgroundColor: COLOR_PALETTE.secondary,
                     borderColor: COLOR_PALETTE.primary,
                     borderWidth: 2,
                     padding: 8,
                     borderRadius: 100,
                     top: "50%",
-                    right: -24,
+                    right: isLoading? 0: -24,
                     zIndex: 50,
                   }}
                 >
@@ -163,13 +183,14 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                   onPress={() => handlePreviousDate()}
                   style={{
                     position: "absolute",
+                    display: dummyIndex === 0? 'none': 'flex',
                     backgroundColor: COLOR_PALETTE.secondary,
                     borderColor: COLOR_PALETTE.primary,
                     borderWidth: 2,
                     padding: 8,
                     borderRadius: 100,
                     top: "50%",
-                    left: -24,
+                    left: isLoading? 0: -24,
                     zIndex: 50,
                   }}
                 >

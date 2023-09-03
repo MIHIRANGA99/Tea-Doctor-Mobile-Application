@@ -6,6 +6,7 @@ import TreeDetails from "./TreeDetails";
 import Scan from "./Scan";
 import Bugs from "./Bugs";
 import AddTree from "./AddTree";
+import Treatments from "../Treatments/Treatments";
 
 function Index() {
   const Stack = createNativeStackNavigator();
@@ -36,6 +37,11 @@ function Index() {
         <Stack.Screen
           name="Bugs"
           component={Bugs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Treatments"
+          component={Treatments}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

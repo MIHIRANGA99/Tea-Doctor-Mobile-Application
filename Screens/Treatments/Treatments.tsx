@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import mainStyles from "../../constants/mainStyles";
 
-type Props = {};
-
-const Treatments = (props: Props) => {
+const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
   const [treatments, setTreatments] = useState<string>("");
 
+  useEffect(() => {
+    console.log(route.params)
+  }, [route]);
+
   const generateTreatments = (percentage: number, disease: string) => {
-    if (disease === "blister_blight") {
+    console.log(percentage, disease)
+    if (disease === "blister") {
       switch (true) {
         case percentage <= 20 && percentage > 10:
           return (
@@ -78,7 +81,7 @@ const Treatments = (props: Props) => {
         default:
           return <Text>ලොකු හානියක් නෙවෙයි</Text>;
       }
-    } else if (disease === "stem_canker" || disease === "bark_canker") {
+    } else if (disease === "stem" || disease === "bark") {
       switch (true) {
         case percentage <= 20 && percentage > 10:
           return (
@@ -218,7 +221,7 @@ const Treatments = (props: Props) => {
       }
     }
   };
-  return <View style={mainStyles.main}>{generateTreatments(2, "insect")}</View>;
+  return <View style={mainStyles.main}>{route.params&& generateTreatments(Number(route.params.percentage), route.params.scanType)}</View>;
 };
 
 export default Treatments;
