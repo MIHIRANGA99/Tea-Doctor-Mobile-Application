@@ -24,6 +24,8 @@ const Bugs = ({ navigation, route }) => {
     image: "",
   });
 
+  const [detectedData, setDetectedData] = useState(null);
+
   const [isRunning, setIsRunning] = useState(false);
   const timerDate = new Date();
   timerDate.setMinutes(0);
@@ -188,7 +190,7 @@ const Bugs = ({ navigation, route }) => {
           },
         })
         .then((res) => {
-          console.log("result", res);
+          setDetectedData(res.data);
           setIsLoading({
             isLoading: false,
             status: "",
@@ -215,6 +217,11 @@ const Bugs = ({ navigation, route }) => {
     }
   };
 
+  const handleNext = () => {
+    // TODO: GO to treatments page
+    console.log('next')
+  }
+
   return (
     <FullScreenLoader
       isLoading={isLoading.isLoading}
@@ -231,7 +238,7 @@ const Bugs = ({ navigation, route }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "70%",
+            height: "60%",
           }}
         >
           <TouchableOpacity
@@ -254,25 +261,33 @@ const Bugs = ({ navigation, route }) => {
             textAlign: "center",
             fontWeight: "700",
             color: COLOR_PALETTE.primary,
-            paddingVertical: 12,
+            paddingBottom: 12
           }}
         >
           OR
         </Text>
-        <View style={{ display: "flex", alignItems: "center" }}>
+        <View style={{ display: "flex", alignItems: "center", paddingBottom: 24 }}>
           {/* TODO: Restrict to choose only audio files */}
           <Button
             onClick={pickDocument}
             label="Select an Audio File"
             extraStyles={{ width: "60%" }}
           />
-          {/* TODO: Remove below button after the integration */}
-          <Button
-            label="test recorded file"
-            extraStyles={{ width: "40%", marginVertical: 12 }}
-            onClick={() => console.log(audioFile)}
-          />
         </View>
+        {detectedData && (
+          <View style={{ paddingVertical: 12 }}>
+            <DetailCard
+              header={detectedData.data.count > 0? "Bugs Detected!": "No Bugs Detected!"}
+              description={detectedData.data.count > 0? `${detectedData.data.count} bugs detected in the tree`: "No bugs detected in the tree."}
+              error={detectedData.data.count > 0}
+              button={
+                !detectedData.data.count
+                  ? null
+                  : { label: "Next", onClick: () => handleNext() }
+              }
+            />
+          </View>
+        )}
       </View>
     </FullScreenLoader>
   );
