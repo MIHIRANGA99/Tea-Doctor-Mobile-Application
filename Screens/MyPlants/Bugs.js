@@ -221,8 +221,10 @@ const Bugs = ({ navigation, route }) => {
 
   const handleNext = () => {
     Toast.show('Successfully Updated!', ToastOptions.succsess)
-    // TODO: GO to treatments page
-    navigation.pop();
+    navigation.navigate('Treatments', {
+      percentage: detectedData.data.count,
+      scanType: route.params.scanType
+    });
   }
 
   return (
