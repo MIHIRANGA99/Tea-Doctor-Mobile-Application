@@ -1,1 +1,1 @@
-export const default_URL = "http://35.77.105.18:8091";
+export const default_URL = "http://54.95.182.57:8091";

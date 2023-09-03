@@ -8,8 +8,8 @@ export const NAVIGATION_MENU = [
         screen: <Index />
     },
     {
-        name: 'messages',
-        iconPath: require('../assets/icons/forum.png'),
+        name: 'map',
+        iconPath: require('../assets/icons/map.png'),
         screen: ''
     },
     {
