@@ -118,7 +118,7 @@ export const categories = [
   {
     id: 3,
     name: "Shot Hole Borer",
-    value: "insect-detetions-by-user/233"
+    value: "insect-detetions-by-user/23232323"
   },
   {
     id: 4,

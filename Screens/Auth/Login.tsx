@@ -57,13 +57,13 @@ const Login = ({ navigation }: { navigation: any }) => {
             type="email-address"
             onChange={(text) => setEmail(text)}
             dense
-            placeholder="Your Email Here"
-            label="E - main Address"
+            placeholder="Enter your Email here"
+            label="ඊ-තැපැල් ලිපිනය"
           />
           <TextField
             onChange={(text) => setPassword(text)}
             dense
-            placeholder="Enter Password"
+            placeholder="Enter your Password here"
             label="Password"
             isPassword
           />

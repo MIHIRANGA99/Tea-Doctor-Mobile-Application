@@ -1,18 +1,18 @@
 export const APP_COMPONENTS = [
     {
-        title: "Leave Scanner",
+        title: "බුබුලු අංගමාරය",
         icon: require('../assets/icons/eco.png'),
     },
     {
-        title: "Branch Scanner",
+        title: "කඳ අතු පිළිකාව",
         icon: require('../assets/icons/branch.png'),
     },
     {
-        title: "Bug Scanner",
+        title: "කද ගුල්ලන්",
         icon: require('../assets/icons/bug_report.png'),
     },
     {
-        title: "Weather Checker",
+        title: "කාලගුණ තත්වය",
         icon: require('../assets/icons/weather.png'),
     }
 ]
