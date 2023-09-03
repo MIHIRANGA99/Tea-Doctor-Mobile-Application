@@ -57,14 +57,14 @@ const Login = ({ navigation }: { navigation: any }) => {
             type="email-address"
             onChange={(text) => setEmail(text)}
             dense
-            placeholder="Enter your Email here"
-            label="ඊ-තැපැල් ලිපිනය"
+            placeholder="ඔබගේ විද්‍යුත් තැපෑල මෙහි ඇතුලත් කරන්න"
+            label="විද්‍යුත් තැපෑල / දුරකථන අංකය"
           />
           <TextField
             onChange={(text) => setPassword(text)}
             dense
-            placeholder="Enter your Password here"
-            label="Password"
+            placeholder="ඔබගේ මුරපදය මෙහි ඇතුලත් කරන්න"
+            label="මුරපදය"
             isPassword
           />
           <View
@@ -79,7 +79,7 @@ const Login = ({ navigation }: { navigation: any }) => {
               <Button
                 isLoading={isLoading}
                 onClick={() => onSubmit()}
-                label="Login"
+                label="ඇතුල් වන්න"
               />
             </View>
           </View>
@@ -98,9 +98,11 @@ const Login = ({ navigation }: { navigation: any }) => {
         }}
       >
         <Text>
-          Don't Have an Account?{" "}
+          ඔබට ගිණුමක් නොමැතිද?{" "}
           <Link to="/Register">
-            <Text style={{ color: COLOR_PALETTE.primary }}>Register</Text>
+            <Text style={{ color: COLOR_PALETTE.primary }}>
+              ලියාපදිංචි වෙන්න
+            </Text>
           </Link>
         </Text>
       </View>

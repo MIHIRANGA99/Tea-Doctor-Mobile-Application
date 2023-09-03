@@ -25,20 +25,16 @@ const HistoryDetails = ({ route }) => {
 
   let featureList = [];
 
-  if (category === "Blister Blight") {
+  if (category === "බුබුලු අංගමාරය") {
     featureList = ["healthy", "blister_blight"];
-  } else if (category === "Stem and Branch") {
+  } else if (category === "කඳ අතු පිළිකාව") {
     featureList = ["healthy", "bark_cancer", "leaf_cancer"];
-  } else if (category === "Shot Hole Borer") {
-    featureList = [0, 1];
+  } else if (category === "කඳ ගුල්ලන්") {
+    featureList = [0, 2, 10];
   } else {
     featureList = ["rainy", "drizzle", "sun"];
   }
 
-  const handlePress = () => {
-    Linking.openURL(item.audioURL);
-  };
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -85,12 +81,12 @@ const HistoryDetails = ({ route }) => {
         <ActivityIndicator style={styles.loader} size="large" />
       ) : (
         <View style={styles.historyContainer}>
-          <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "700" }}>
+          {/* <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "700" }}>
             {user ? `Hi ${user.email}!` : "Loading..."}
-          </Text>
-          <Text style={styles.label}>Detection History of {category} </Text>
+          </Text> */}
+          <Text style={styles.label}>{category} හඳුනාගැනීමේ ඉතිහාසය</Text>
           <Text style={styles.countText}>
-            {data !== null ? `Total Records: ${data.length}` : ""}
+            {data !== null ? `මුළු වාර්තා ගණන: ${data.length}` : ""}
           </Text>
 
           <View style={styles.rowContainer}>
@@ -125,7 +121,7 @@ const HistoryDetails = ({ route }) => {
           {data !== null && data.length > 0 ? (
             data.map((item) => (
               <View key={item._id} style={styles.cardContainer}>
-                {category === "Weather" ? (
+                {category === "කාලගුණය" ? (
                   <>
                     <View style={styles.imageContainer}>
                       <Image
@@ -145,7 +141,7 @@ const HistoryDetails = ({ route }) => {
                       <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
                     </View>
                   </>
-                ) : category === "Shot Hole Borer" ? (
+                ) : category === "කඳ ගුල්ලන්" ? (
                   <>
                     <View style={styles.imageContainer}>
                       {item.status === 1 ? (
@@ -168,7 +164,17 @@ const HistoryDetails = ({ route }) => {
                           : "Shot-hole Borer"}
                       </Text>
                       <Text>count: {item.count}</Text>
-                      <Text>Audio: <Text style={{ color: 'blue', textDecorationLine: 'underline',  }}>Play</Text> </Text>
+                      <Text>
+                        Audio:{" "}
+                        <Text
+                          style={{
+                            color: "blue",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Play
+                        </Text>{" "}
+                      </Text>
                       <Text>Date: {formatCreatedAt(item.createdAt).date}</Text>
                       <Text>Time: {formatCreatedAt(item.createdAt).time}</Text>
                     </View>
@@ -219,7 +225,7 @@ const styles = StyleSheet.create({
     color: COLOR_PALETTE.primary,
   },
   countText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "gray",
     marginTop: 5,
     marginBottom: 8,
@@ -240,10 +246,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   label: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 8,
     marginTop: 25,
+    textAlign: "center"
   },
   cardContainer: {
     flexDirection: "row",

@@ -63,7 +63,7 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <DetailCard
         header="About Your Tea State"
-        description={`Your Overall State Health is ${stateHealth}%`}
+        description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth}%`}
       />
       <DetailCard
         header="Suggestions"
