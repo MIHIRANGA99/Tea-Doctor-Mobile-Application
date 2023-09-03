@@ -8,6 +8,7 @@ import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { COLOR_PALETTE } from "../../constants/colors";
 import AnimatedLottieView from "lottie-react-native";
+import { default_URL } from "../../constants/url";
 
 const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [weatherData, setWeatherData] = useState<any>(null);
@@ -64,7 +65,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
             today: dateString,
           };
           axios
-            .post("http://3.112.233.148:8091/detection/detect-weather", weather)
+            .post(`${default_URL}/detection/detect-weather`, weather)
             .then((response) => {
               console.log(response.data);
               setWeatherData(response.data.data);

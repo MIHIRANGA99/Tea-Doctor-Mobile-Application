@@ -7,6 +7,8 @@ import { getDataFromCollection } from "../../firebase/utils/firestore/firestore"
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import ITree from "../../interfaces/ITree";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
+import { COLOR_PALETTE } from "../../constants/colors";
+import { calculateConditions } from "../../utils/calculateHealth";
 
 const MyPlants = ({ navigation }: { navigation: any }) => {
   const [trees, setTrees] = useState<ITree[]>([]);
@@ -46,11 +48,21 @@ const MyPlants = ({ navigation }: { navigation: any }) => {
         header="Suggestions"
         description="Check the tea leaves and scan if you see any odd spots"
       />
+      <Text
+        style={{
+          color: COLOR_PALETTE.primary,
+          fontWeight: "600",
+          textAlign: "center",
+          paddingVertical: 12,
+        }}
+      >
+        My Trees
+      </Text>
       <FullScreenLoader isLoading={isLoading}>
         {trees && (
           <View
             style={{
-              paddingVertical: 12,
+              paddingBottom: 12,
               height: trees.length === 0 ? 200 : "100%",
             }}
           >
@@ -58,6 +70,7 @@ const MyPlants = ({ navigation }: { navigation: any }) => {
               <TreeCard
                 key={index}
                 treeName={tree.treeName}
+                condition={calculateConditions(tree.id ? tree.id : "", trees)}
                 style="filled"
                 onClick={() =>
                   navigation.navigate("Details", {
