@@ -9,7 +9,7 @@ import mainStyles from "../constants/mainStyles";
 import Index from "./MyPlants/Index";
 import { auth } from "../firebase/config";
 import Weather from "./Weather/Weather";
-import Other from "./Other/Other";
+import BlisterMap from "./Map/BlisterMap";
 
 const Main = () => {
   const [selectedID, setSelectedID] = useState<number>(
@@ -32,7 +32,7 @@ const Main = () => {
       case 0:
         return <Index />;
       case 1:
-        return <Other changeTab={(n: number) => setSelectedID(n)} />;
+        return <BlisterMap changeTab={(n: number) => setSelectedID(n)} />;
       case 2:
         return <Home changeTab={(n: number) => setSelectedID(n)} />;
       case 3:
@@ -46,7 +46,7 @@ const Main = () => {
 
   return (
     <>
-      <View style={mainStyles.main}>{componentNavigation()}</View>
+      <View style={selectedID === 1? {height: '100%', paddingBottom: 60} : mainStyles.main}>{componentNavigation()}</View>
       <NavContainer>
         {NAVIGATION_MENU.map((item, index) => (
           <NavItem
