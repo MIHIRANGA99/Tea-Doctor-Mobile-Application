@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import { COLOR_PALETTE } from "../../constants/colors";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
+import { default_URL } from "../../constants/url";
 
 const HistoryDetails = ({ route }) => {
   const [data, setData] = useState(null);
@@ -20,7 +21,7 @@ const HistoryDetails = ({ route }) => {
   const user = useCurrentUser();
   const { url, category } = route.params;
 
-  const API_URL = `http://35.77.105.18:8091/detection/${url}`;
+  const API_URL = `${default_URL}/detection/${url}`;
 
   let featureList = [];
 
