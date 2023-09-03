@@ -9,6 +9,8 @@ import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { COLOR_PALETTE } from "../../constants/colors";
 import AnimatedLottieView from "lottie-react-native";
 import { default_URL } from "../../constants/url";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../../constants/ToastOptions";
 
 const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [weatherData, setWeatherData] = useState<any>(null);
@@ -72,7 +74,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
               setIsLoading(false);
             })
             .catch((error) => {
-              console.error(error);
+              Toast.show(error.message, ToastOptions.error);
               setIsLoading(false);
             });
         })

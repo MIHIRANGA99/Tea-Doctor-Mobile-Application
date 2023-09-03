@@ -1,18 +1,10 @@
 export const APP_COMPONENTS = [
     {
-        title: "බුබුලු අංගමාරය",
+        title: "My Trees",
         icon: require('../assets/icons/eco.png'),
     },
     {
-        title: "කඳ අතු පිළිකාව",
-        icon: require('../assets/icons/branch.png'),
-    },
-    {
-        title: "කද ගුල්ලන්",
-        icon: require('../assets/icons/bug_report.png'),
-    },
-    {
-        title: "කාලගුණ තත්වය",
+        title: "Weather Condition",
         icon: require('../assets/icons/weather.png'),
     }
 ]

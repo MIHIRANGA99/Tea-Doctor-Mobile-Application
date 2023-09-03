@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Marker, Circle, Callout } from "react-native-maps";
 import { StyleSheet, View, Button, Text, Image } from "react-native";
+import { default_URL } from "../../constants/url";
 
 export default function BorerMap() {
   const [mapRegion, setMapRegion] = useState({
@@ -17,7 +18,7 @@ export default function BorerMap() {
 
   useEffect(() => {
     // Fetch data from the provided API endpoint
-    fetch("http://3.112.233.148:8091/detection/insect-detections") // Replace with your actual API endpoint
+    fetch(`${default_URL}/detection/insect-detections`) // Replace with your actual API endpoint
       .then((response) => response.json())
       .then((data) => {
         if (data.success && Array.isArray(data.data)) {
