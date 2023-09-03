@@ -9,6 +9,7 @@ import {
 import mainStyles from "../../constants/mainStyles";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { useNavigation } from "@react-navigation/native";
+import BlisterMap from "../Map/BlisterMap";
 
 const Other = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const navigation: any = useNavigation();
@@ -26,21 +27,9 @@ const Other = ({ changeTab }: { changeTab: (number: number) => void }) => {
   };
 
   return (
-    <ScrollView style={mainStyles.main}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={navigateToBlisterMap}>
-          <Text style={styles.buttonText}>බුබුළු අංගමාරය ඇති ස්ථාන බලන්න</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={navigateToStemMap}>
-          <Text style={styles.buttonText}>කඳ අතු පිළිකාව ඇති ස්ථාන බලන්න</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={navigateToBorerMap}>
-          <Text style={styles.buttonText}>කද ගුල්ලා සිටින ස්ථාන බලන්න</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <View style={{height: '100%', width: '100%', marginTop: -10, marginLeft: -12}}>
+      <BlisterMap />
+    </View>
   );
 };
 
