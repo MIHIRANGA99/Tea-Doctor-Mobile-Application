@@ -10,6 +10,7 @@ import Button from "../../Components/Button/Button";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import axios from "axios";
+import { default_URL } from "../../constants/url";
 
 const Bugs = ({ navigation, route }) => {
   const [recording, setRecording] = useState();
@@ -82,12 +83,39 @@ const Bugs = ({ navigation, route }) => {
         playsInSilentModeIOS: true,
       });
 
+      const recordingOptions = {
+        android: {
+          extension: ".wav",
+          outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_DEFAULT,
+          audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_DEFAULT, // Change the encoder if needed
+          sampleRate: 22050, // Lower sample rate to reduce file size
+          numberOfChannels: 1, // Use mono recording if stereo is not necessary
+          bitRate: 64000, // Lower bit rate to reduce file size
+          linearPCMBitDepth: 16, // Keep the same
+          linearPCMIsBigEndian: false, // Keep the same
+          linearPCMIsFloat: false, // Keep the same
+        },
+        ios: {
+          extension: ".wav",
+          outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_LINEARPCM,
+          audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
+          sampleRate: 44100, // Keep the same
+          numberOfChannels: 2, // Keep the same
+          bitRate: 128000, // Keep the same
+          linearPCMBitDepth: 16, // Keep the same
+          linearPCMIsBigEndian: false, // Keep the same
+          linearPCMIsFloat: false, // Keep the same
+        },
+      };
+      
+
       toggleTimer();
       setIsRecording(true);
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
-      setRecording(recording);
+      const recordingObject = new Audio.Recording();
+      await recordingObject.prepareToRecordAsync(recordingOptions);
+      await recordingObject.startAsync();
+      setRecording(recordingObject);
+      console.log("obj", recordingObject);
       console.log("Recording started");
     } catch (err) {
       console.error("Failed to start recording", err);
@@ -112,21 +140,23 @@ const Bugs = ({ navigation, route }) => {
 
   const analyzeAudio = async () => {
     if (currentUser && currentLocation && audioFile) {
-      const payload = new FormData();
-      payload.append("req_type", route.params.scanType);
-      payload.append("file", {
-        uri: audioFile._uri,
-        type: "audio/m4a",
-        name: String(new Date().getTime()),
-      });
-      payload.append("user_Id", currentUser.uid);
-      payload.append("lang", currentLocation.coords.latitude.toFixed(2));
-      payload.append("long", currentLocation.coords.longitude.toFixed(2));
+      const formData = new FormData();
+      formData.append("req_type", route.params.scanType);
+      audioFile &&
+        formData.append("file", {
+          uri: audioFile._uri,
+          name: audioFile._uri.split("/").pop(),
+          type: "audio/wav",
+        });
+      formData.append("user_Id", currentUser.uid);
+      formData.append("lang", currentLocation.coords.latitude.toFixed(2));
+      formData.append("long", currentLocation.coords.longitude.toFixed(2));
+
+      console.log(audioFile._uri);
 
       await axios
-        .post("http://3.112.233.148:8091/detection/uproute", payload, {
+        .post(`${default_URL}/detection/uproute`, formData, {
           headers: {
-            Accept: "multipart/form-data",
             "Content-Type": "multipart/form-data",
           },
         })
@@ -135,6 +165,11 @@ const Bugs = ({ navigation, route }) => {
         })
         .catch((e) => {
           console.error("error", e);
+          console.error(formData, {
+            uri: audioFile._uri,
+            name: audioFile._uri.split("/").pop(),
+            type: "audio/wav",
+          });
 
           if (e.response) {
             console.log(e.response);

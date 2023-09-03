@@ -12,6 +12,7 @@ import useCurrentLocation from "../../hooks/useCurrentLocation";
 import { detectTreeLevel } from "../../utils/detectTreeLevel";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { updateFromCollection } from "../../firebase/utils/firestore/firestore";
+import { default_URL } from "../../constants/url";
 
 const Scan = ({ navigation, route }) => {
   const cameraRef = useRef(null);
@@ -79,7 +80,7 @@ const Scan = ({ navigation, route }) => {
       });
 
       await axios
-        .post("http://3.112.233.148:8091/detection/uproute", formData, {
+        .post(`${default_URL}/detection/uproute`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
