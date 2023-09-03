@@ -76,7 +76,7 @@ const Treatments = (props: Props) => {
             </Text>
           );
         default:
-          return <Text>Not a big damage</Text>;
+          return <Text>ලොකු හානියක් නෙවෙයි</Text>;
       }
     } else if (disease === "stem_canker" || disease === "bark_canker") {
       switch (true) {
@@ -147,7 +147,7 @@ const Treatments = (props: Props) => {
             </Text>
           );
         default:
-          return <Text>Not a big damage</Text>;
+          return <Text>ලොකු හානියක් නෙවෙයි</Text>;
       }
     } else if (disease === "insect") {
       switch (percentage) {
