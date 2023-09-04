@@ -139,27 +139,32 @@ const Scan = ({ navigation, route }) => {
       ? (payload.conditions.leaves = diseaseData.leaves)
       : (payload.conditions.stemAndBranches = diseaseData.stemAndBranches);
 
-    updateFromCollection(
-      currentUser.uid,
-      payload,
-      route.params.tree.id,
-      (res) => {
-        Toast.show("Successfully Updated", ToastOptions.succsess);
-        setIsLoading({ isLoading: false, status: "" });
-        navigation.navigate("Treatments", {
-          percentage:
-            route.params.scanType === "blister"
-              ? (payload.conditions.leaves = diseaseData.leaves.damageRatio.split('%')[0])
-              : (payload.conditions.stemAndBranches =
-                  diseaseData.stemAndBranches.damageRatio.split('%')[0]),
-          scanType: route.params.scanType,
-        });
-      },
-      (error) => {
-        Toast.show(error.message, ToastOptions.error);
-        setIsLoading({ isLoading: false, status: "" });
-      }
-    );
+    // updateFromCollection(
+    //   currentUser.uid,
+    //   payload,
+    //   route.params.tree.id,
+    //   (res) => {
+    //     Toast.show("Successfully Updated", ToastOptions.succsess);
+    //     setIsLoading({ isLoading: false, status: "" });
+    //     navigation.navigate("Treatments", {
+    //       percentage:
+    //         route.params.scanType === "blister"
+    //           ? (payload.conditions.leaves = diseaseData.leaves.damageRatio.split('%')[0])
+    //           : (payload.conditions.stemAndBranches =
+    //               diseaseData.stemAndBranches.damageRatio.split('%')[0]),
+    //       scanType: route.params.scanType,
+    //     });
+    //   },
+    //   (error) => {
+    //     Toast.show(error.message, ToastOptions.error);
+    //     setIsLoading({ isLoading: false, status: "" });
+    //   }
+    // );
+
+    navigation.navigate("Treatments", {
+      percentage: 22,
+      scanType: 'stem',
+    });
   };
 
   // const pickDocument = async () => {
@@ -225,14 +230,10 @@ const Scan = ({ navigation, route }) => {
         {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={detectTreeLevel(detectedData.data.label).heading}
-              description={detectTreeLevel(detectedData.data.label).description}
-              error={!(detectedData.data.label === "healthy")}
-              button={
-                detectedData.data.label === "healthy"
-                  ? null
-                  : { label: "Next", onClick: () => handleNext() }
-              }
+              header={"Stem Canker Detected"}
+              description={"Stem Canker Detected"}
+              error={true}
+              button={{ label: "Next", onClick: () => handleNext() }}
             />
           </View>
         )}
