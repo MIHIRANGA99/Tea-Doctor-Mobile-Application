@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import mainStyles from "../../constants/mainStyles";
+import { COLOR_PALETTE } from "../../constants/colors";
 
-const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
+const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
   const [treatments, setTreatments] = useState<string>("");
 
   useEffect(() => {
-    console.log(route.params)
+    console.log(route.params);
   }, [route]);
 
   const generateTreatments = (percentage: number, disease: string) => {
-    console.log(percentage, disease)
+    console.log(percentage, disease);
     if (disease === "blister") {
       switch (true) {
         case percentage <= 20 && percentage > 10:
@@ -221,7 +222,54 @@ const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
       }
     }
   };
-  return <View style={mainStyles.main}>{route.params&& generateTreatments(Number(route.params.percentage), route.params.scanType)}</View>;
+  return (
+    <View style={mainStyles.main}>
+      <Text
+        style={{
+          color: COLOR_PALETTE.secondary,
+          backgroundColor: COLOR_PALETTE.primary,
+          fontSize: 24,
+          paddingBottom: 32,
+          paddingTop: 12,
+          borderRadius: 12,
+          textAlign: "center",
+          marginTop: 24,
+        }}
+      >
+        {route.params.scanType === "blister"
+          ? "Blister Blight"
+          : route.params.scanType === "stem"
+          ? "Stem Canker"
+          : route.params.scanType === "insect"
+          ? "Insect Detected"
+          : "Branch Canker"}
+      </Text>
+      <Text
+        style={{
+          color: COLOR_PALETTE.secondary,
+          backgroundColor: COLOR_PALETTE.primary,
+          fontSize: 16,
+          padding: 12,
+          borderRadius: 12,
+          textAlign: "center",
+          borderColor: COLOR_PALETTE.secondary,
+          borderWidth: 2,
+          marginBottom: 12,
+          marginHorizontal: 32,
+          marginTop: -24,
+        }}
+      >
+        Damage Rate: {Number(route.params.percentage)}%
+      </Text>
+      <View style={{marginTop: 32}}>
+        {route.params &&
+          generateTreatments(
+            Number(route.params.percentage),
+            route.params.scanType
+          )}
+      </View>
+    </View>
+  );
 };
 
 export default Treatments;
