@@ -41,19 +41,19 @@ const Register = ({navigation}: {navigation: any}) => {
                     <Image style={{ width: '80%', resizeMode: 'contain' }} source={require("../../assets/tea-doctor-logo.png")} />
                 </View>
                 <View>
-                    <TextField onChange={(text) => setUsername(text)} dense placeholder='Your Name Here' label='Username' />
-                    <TextField onChange={(text) => setEmail(text)} dense placeholder='Your Email Here' label='E - main Address' />
-                    <TextField onChange={(text) => setPassword(text)} dense placeholder='Enter Password' label='Password' />
-                    <TextField onChange={(text) => setConfPassword(text)} dense placeholder='Confirm Password' label='Confirm Password' />
+                    <TextField onChange={(text) => setUsername(text)} dense placeholder='ඔබගේ නම මෙහි ඇතුලත් කරන්න' label='නම' />
+                    <TextField onChange={(text) => setEmail(text)} dense placeholder='ඔබගේ විද්‍යුත් තැපෑල මෙහි ඇතුලත් කරන්න' label='විද්‍යුත් තැපෑල' />
+                    <TextField onChange={(text) => setPassword(text)} dense placeholder='මුරපදය ඇතුළත් කරන්න' label='මුරපදය නැවතත්' />
+                    <TextField onChange={(text) => setConfPassword(text)} dense placeholder='මුරපදය තහවුරු කරන්න' label='මුරපදය තහවුරු කරන්න' />
                     <View style={{ display: 'flex', width: '100%', alignItems: 'flex-end', paddingVertical: 8 }}>
                         <View style={{ width: '40%' }}>
-                            <Button isLoading = {isLoading} onClick={() => onSubmit()} label='Register' />
+                            <Button isLoading = {isLoading} onClick={() => onSubmit()} label='ලියාපදිංචි වෙන්න' />
                         </View>
                     </View>
                 </View>
             </ScrollView>
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 24, right: 12, backgroundColor: COLOR_PALETTE.secondary, width: '100%' }}>
-                <Text>Already Have an Account? <Link to='/Login'><Text style={{ color: COLOR_PALETTE.primary }}>Sign In</Text></Link></Text>
+                <Text>දැනටමත් ගිණුමක් තිබේද? <Link to='/Login'><Text style={{ color: COLOR_PALETTE.primary }}>පුරන්න</Text></Link></Text>
             </View>
         </View>
     )

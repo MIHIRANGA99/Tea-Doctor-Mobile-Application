@@ -58,14 +58,14 @@ const AddTree = ({ navigation }: { navigation: any }) => {
     <View style={{ ...mainStyles.main, marginTop: 20 }}>
       <TextField
         onChange={(text) => setName(text)}
-        placeholder="Give a name to your tree"
-        label="Tree Name"
+        placeholder="Give a name to your state"
+        label="State Name"
         dense
       />
       <TextField
         onChange={(text) => setAge(Number(text))}
-        placeholder="Age of your tree"
-        label="Age"
+        placeholder="Duration of the Tea State"
+        label="Duration"
         type="number-pad"
         dense
       />
