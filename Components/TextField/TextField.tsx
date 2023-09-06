@@ -10,13 +10,14 @@ type Props = {
   dense?: boolean;
   isPassword?: boolean;
   type?: KeyboardTypeOptions;
+  maxLength?: number;
 }
 
-const TextField = ({ label, onChange, placeholder, value, dense = false, isPassword, type }: Props) => {
+const TextField = ({ label, onChange, placeholder, value, dense = false, isPassword, type, maxLength = 100 }: Props) => {
   return (
     <View style={{ paddingVertical: dense ? 6 : 0 }}>
       {label && <Text style={textFieldStyles.label}>{label}</Text>}
-      <TextInput secureTextEntry = {isPassword} keyboardType={type? type: 'default' } value={value} placeholder={placeholder && placeholder} onChange={(e) => onChange && onChange(e.nativeEvent.text)} style={textFieldStyles.textField} />
+      <TextInput maxLength={maxLength} secureTextEntry = {isPassword} keyboardType={type? type: 'default' } value={value} placeholder={placeholder && placeholder} onChange={(e) => onChange && onChange(e.nativeEvent.text)} style={textFieldStyles.textField} />
     </View>
   )
 }

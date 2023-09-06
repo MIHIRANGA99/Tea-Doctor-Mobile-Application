@@ -86,6 +86,7 @@ const Scan = ({ navigation, route }) => {
         })
         .then((res) => {
           setDetectedData(res.data);
+          console.log(res.data)
           setIsLoading({ isLoading: false, status: "", image: "" });
         })
         .catch((e) => {

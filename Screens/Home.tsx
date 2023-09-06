@@ -58,12 +58,12 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
           source={require("../assets/tea-doctor-logo.png")}
         />
         <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "700" }}>
-          {user ? `Hi ${user.email}!` : "Loading..."}
+          {user ? `Hi ${user.displayName || user.email}!` : "Loading..."}
         </Text>
       </View>
       <DetailCard
         header="About Your Tea State"
-        description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth}%`}
+        description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth? stateHealth: 0}%`}
       />
       <DetailCard
         header="Suggestions"

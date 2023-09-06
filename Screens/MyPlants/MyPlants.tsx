@@ -10,7 +10,7 @@ import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { calculateConditions } from "../../utils/calculateHealth";
 
-const MyPlants = ({ navigation }: { navigation: any }) => {
+const MyPlants = ({ navigation }: { navigation: any, route: any }) => {
   const [trees, setTrees] = useState<ITree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const currentUser = useCurrentUser();

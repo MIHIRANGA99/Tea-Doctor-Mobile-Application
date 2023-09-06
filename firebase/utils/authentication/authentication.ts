@@ -1,6 +1,8 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../config";
 
@@ -23,7 +25,18 @@ export const registerUser = async (
     .then((userCredential) => {
       const user = userCredential.user;
 
-      response.isSuccess = true;
+      updateProfile(user, {
+        displayName: username
+      }).then(() => {
+        response.isSuccess = true;
+      }).catch((error) => {
+        const statusCode = error.code;
+        const errorMessage = error.message;
+
+        response.isSuccess = false;
+        response.response = { code: statusCode, message: errorMessage };
+      });
+
       response.response = user;
     })
     .catch((error) => {
@@ -52,6 +65,28 @@ export const loginUser = async (
 
       response.isSuccess = true;
       response.response = user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      response.isSuccess = false;
+      response.response = { code: errorCode, message: errorMessage };
+    });
+
+  return response;
+};
+
+export const logOutUser = async (
+): Promise<IResponse> => {
+  const response: IResponse = {
+    isSuccess: false,
+    response: {},
+  };
+
+  await signOut(auth)
+    .then((res) => {
+      response.isSuccess = true;
     })
     .catch((error) => {
       const errorCode = error.code;
