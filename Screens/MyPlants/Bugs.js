@@ -186,7 +186,7 @@ const Bugs = ({ navigation, route }) => {
       formData.append("long", currentLocation.coords.longitude.toFixed(2));
 
       await axios
-        .post(`${default_URL}/detection/uproute`, formData, {
+        .post(`http://13.231.25.215:8091/detection/uproute`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

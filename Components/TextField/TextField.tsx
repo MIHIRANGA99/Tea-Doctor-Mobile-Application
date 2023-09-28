@@ -1,6 +1,6 @@
-import React from 'react'
-import { TextInput, View, Text, KeyboardTypeOptions } from 'react-native';
-import textFieldStyles from './textFieldStyles';
+import React from "react";
+import { TextInput, View, Text, KeyboardTypeOptions } from "react-native";
+import textFieldStyles from "./textFieldStyles";
 
 type Props = {
   placeholder?: string;
@@ -11,15 +11,35 @@ type Props = {
   isPassword?: boolean;
   type?: KeyboardTypeOptions;
   maxLength?: number;
-}
+  disabled?: boolean;
+};
 
-const TextField = ({ label, onChange, placeholder, value, dense = false, isPassword, type, maxLength = 100 }: Props) => {
+const TextField = ({
+  label,
+  onChange,
+  placeholder,
+  value,
+  dense = false,
+  isPassword,
+  type,
+  maxLength = 100,
+  disabled,
+}: Props) => {
   return (
     <View style={{ paddingVertical: dense ? 6 : 0 }}>
       {label && <Text style={textFieldStyles.label}>{label}</Text>}
-      <TextInput maxLength={maxLength} secureTextEntry = {isPassword} keyboardType={type? type: 'default' } value={value} placeholder={placeholder && placeholder} onChange={(e) => onChange && onChange(e.nativeEvent.text)} style={textFieldStyles.textField} />
+      <TextInput
+        maxLength={maxLength}
+        secureTextEntry={isPassword}
+        keyboardType={type ? type : "default"}
+        value={value}
+        placeholder={placeholder && placeholder}
+        onChange={(e) => onChange && onChange(e.nativeEvent.text)}
+        style={{...textFieldStyles.textField, opacity: disabled? 0.5: 1}}
+        editable = {!disabled}
+      />
     </View>
-  )
-}
+  );
+};
 
-export default TextField
+export default TextField;

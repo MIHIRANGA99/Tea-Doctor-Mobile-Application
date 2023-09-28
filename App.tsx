@@ -14,6 +14,7 @@ import Category from "./Screens/History/Category";
 import BlisterMap from "./Screens/Map/BlisterMap";
 import StemMap from "./Screens/Map/StemMap";
 import BorerMap from "./Screens/Map/BorerMap";
+import FertilizerDetails from "./Screens/Weather/FertilizerDetails";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -29,6 +30,7 @@ export default function App() {
           <Stack.Screen name="Insect" component={Insect} options={{headerShown: false}} />
           <Stack.Screen name="DiseaseDisplay" component={DiseaseDisplay} options={{headerShown: false}}/>
           <Stack.Screen name="DiseaseDetails" component={DiseaseDetailsScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="FertilizerDetails" component={FertilizerDetails} options={{ headerShown: false }}/>
           <Stack.Screen name="Category" component={Category} options={{ headerShown: false }}/>
           <Stack.Screen name="HistoryDetails" component={HistoryDetails} options={{ headerShown: false }}/>
           <Stack.Screen name="BlisterMap" component={BlisterMap} options={{ headerShown: false }}/>
