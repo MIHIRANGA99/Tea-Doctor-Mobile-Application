@@ -86,7 +86,7 @@ const TreeDetails = ({
         </Text>
       </View>
       <DetailCard
-        header="Suggestions"
+        header="යෝජනා"
         description="Check the tea leaves and scan if you see any odd spots"
       />
       <View style={{ paddingVertical: 12 }}>

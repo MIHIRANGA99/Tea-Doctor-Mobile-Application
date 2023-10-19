@@ -21,33 +21,33 @@ const FertilizerDetails = ({
     // }
   }, []);
   return (
-    <View style={{ ...mainStyles.main, paddingTop: 24 }}>
-      <TextField label="Nitrogen Level" dense />
-      <TextField label="Phosphorous Level" dense />
-      <TextField label="Potassium Level" dense />
-      <TextField label="PH Value" dense />
+    <View style={{ ...mainStyles.main, paddingTop: 100 }}>
+      <TextField label="නයිට්රජන් මට්ටම" dense />
+      <TextField label="පොස්පරස් මට්ටම" dense />
+      <TextField label="පොටෑසියම් මට්ටම" dense />
+      <TextField label="PH අගය" dense />
       <TextField
         disabled
         value={data && data.weatherCondition}
-        label="Weather Condition"
+        label="කාලගුණ තත්ත්වය"
         dense
       />
       <TextField
         disabled
         value={data && data.rainfall}
-        label="Rainfall"
+        label="වර්ෂාපතනය"
         dense
       />
       <TextField
         disabled
         value={data && data.temperature}
-        label="Temperature"
+        label="උෂ්ණත්වය"
         dense
       />
       <TextField
         disabled
         value={data && data.humidity}
-        label="Humidity"
+        label="ආර්ද්රතාවය"
         dense
       />
       <View style={{ display: "flex", alignItems: "flex-end" }}>
@@ -68,7 +68,7 @@ const FertilizerDetails = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: 'rgba(244, 244, 224, 0.6)',
+            backgroundColor: "rgba(244, 244, 224, 0.6)",
             height: "100%",
           }}
         >
@@ -82,13 +82,17 @@ const FertilizerDetails = ({
                 fontWeight: "600",
               }}
             >
-              Fertilizer Recommendation Details
+              පොහොර නිර්දේශ විස්තර
             </Text>
-            <View style={{paddingVertical: 12}}>
-                <Text>Fertilizer Type: U709</Text>
-                <Text>Fertilizer Amount: 125 kg</Text>
+            <View style={{ paddingVertical: 12 }}>
+              <Text>පොහොර වර්ගය: U709</Text>
+              <Text>පොහොර ප්‍රමාණය: 125 kg</Text>
             </View>
-            <Button onClick={() => setOpen(false)} label="ok" extraStyles={{marginTop: 12}} />
+            <Button
+              onClick={() => setOpen(false)}
+              label="හරි"
+              extraStyles={{ marginTop: 12 }}
+            />
           </View>
         </View>
       </Modal>

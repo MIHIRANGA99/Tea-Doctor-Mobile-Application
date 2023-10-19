@@ -193,7 +193,7 @@ const Scan = ({ navigation, route }) => {
     >
       <View style={mainStyles.main}>
         <View style={{ paddingVertical: 12 }}>
-          <DetailCard header="Suggestions" description="sample suggestion" />
+          <DetailCard header="යෝජනා" description="sample suggestion" />
         </View>
         <View style={{ height: 412 }}>
           {currentLocation && (

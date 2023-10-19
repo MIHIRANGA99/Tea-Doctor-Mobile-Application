@@ -45,7 +45,7 @@ const MyPlants = ({ navigation }: { navigation: any, route: any }) => {
         />
       </View>
       <DetailCard
-        header="Suggestions"
+        header="යෝජනා"
         description="Check the tea leaves and scan if you see any odd spots"
       />
       <Text

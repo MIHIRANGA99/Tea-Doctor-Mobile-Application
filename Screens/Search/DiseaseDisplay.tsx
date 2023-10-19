@@ -43,7 +43,7 @@ const DiseaseDisplay = () => {
       <FlatList
         data={filteredDiseasesWithSearch}
         style={{backgroundColor: COLOR_PALETTE.secondary}}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(index) => index.toString()}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
         renderItem={({ item }) => (

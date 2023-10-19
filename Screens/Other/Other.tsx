@@ -1,12 +1,8 @@
 import React from "react";
 import {
   View,
-  Text,
-  ScrollView,
   StyleSheet,
-  TouchableOpacity,
 } from "react-native";
-import mainStyles from "../../constants/mainStyles";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import BlisterMap from "../Map/BlisterMap";

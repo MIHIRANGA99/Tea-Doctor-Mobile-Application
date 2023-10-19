@@ -1,4 +1,5 @@
-import { View, Image, Text, ToastAndroid } from "react-native";
+import React from "react";
+import { View, Image, Text } from "react-native";
 import DetailCard from "../Components/DetailCard/DetailCard";
 import IconCard from "../Components/IconCard/IconCard";
 import { APP_COMPONENTS } from "../constants/appComponents";
@@ -10,8 +11,6 @@ import { useEffect, useState } from "react";
 import { getDataFromCollection } from "../firebase/utils/firestore/firestore";
 import ITree from "../interfaces/ITree";
 import { calculateConditions } from "../utils/calculateHealth";
-import Toast from "react-native-root-toast";
-import { ToastOptions } from "../constants/ToastOptions";
 
 const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [stateHealth, setStateHealth] = useState<number>(0);
@@ -62,12 +61,12 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
         </Text>
       </View>
       <DetailCard
-        header="About Your Tea State"
+        header="ඔබේ තේ වගාව ගැන"
         description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth? stateHealth: 0}%`}
       />
       <DetailCard
-        header="Suggestions"
-        description="Choose a tea tree that you can see some diseases and let us decide the treatments."
+        header="යෝජනා"
+        description="ඔබට හානිවී යැයි සැක හිතෙන ගසක් තෝරාගෙන පරික්ශා කර, ඊට අදාල ප්‍රතිකාර දැනගන්න."
       />
       <View
         style={{

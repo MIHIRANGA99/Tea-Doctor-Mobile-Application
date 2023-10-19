@@ -122,7 +122,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           source={require("../../assets/tea-doctor-logo.png")}
         />
       </View>
-      <DetailCard header="Suggestions" description="පොහොර දැමීමට සුදුසු නැත" />
+      <DetailCard header="යෝජනා" description="පොහොර දැමීමට සුදුසු නැත" />
       <FullScreenLoader isLoading={isLoading}>
         <View
           style={{ paddingVertical: 12, height: isLoading ? "60%" : "100%" }}
@@ -212,7 +212,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                 </TouchableOpacity>
               </View>
               <Button
-                label="Can Apply Fertilizer?"
+                label="පොහොර යෙදිය හැකිද?"
                 onClick={() => navigation.navigate('FertilizerDetails')}
                 extraStyles={{ marginTop: 12, marginHorizontal: 12 }}
               />
