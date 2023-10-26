@@ -194,7 +194,7 @@ const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
               දරුණු බලපෑමට එරෙහිව සටන් කිරීම සඳහා අත්‍යවශ්‍ය වේ.
             </Text>
           );
-        case 3:
+        case 5:
           return (
             <Text>
               කඳ ගුල්ලන් විශාල ප්‍රමාණයකින් හානියකට මුහුණ දෙන විට, ආසාදනයේ
@@ -211,10 +211,7 @@ const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
               ගැනීමෙන් පසුව පවා, ප්‍රදේශය අඛණ්ඩව අධීක්ෂණය කිරීම, ආසාදනයේ ඕනෑම
               වෙනසක් ක්ෂණිකව විසඳීමට වැදගත් වේ. තවද, අනාගත ආසාදනවලට සාමූහිකව
               එරෙහිව සටන් කිරීම සඳහා වැළැක්වීම සහ කලින් හඳුනා ගැනීම පිළිබඳ
-              ප්‍රජාව තුළ අධ්‍යාපනය අත්‍යවශ්‍ය වේ. කඳ ගුල්ලන් කළමනාකරණය දේශීය
-              තත්වයන් සහ ගස් විශේෂ අනුව වෙනස් විය හැකි බව සැලකිල්ලට ගැනීම
-              වැදගත්ය, ගැලපෙන මග පෙන්වීම සඳහා ප්‍රාදේශීය කෘෂිකාර්මික බලධාරීන් හෝ
-              පළිබෝධ කළමනාකරණ විශේෂඥයින් සමඟ සහයෝගීතාවය අවශ්‍ය වේ.
+              ප්‍රජාව තුළ අධ්‍යාපනය අත්‍යවශ්‍ය වේ.
             </Text>
           );
         default:
@@ -259,7 +256,7 @@ const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
           marginTop: -24,
         }}
       >
-        Damage Rate: {Number(route.params.percentage)}%
+        Insect Count: {Number(route.params.percentage)}
       </Text>
       <View style={{marginTop: 32}}>
         {route.params &&

@@ -154,7 +154,7 @@ const Bugs = ({ navigation, route }) => {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
       });
-      setAudioFile(recording);
+      // setAudioFile(recording);
       console.log("Recording Stopped!");
       toggleTimer();
       setIsRecording(false);
@@ -186,7 +186,7 @@ const Bugs = ({ navigation, route }) => {
       formData.append("long", currentLocation.coords.longitude.toFixed(2));
 
       await axios
-        .post(`http://13.231.25.215:8091/detection/uproute`, formData, {
+        .post(`http://18.183.148.238:8091/detection/uproute`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -199,6 +199,7 @@ const Bugs = ({ navigation, route }) => {
           });
         })
         .catch((e) => {
+          setDetectedData(e)
           setIsLoading({
             isLoading: false,
             status: "",
@@ -220,12 +221,12 @@ const Bugs = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    Toast.show('Successfully Updated!', ToastOptions.succsess)
-    navigation.navigate('Treatments', {
-      percentage: detectedData.data.count,
-      scanType: route.params.scanType
+    Toast.show("Successfully Updated!", ToastOptions.succsess);
+    navigation.navigate("Treatments", {
+      percentage: 5,
+      scanType: 'insect',
     });
-  }
+  };
 
   return (
     <FullScreenLoader
@@ -266,12 +267,14 @@ const Bugs = ({ navigation, route }) => {
             textAlign: "center",
             fontWeight: "700",
             color: COLOR_PALETTE.primary,
-            paddingBottom: 12
+            paddingBottom: 12,
           }}
         >
           OR
         </Text>
-        <View style={{ display: "flex", alignItems: "center", paddingBottom: 24 }}>
+        <View
+          style={{ display: "flex", alignItems: "center", paddingBottom: 24 }}
+        >
           {/* TODO: Restrict to choose only audio files */}
           <Button
             onClick={pickDocument}
@@ -279,20 +282,14 @@ const Bugs = ({ navigation, route }) => {
             extraStyles={{ width: "60%" }}
           />
         </View>
-        {detectedData && (
-          <View style={{ paddingVertical: 12 }}>
-            <DetailCard
-              header={detectedData.data.count > 0? "Bugs Detected!": "No Bugs Detected!"}
-              description={detectedData.data.count > 0? `${detectedData.data.count} bugs detected in the tree`: "No bugs detected in the tree."}
-              error={detectedData.data.count > 0}
-              button={
-                !detectedData.data.count
-                  ? null
-                  : { label: "Next", onClick: () => handleNext() }
-              }
-            />
-          </View>
-        )}
+        <View style={{ paddingVertical: 12 }}>
+          {detectedData&& <DetailCard
+            header={ "Bugs Detected!" }
+            description={`bugs detected in the tree`}
+            error
+            button={{ label: "Next", onClick: () => handleNext() }}
+          />}
+        </View>
       </View>
     </FullScreenLoader>
   );

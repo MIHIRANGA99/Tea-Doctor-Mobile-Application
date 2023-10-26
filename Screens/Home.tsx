@@ -12,6 +12,7 @@ import ITree from "../interfaces/ITree";
 import { calculateConditions } from "../utils/calculateHealth";
 import Toast from "react-native-root-toast";
 import { ToastOptions } from "../constants/ToastOptions";
+import React from "react";
 
 const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [stateHealth, setStateHealth] = useState<number>(0);
@@ -63,7 +64,7 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <DetailCard
         header="About Your Tea State"
-        description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth? stateHealth: 0}%`}
+        description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth? stateHealth.toFixed(2): 0}%`}
       />
       <DetailCard
         header="Suggestions"

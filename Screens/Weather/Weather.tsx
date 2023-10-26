@@ -24,7 +24,8 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const currentUser = useCurrentUser();
 
   useEffect(() => {
-    getWeatherData(new Date().toLocaleDateString());
+    const date = new Date();
+    getWeatherData(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
   }, [currentUser, currentLocation]);
 
   let formattedDate = null;
@@ -54,19 +55,19 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
     const date = day;
     setDummyIndex(dummyIndex + 1);
     date.setDate(day.getDate() + 1);
-    getWeatherData(date.toLocaleDateString());
+    getWeatherData(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
   };
 
   const handlePreviousDate = () => {
     const date = day;
     setDummyIndex(dummyIndex - 1);
     date.setDate(day.getDate() - 1);
-    getWeatherData(date.toLocaleDateString());
+    getWeatherData(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
   };
 
   const getWeatherData = (dateString: string) => {
     if (currentLocation && currentUser) {
-      // setIsLoading(true);
+      setIsLoading(true);
       axios
         .get(
           `https://weatherapi-com.p.rapidapi.com/current.json?q=${currentLocation.coords.latitude},${currentLocation.coords.longitude}`,
@@ -82,13 +83,14 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           const weather = {
             lang: currentLocation?.coords.latitude,
             long: currentLocation?.coords.longitude,
-            userId: currentUser?.uid,
+            user_Id: currentUser?.uid,
             precipitation: res.data.current.precip_mm,
             temp_max: res.data.current.temp_c,
             temp_min: res.data.current.temp_c,
             wind: res.data.current.wind_kph,
             today: dateString,
           };
+          console.log(weather);
           axios
             .post(`${default_URL}/detection/detect-weather`, weather)
             .then((response) => {
@@ -98,7 +100,8 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
             })
             .catch((error) => {
               Toast.show(error.message, ToastOptions.error);
-              // setIsLoading(false);
+              console.error(error)
+              setIsLoading(false);
             });
         })
         .catch((error) => {
@@ -122,15 +125,15 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           source={require("../../assets/tea-doctor-logo.png")}
         />
       </View>
-      <DetailCard header="Suggestions" description="පොහොර දැමීමට සුදුසු නැත" />
+      <DetailCard header="Suggestions" description="පොහොර දැමීමට සුදුසුයි" />
       <FullScreenLoader isLoading={isLoading}>
         <View
           style={{ paddingVertical: 12, height: isLoading ? "60%" : "100%" }}
         >
-          {!weatherData && (
+          {weatherData && (
             <DetailCard header="Weather on Rathganga">
               <View style={styles.container}>
-                {/* <Text style={styles.dateText}>දිනය: {formattedDate}</Text>
+                <Text style={styles.dateText}>දිනය: {formattedDate}</Text>
                 <View style={styles.infoContainer}>
                   <View style={styles.infoRow}>
                     <Text style={styles.label}>අද කාලගුණය:</Text>
@@ -158,7 +161,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                     <Text style={styles.label}>සුළඟේ වේගය:</Text>
                     <Text style={styles.value}>{dummyData.class[dummyIndex].wind} km/h</Text>
                   </View>
-                </View> */}
+                </View>
                 <TouchableOpacity
                   onPress={() => handleNextDate()}
                   style={{
@@ -213,7 +216,12 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
               </View>
               <Button
                 label="Can Apply Fertilizer?"
-                onClick={() => navigation.navigate('FertilizerDetails')}
+                onClick={() => navigation.navigate('FertilizerDetails', {data: {
+                  weatherCondition: dummyData.class[dummyIndex].todayWeatherClass,
+                  rainfall: dummyData.rainfalls[dummyIndex],
+                  temperature: dummyData.temps[dummyIndex],
+                  humidity: dummyData.humidities[dummyIndex],
+                }})}
                 extraStyles={{ marginTop: 12, marginHorizontal: 12 }}
               />
             </DetailCard>

@@ -35,7 +35,7 @@ const TextField = ({
         value={value}
         placeholder={placeholder && placeholder}
         onChange={(e) => onChange && onChange(e.nativeEvent.text)}
-        style={{...textFieldStyles.textField, opacity: disabled? 0.5: 1}}
+        style={textFieldStyles.textField}
         editable = {!disabled}
       />
     </View>

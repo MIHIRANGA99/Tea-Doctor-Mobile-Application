@@ -86,7 +86,7 @@ const Scan = ({ navigation, route }) => {
         })
         .then((res) => {
           setDetectedData(res.data);
-          console.log(res.data)
+          console.log(res.data);
           setIsLoading({ isLoading: false, status: "", image: "" });
         })
         .catch((e) => {
@@ -105,7 +105,7 @@ const Scan = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    // setIsLoading({isLoading: true, status: 'Updating Tree'});
+    setIsLoading({ isLoading: true, status: "Updating Tree" });
     const diseaseData =
       route.params.scanType === "blister"
         ? {
@@ -150,9 +150,10 @@ const Scan = ({ navigation, route }) => {
     //     navigation.navigate("Treatments", {
     //       percentage:
     //         route.params.scanType === "blister"
-    //           ? (payload.conditions.leaves = diseaseData.leaves.damageRatio.split('%')[0])
+    //           ? (payload.conditions.leaves =
+    //               diseaseData.leaves.damageRatio.split("%")[0])
     //           : (payload.conditions.stemAndBranches =
-    //               diseaseData.stemAndBranches.damageRatio.split('%')[0]),
+    //               diseaseData.stemAndBranches.damageRatio.split("%")[0]),
     //       scanType: route.params.scanType,
     //     });
     //   },
@@ -164,7 +165,7 @@ const Scan = ({ navigation, route }) => {
 
     navigation.navigate("Treatments", {
       percentage: 22,
-      scanType: 'stem',
+      scanType: 'blister',
     });
   };
 
@@ -231,10 +232,8 @@ const Scan = ({ navigation, route }) => {
         {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={"Stem Canker Detected"}
-              description={"Stem Canker Detected"}
-              error={true}
-              button={{ label: "Next", onClick: () => handleNext() }}
+              header={"Healthy"}
+              description={"No blister blight detected"}
             />
           </View>
         )}
