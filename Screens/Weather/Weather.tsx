@@ -105,7 +105,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
             });
         })
         .catch((error) => {
-          console.log(error);
+          Toast.show(error.message, ToastOptions.error);
           setIsLoading(false);
         });
     }

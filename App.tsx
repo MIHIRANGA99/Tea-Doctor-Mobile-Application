@@ -15,12 +15,14 @@ import BlisterMap from "./Screens/Map/BlisterMap";
 import StemMap from "./Screens/Map/StemMap";
 import BorerMap from "./Screens/Map/BorerMap";
 import FertilizerDetails from "./Screens/Weather/FertilizerDetails";
+import { LanguageProvider } from "./Context/LanguageContext";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <RootSiblingParent>
+    <LanguageProvider>
+      <RootSiblingParent>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
@@ -39,6 +41,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </RootSiblingParent>
+    </LanguageProvider>
   );
 }
 

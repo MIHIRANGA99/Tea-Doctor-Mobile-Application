@@ -13,27 +13,31 @@ import { calculateConditions } from "../utils/calculateHealth";
 import Toast from "react-native-root-toast";
 import { ToastOptions } from "../constants/ToastOptions";
 import React from "react";
+import { useLanguageContext } from "../Context/LanguageContext";
 
 const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [stateHealth, setStateHealth] = useState<number>(0);
   const user = useCurrentUser();
+  const { language } = useLanguageContext().state;
 
   const navigation: any = useNavigation();
 
   useEffect(() => {
     if (user) {
-      getDataFromCollection(user.uid).then((res: ITree[]) => {
-        let totalHealth = 0;
-        res.forEach((tree: ITree) => {
-          const value = calculateConditions(tree.id? tree.id: '', res);
-          totalHealth = totalHealth + value;
-        });
+      getDataFromCollection(user.uid)
+        .then((res: ITree[]) => {
+          let totalHealth = 0;
+          res.forEach((tree: ITree) => {
+            const value = calculateConditions(tree.id ? tree.id : "", res);
+            totalHealth = totalHealth + value;
+          });
 
-        totalHealth = totalHealth / res.length;
-        setStateHealth(totalHealth);
-      }).catch((e) => {
-        console.error(e);
-      })
+          totalHealth = totalHealth / res.length;
+          setStateHealth(totalHealth);
+        })
+        .catch((e) => {
+          Toast.show(e.message, ToastOptions.error);
+        });
     }
   }, [changeTab, user]);
 
@@ -64,7 +68,11 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <DetailCard
         header="About Your Tea State"
-        description={`ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය ${stateHealth? stateHealth.toFixed(2): 0}%`}
+        description={`${
+          language === "English"
+            ? "Overall Condition of Your Tea State"
+            : "ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය"
+        } ${stateHealth ? stateHealth.toFixed(2) : 0}%`}
       />
       <DetailCard
         header="Suggestions"
@@ -81,24 +89,26 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
         {APP_COMPONENTS.map((comp, index) => (
           <IconCard
             key={index}
-            onClick={() => changeTab(comp.title === "Weather Condition" ? 3 : 0)}
+            onClick={() =>
+              changeTab(comp.title === "Weather Condition" ? 3 : 0)
+            }
             icon={comp.icon}
             title={comp.title}
           />
         ))}
       </View>
-      <View style={{display: 'flex', flexDirection: 'column'}}>
+      <View style={{ display: "flex", flexDirection: "column" }}>
         <Button
           label="රෝග ගැන ඉගෙන ගන්න"
           onClick={navigateToDiseaseDetails}
           color={COLOR_PALETTE.primary}
-          extraStyles={{height: 72, borderRadius: 12, marginVertical: 4}}
+          extraStyles={{ height: 72, borderRadius: 12, marginVertical: 4 }}
         />
         <Button
           label="ඔබගේ අතීත රෝග හඳුනාගැනීම් බලන්න"
           onClick={navigateToDiseaseCategory}
           color={COLOR_PALETTE.primary}
-          extraStyles={{height: 72, borderRadius: 12, marginVertical: 4}}
+          extraStyles={{ height: 72, borderRadius: 12, marginVertical: 4 }}
         />
       </View>
     </View>
