@@ -1,5 +1,6 @@
 export const detectTreeLevel = (label: string): {heading: string, description: string} => {
-    switch (label) {
+  console.log(label);
+    switch (label.toLocaleLowerCase()) {
       case 'blister_blight':
         return {
           heading: 'Disease Detected',
@@ -10,7 +11,7 @@ export const detectTreeLevel = (label: string): {heading: string, description: s
           heading: 'Disease Detected',
           description: 'Branch Cancer Detected!'
         }
-      case 'bark_cancer':
+      case 'stem_cancer':
         return {
           heading: 'Disease Detected',
           description: 'Stem Cancer Detected!'

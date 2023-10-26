@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import DetailCard from "../../Components/DetailCard/DetailCard";
 import mainStyles from "../../constants/mainStyles";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import useCurrentUser from "../../firebase/hooks/useCurrentUser";
@@ -11,6 +12,7 @@ import AnimatedLottieView from "lottie-react-native";
 import { default_URL } from "../../constants/url";
 import Toast from "react-native-root-toast";
 import { ToastOptions } from "../../constants/ToastOptions";
+import Button from "../../Components/Button/Button";
 
 const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [weatherData, setWeatherData] = useState<any>(null);
@@ -18,10 +20,12 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
   const [day, setDay] = useState<Date>(new Date());
   const [dummyIndex, setDummyIndex] = useState<number>(0);
   const currentLocation = useCurrentLocation();
+  const navigation = useNavigation();
   const currentUser = useCurrentUser();
 
   useEffect(() => {
-    getWeatherData(new Date().toLocaleDateString());
+    const date = new Date();
+    getWeatherData(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
   }, [currentUser, currentLocation]);
 
   let formattedDate = null;
@@ -51,14 +55,14 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
     const date = day;
     setDummyIndex(dummyIndex + 1);
     date.setDate(day.getDate() + 1);
-    getWeatherData(date.toLocaleDateString());
+    getWeatherData(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
   };
 
   const handlePreviousDate = () => {
     const date = day;
     setDummyIndex(dummyIndex - 1);
     date.setDate(day.getDate() - 1);
-    getWeatherData(date.toLocaleDateString());
+    getWeatherData(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
   };
 
   const getWeatherData = (dateString: string) => {
@@ -79,13 +83,14 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           const weather = {
             lang: currentLocation?.coords.latitude,
             long: currentLocation?.coords.longitude,
-            userId: currentUser?.uid,
+            user_Id: currentUser?.uid,
             precipitation: res.data.current.precip_mm,
             temp_max: res.data.current.temp_c,
             temp_min: res.data.current.temp_c,
             wind: res.data.current.wind_kph,
             today: dateString,
           };
+          console.log(weather);
           axios
             .post(`${default_URL}/detection/detect-weather`, weather)
             .then((response) => {
@@ -95,6 +100,7 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
             })
             .catch((error) => {
               Toast.show(error.message, ToastOptions.error);
+              console.error(error)
               setIsLoading(false);
             });
         })
@@ -119,12 +125,11 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           source={require("../../assets/tea-doctor-logo.png")}
         />
       </View>
-      <DetailCard
-        header="Suggestions"
-        description="පොහොර දැමීමට සුදුසු නැත"
-      />
+      <DetailCard header="Suggestions" description="පොහොර දැමීමට සුදුසුයි" />
       <FullScreenLoader isLoading={isLoading}>
-        <View style={{ paddingVertical: 12, height: isLoading ? "60%" : "100%" }}>
+        <View
+          style={{ paddingVertical: 12, height: isLoading ? "60%" : "100%" }}
+        >
           {weatherData && (
             <DetailCard header="Weather on Rathganga">
               <View style={styles.container}>
@@ -161,14 +166,17 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                   onPress={() => handleNextDate()}
                   style={{
                     position: "absolute",
-                    display: dummyData.class.length === dummyIndex + 1? 'none': 'flex',
+                    display:
+                      dummyData.class.length === dummyIndex + 1
+                        ? "none"
+                        : "flex",
                     backgroundColor: COLOR_PALETTE.secondary,
                     borderColor: COLOR_PALETTE.primary,
                     borderWidth: 2,
                     padding: 8,
                     borderRadius: 100,
                     top: "50%",
-                    right: isLoading? 0: -24,
+                    right: isLoading ? 0 : -24,
                     zIndex: 50,
                   }}
                 >
@@ -183,14 +191,14 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                   onPress={() => handlePreviousDate()}
                   style={{
                     position: "absolute",
-                    display: dummyIndex === 0? 'none': 'flex',
+                    display: dummyIndex === 0 ? "none" : "flex",
                     backgroundColor: COLOR_PALETTE.secondary,
                     borderColor: COLOR_PALETTE.primary,
                     borderWidth: 2,
                     padding: 8,
                     borderRadius: 100,
                     top: "50%",
-                    left: isLoading? 0: -24,
+                    left: isLoading ? 0 : -24,
                     zIndex: 50,
                   }}
                 >
@@ -206,6 +214,16 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
                   />
                 </TouchableOpacity>
               </View>
+              <Button
+                label="Can Apply Fertilizer?"
+                onClick={() => navigation.navigate('FertilizerDetails', {data: {
+                  weatherCondition: dummyData.class[dummyIndex].todayWeatherClass,
+                  rainfall: dummyData.rainfalls[dummyIndex],
+                  temperature: dummyData.temps[dummyIndex],
+                  humidity: dummyData.humidities[dummyIndex],
+                }})}
+                extraStyles={{ marginTop: 12, marginHorizontal: 12 }}
+              />
             </DetailCard>
           )}
         </View>

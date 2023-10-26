@@ -7,6 +7,8 @@ import { Link } from "@react-navigation/native";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { loginUser } from "../../firebase/utils/authentication/authentication";
 import { auth } from "../../firebase/config";
+import Toast from "react-native-root-toast";
+import { ToastOptions } from "../../constants/ToastOptions";
 
 const Login = ({ navigation }: { navigation: any }) => {
   const [email, setEmail] = useState<string>("");
@@ -26,14 +28,23 @@ const Login = ({ navigation }: { navigation: any }) => {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    const res = await loginUser(email, password);
-    if (res.isSuccess) {
+
+    if (email === '' || password === '') {
+      Toast.show('Please Fill Required Fields!', ToastOptions.error);
       setIsLoading(false);
-      navigation.navigate("Main");
-    } else {
+    } else if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+      Toast.show('Please Enter a valid email!', ToastOptions.error);
       setIsLoading(false);
-      // TODO: Add Alert Message
-      ToastAndroid.show(res.response.message, ToastAndroid.SHORT);
+    } 
+    else {
+      const res = await loginUser(email, password);
+      if (res.isSuccess) {
+        setIsLoading(false);
+        navigation.navigate("Main");
+      } else {
+        setIsLoading(false);
+        ToastAndroid.show(res.response.message, ToastAndroid.SHORT);
+      }
     }
   };
 

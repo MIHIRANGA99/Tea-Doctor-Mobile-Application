@@ -11,7 +11,7 @@ import { auth } from "../firebase/config";
 import Weather from "./Weather/Weather";
 import BlisterMap from "./Map/BlisterMap";
 
-const Main = () => {
+const Main = ({navigation}: {navigation: any}) => {
   const [selectedID, setSelectedID] = useState<number>(
     Math.round(NAVIGATION_MENU.length / 2) - 1
   );
@@ -21,11 +21,11 @@ const Main = () => {
       if (user) {
         console.log("logged In");
       } else {
-        // TODO: Move to login page
+        navigation.navigate('Login');
         console.log("logged out");
       }
     });
-  }, []);
+  }, [selectedID]);
 
   const componentNavigation = () => {
     switch (selectedID) {

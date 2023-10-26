@@ -40,6 +40,7 @@ const AddTree = ({ navigation }: { navigation: any }) => {
         payload,
         (res) => {
           setIsLoading(false);
+          Toast.show('Tree Created!', ToastOptions.succsess);
           navigation.pop();
         },
         (error: any) => {
@@ -60,6 +61,7 @@ const AddTree = ({ navigation }: { navigation: any }) => {
         onChange={(text) => setName(text)}
         placeholder="Give a name to your tree"
         label="Tree Name"
+        maxLength={20}
         dense
       />
       <TextField
@@ -67,6 +69,7 @@ const AddTree = ({ navigation }: { navigation: any }) => {
         placeholder="Age of your tree"
         label="Age"
         type="number-pad"
+        maxLength={3}
         dense
       />
       <View style={{ display: "flex", alignItems: "flex-end" }}>

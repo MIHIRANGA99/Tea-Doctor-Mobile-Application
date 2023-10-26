@@ -7,6 +7,7 @@ import Scan from "./Scan";
 import Bugs from "./Bugs";
 import AddTree from "./AddTree";
 import Treatments from "../Treatments/Treatments";
+import FertilizerDetails from "../Weather/FertilizerDetails";
 
 function Index() {
   const Stack = createNativeStackNavigator();

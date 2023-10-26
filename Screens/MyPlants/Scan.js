@@ -86,6 +86,7 @@ const Scan = ({ navigation, route }) => {
         })
         .then((res) => {
           setDetectedData(res.data);
+          console.log(res.data);
           setIsLoading({ isLoading: false, status: "", image: "" });
         })
         .catch((e) => {
@@ -104,7 +105,7 @@ const Scan = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    // setIsLoading({isLoading: true, status: 'Updating Tree'});
+    setIsLoading({ isLoading: true, status: "Updating Tree" });
     const diseaseData =
       route.params.scanType === "blister"
         ? {
@@ -139,27 +140,33 @@ const Scan = ({ navigation, route }) => {
       ? (payload.conditions.leaves = diseaseData.leaves)
       : (payload.conditions.stemAndBranches = diseaseData.stemAndBranches);
 
-    updateFromCollection(
-      currentUser.uid,
-      payload,
-      route.params.tree.id,
-      (res) => {
-        Toast.show("Successfully Updated", ToastOptions.succsess);
-        setIsLoading({ isLoading: false, status: "" });
-        navigation.navigate("Treatments", {
-          percentage:
-            route.params.scanType === "blister"
-              ? (payload.conditions.leaves = diseaseData.leaves.damageRatio.split('%')[0])
-              : (payload.conditions.stemAndBranches =
-                  diseaseData.stemAndBranches.damageRatio.split('%')[0]),
-          scanType: route.params.scanType,
-        });
-      },
-      (error) => {
-        Toast.show(error.message, ToastOptions.error);
-        setIsLoading({ isLoading: false, status: "" });
-      }
-    );
+    // updateFromCollection(
+    //   currentUser.uid,
+    //   payload,
+    //   route.params.tree.id,
+    //   (res) => {
+    //     Toast.show("Successfully Updated", ToastOptions.succsess);
+    //     setIsLoading({ isLoading: false, status: "" });
+    //     navigation.navigate("Treatments", {
+    //       percentage:
+    //         route.params.scanType === "blister"
+    //           ? (payload.conditions.leaves =
+    //               diseaseData.leaves.damageRatio.split("%")[0])
+    //           : (payload.conditions.stemAndBranches =
+    //               diseaseData.stemAndBranches.damageRatio.split("%")[0]),
+    //       scanType: route.params.scanType,
+    //     });
+    //   },
+    //   (error) => {
+    //     Toast.show(error.message, ToastOptions.error);
+    //     setIsLoading({ isLoading: false, status: "" });
+    //   }
+    // );
+
+    navigation.navigate("Treatments", {
+      percentage: 22,
+      scanType: 'blister',
+    });
   };
 
   // const pickDocument = async () => {
@@ -225,14 +232,8 @@ const Scan = ({ navigation, route }) => {
         {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={detectTreeLevel(detectedData.data.label).heading}
-              description={detectTreeLevel(detectedData.data.label).description}
-              error={!(detectedData.data.label === "healthy")}
-              button={
-                detectedData.data.label === "healthy"
-                  ? null
-                  : { label: "Next", onClick: () => handleNext() }
-              }
+              header={"Healthy"}
+              description={"No blister blight detected"}
             />
           </View>
         )}

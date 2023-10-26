@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import mainStyles from "../../constants/mainStyles";
+import { COLOR_PALETTE } from "../../constants/colors";
 
-const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
+const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
   const [treatments, setTreatments] = useState<string>("");
 
   useEffect(() => {
-    console.log(route.params)
+    console.log(route.params);
   }, [route]);
 
   const generateTreatments = (percentage: number, disease: string) => {
-    console.log(percentage, disease)
+    console.log(percentage, disease);
     if (disease === "blister") {
       switch (true) {
         case percentage <= 20 && percentage > 10:
@@ -193,7 +194,7 @@ const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
               දරුණු බලපෑමට එරෙහිව සටන් කිරීම සඳහා අත්‍යවශ්‍ය වේ.
             </Text>
           );
-        case 3:
+        case 5:
           return (
             <Text>
               කඳ ගුල්ලන් විශාල ප්‍රමාණයකින් හානියකට මුහුණ දෙන විට, ආසාදනයේ
@@ -210,10 +211,7 @@ const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
               ගැනීමෙන් පසුව පවා, ප්‍රදේශය අඛණ්ඩව අධීක්ෂණය කිරීම, ආසාදනයේ ඕනෑම
               වෙනසක් ක්ෂණිකව විසඳීමට වැදගත් වේ. තවද, අනාගත ආසාදනවලට සාමූහිකව
               එරෙහිව සටන් කිරීම සඳහා වැළැක්වීම සහ කලින් හඳුනා ගැනීම පිළිබඳ
-              ප්‍රජාව තුළ අධ්‍යාපනය අත්‍යවශ්‍ය වේ. කඳ ගුල්ලන් කළමනාකරණය දේශීය
-              තත්වයන් සහ ගස් විශේෂ අනුව වෙනස් විය හැකි බව සැලකිල්ලට ගැනීම
-              වැදගත්ය, ගැලපෙන මග පෙන්වීම සඳහා ප්‍රාදේශීය කෘෂිකාර්මික බලධාරීන් හෝ
-              පළිබෝධ කළමනාකරණ විශේෂඥයින් සමඟ සහයෝගීතාවය අවශ්‍ය වේ.
+              ප්‍රජාව තුළ අධ්‍යාපනය අත්‍යවශ්‍ය වේ.
             </Text>
           );
         default:
@@ -221,7 +219,54 @@ const Treatments = ({navigation, route}: {navigation: any, route: any}) => {
       }
     }
   };
-  return <View style={mainStyles.main}>{route.params&& generateTreatments(Number(route.params.percentage), route.params.scanType)}</View>;
+  return (
+    <View style={mainStyles.main}>
+      <Text
+        style={{
+          color: COLOR_PALETTE.secondary,
+          backgroundColor: COLOR_PALETTE.primary,
+          fontSize: 24,
+          paddingBottom: 32,
+          paddingTop: 12,
+          borderRadius: 12,
+          textAlign: "center",
+          marginTop: 24,
+        }}
+      >
+        {route.params.scanType === "blister"
+          ? "Blister Blight"
+          : route.params.scanType === "stem"
+          ? "Stem Canker"
+          : route.params.scanType === "insect"
+          ? "Insect Detected"
+          : "Branch Canker"}
+      </Text>
+      <Text
+        style={{
+          color: COLOR_PALETTE.secondary,
+          backgroundColor: COLOR_PALETTE.primary,
+          fontSize: 16,
+          padding: 12,
+          borderRadius: 12,
+          textAlign: "center",
+          borderColor: COLOR_PALETTE.secondary,
+          borderWidth: 2,
+          marginBottom: 12,
+          marginHorizontal: 32,
+          marginTop: -24,
+        }}
+      >
+        Insect Count: {Number(route.params.percentage)}
+      </Text>
+      <View style={{marginTop: 32}}>
+        {route.params &&
+          generateTreatments(
+            Number(route.params.percentage),
+            route.params.scanType
+          )}
+      </View>
+    </View>
+  );
 };
 
 export default Treatments;
