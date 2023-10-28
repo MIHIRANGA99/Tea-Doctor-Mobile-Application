@@ -10,7 +10,7 @@ import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { calculateConditions } from "../../utils/calculateHealth";
 
-const MyPlants = ({ navigation }: { navigation: any, route: any }) => {
+const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
   const [trees, setTrees] = useState<ITree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const currentUser = useCurrentUser();
@@ -72,6 +72,83 @@ const MyPlants = ({ navigation }: { navigation: any, route: any }) => {
                 treeName={tree.treeName}
                 condition={calculateConditions(tree.id ? tree.id : "", trees)}
                 style="filled"
+                expandedView={
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                      width: "90%",
+                      paddingVertical: 12,
+                    }}
+                  >
+                    <View>
+                      <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2 }}>
+                        Blister Blight
+                      </Text>
+                      <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2 }}>
+                        Stem and Branch Canker
+                      </Text>
+                      <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2 }}>
+                        Bugs
+                      </Text>
+                    </View>
+                    <View>
+                      {Object.keys(tree.conditions.leaves).length !== 0 ? (
+                        <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2, fontWeight: '600' }}>
+                          {tree.conditions.leaves.damageRatio}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={{
+                            color: COLOR_PALETTE.error.secondary,
+                            backgroundColor: COLOR_PALETTE.error.primary,
+                            paddingHorizontal: 12,
+                            borderRadius: 8,
+                            marginVertical: 2, fontWeight: '600'
+                          }}
+                        >
+                          Not Scanned
+                        </Text>
+                      )}
+                      {Object.keys(tree.conditions.stemAndBranches).length !==
+                      0 ? (
+                        <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2, fontWeight: '600' }}>
+                          {tree.conditions.stemAndBranches.damageRatio}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={{
+                            color: COLOR_PALETTE.error.secondary,
+                            backgroundColor: COLOR_PALETTE.error.primary,
+                            paddingHorizontal: 12,
+                            borderRadius: 8,
+                            marginVertical: 2, fontWeight: '600'
+                          }}
+                        >
+                          Not Scanned
+                        </Text>
+                      )}
+                      {Object.keys(tree.conditions.bugs).length !== 0 ? (
+                        <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2, fontWeight: '600' }}>
+                          {tree.conditions.bugs.damageRatio}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={{
+                            color: COLOR_PALETTE.error.secondary,
+                            backgroundColor: COLOR_PALETTE.error.primary,
+                            paddingHorizontal: 12,
+                            borderRadius: 8,
+                            marginVertical: 2, fontWeight: '600'
+                          }}
+                        >
+                          Not Scanned
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                }
                 onClick={() =>
                   navigation.navigate("Details", {
                     id: tree.id,

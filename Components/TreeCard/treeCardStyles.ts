@@ -7,11 +7,11 @@ const treeCardStyles = StyleSheet.create({
         paddingVertical: 24,
         paddingHorizontal: 12,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: 12,
-        marginVertical: 4
+        marginVertical: 4,
     },
     cardOutlined: {
         paddingVertical: 24,

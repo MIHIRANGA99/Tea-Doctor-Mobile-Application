@@ -16,12 +16,14 @@ const Login = ({ navigation }: { navigation: any }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsLoading(true);
     auth.onAuthStateChanged((user) => {
       if (user) {
         navigation.navigate("Main");
       } else {
         // TODO: Move to login page
         console.log("logged out");
+        setIsLoading(false);
       }
     });
   }, [navigation]);

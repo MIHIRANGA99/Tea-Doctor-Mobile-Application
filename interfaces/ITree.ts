@@ -4,8 +4,8 @@ export default interface ITree {
   treeAge: number;
   location: { lat: number; long: number };
   conditions: {
-    leaves: object,
-    stemAndBranches: object,
-    bugs: object,
+    leaves: any,
+    stemAndBranches: any,
+    bugs: any,
   };
 }
