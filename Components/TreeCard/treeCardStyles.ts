@@ -28,7 +28,7 @@ const treeCardStyles = StyleSheet.create({
         color: 'white',
         fontWeight: '600',
         fontSize: 18,
-        paddingLeft: 24
+        paddingHorizontal: 24
     },
     healthText: {
         color: COLOR_PALETTE.secondary,

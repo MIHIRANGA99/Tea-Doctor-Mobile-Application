@@ -78,23 +78,38 @@ const Scan = ({ navigation, route }) => {
         image: capturedPic.uri,
       });
 
-      await axios
-        .post(`${default_URL}/detection/uproute`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          setDetectedData(res.data);
-          console.log(res.data);
-          setIsLoading({ isLoading: false, status: "", image: "" });
-        })
-        .catch((e) => {
-          Toast.show(e.response.data, ToastOptions.error);
-          setIsLoading(false);
+      // ACTUAL GETTING DATA FROM API
+      // await axios
+      //   .post(`${default_URL}/detection/uproute`, formData, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   })
+      //   .then((res) => {
+      //     setDetectedData(res.data);
+      //     setIsLoading({ isLoading: false, status: "", image: "" });
+      //   })
+      //   .catch((e) => {
+      //     Toast.show(e.response.data, ToastOptions.error);
+      //     setIsLoading(false);
+      //   });
+
+      // Bister Blight ( TODO: Change the time duration and detected data as you want )
+      setTimeout(() => {
+        setDetectedData({
+          data: {
+            label: 'blister',
+            ratio: "22.98%",
+            score: 0.45,
+            updatedAt: new Date(),
+          }
         });
+        setIsLoading({ isLoading: false, status: "", image: "" });
+      }, 1000);
+
+
     } else {
-      console.log(
+      console.error(
         "error with payload",
         currentUser,
         currentLocation,
@@ -140,6 +155,8 @@ const Scan = ({ navigation, route }) => {
       ? (payload.conditions.leaves = diseaseData.leaves)
       : (payload.conditions.stemAndBranches = diseaseData.stemAndBranches);
 
+    //  ACTUAL CODE
+
     updateFromCollection(
       currentUser.uid,
       payload,
@@ -163,8 +180,9 @@ const Scan = ({ navigation, route }) => {
       }
     );
 
+    // BLISTER BLIGHT
     navigation.navigate("Treatments", {
-      percentage: 22,
+      percentage: 22.98,
       scanType: 'blister',
     });
   };
@@ -229,17 +247,25 @@ const Scan = ({ navigation, route }) => {
             extraStyles={{ width: "40%" }}
           />
         </View> */}
+
+        {/* BISTER BLIGHT HEALTHY */}
+        {/* {detectedData && (
+          <View style={{ paddingVertical: 12 }}>
+            <DetailCard
+              header={"Healthy"}
+              description={"No blister blight detected"}
+            />
+          </View>
+        )} */}
+
+        {/* BISTER BLIGHT NOT HEALTHY TODO: ADD SOMETHING MEANING FULL FOR THE DESCRIPTION */}
         {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={detectTreeLevel(detectedData.data.label).heading}
-              description={detectTreeLevel(detectedData.data.label).description}
-              error={!(detectedData.data.label === "healthy")}
-              button={
-                detectedData.data.label === "healthy"
-                  ? null
-                  : { label: "Next", onClick: () => handleNext() }
-              }
+              header={"Blister Blight Detected!"}
+              description={"Blister Blight Detected detected"}
+              button={{label: 'Next', onClick: () => handleNext()}}
+              error
             />
           </View>
         )}

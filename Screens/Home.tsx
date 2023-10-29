@@ -99,13 +99,13 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <View style={{ display: "flex", flexDirection: "column" }}>
         <Button
-          label="රෝග ගැන ඉගෙන ගන්න"
+          label={language === 'English'? "Learn More About Diseases" : "රෝග ගැන ඉගෙන ගන්න"}
           onClick={navigateToDiseaseDetails}
           color={COLOR_PALETTE.primary}
           extraStyles={{ height: 72, borderRadius: 12, marginVertical: 4 }}
         />
         <Button
-          label="ඔබගේ අතීත රෝග හඳුනාගැනීම් බලන්න"
+          label={language === 'English' ? "Disease Detection History" : "ඔබගේ අතීත රෝග හඳුනාගැනීම් බලන්න"}
           onClick={navigateToDiseaseCategory}
           color={COLOR_PALETTE.primary}
           extraStyles={{ height: 72, borderRadius: 12, marginVertical: 4 }}

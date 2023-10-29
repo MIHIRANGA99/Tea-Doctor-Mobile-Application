@@ -34,7 +34,7 @@ const TreeCard = ({ treeName, condition, style, onClick, expandedView }: Props) 
             : treeCardStyles.cardOutlined
         }
       >
-        <View style={{flex: 1, justifyContent: style === 'filled'? 'space-between': 'center', flexDirection: 'row', width: '100%'}}>
+        <View style={{flex: 1, justifyContent: style === 'filled' && !expanded? 'space-between': 'center', flexDirection: 'row', width: '100%'}}>
         <Text
           style={
             style === "filled"
@@ -44,7 +44,7 @@ const TreeCard = ({ treeName, condition, style, onClick, expandedView }: Props) 
         >
           {treeName}
         </Text>
-        {condition && (
+        {condition && !expanded && (
           <Text style={treeCardStyles.healthText}>Health: {condition}%</Text>
         )}
         </View>

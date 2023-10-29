@@ -256,7 +256,8 @@ const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
           marginTop: -24,
         }}
       >
-        Insect Count: {Number(route.params.percentage)}
+        {/* Change This According to your need */}
+        Damage Ratio: {Number(route.params.percentage)}
       </Text>
       <View style={{marginTop: 32}}>
         {route.params &&
