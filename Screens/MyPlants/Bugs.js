@@ -237,7 +237,7 @@ const Bugs = ({ navigation, route }) => {
         style={{ ...mainStyles.main, display: "flex", flexDirection: "column" }}
       >
         <View style={{ paddingVertical: 12 }}>
-          <DetailCard header="Suggestions" description="sample suggestion" />
+          <DetailCard header="යෝජනා" description="නිසි ප්‍රථිපල ලබාගැනීම සඳහා මයික්‍රෆෝනය ශ්‍රව්‍ය ප්‍රභවයට සමීපව තබන්න." />
         </View>
         <View
           style={{

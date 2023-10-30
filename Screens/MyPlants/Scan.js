@@ -267,6 +267,29 @@ const Scan = ({ navigation, route }) => {
             />
           </View>
         )} */}
+
+         {/* CANKER HEALTHY */}
+        {/* {detectedData && (
+          <View style={{ paddingVertical: 12 }}>
+            <DetailCard
+              header={"නිරෝගී"}
+              description={"කඳ අතු පිළිකාව හඳුනාගත්තේ නැත"}
+            />
+          </View>
+        )} */}
+
+        {/* CANKER NOT HEALTHY TODO: ADD SOMETHING MEANING FULL FOR THE DESCRIPTION */}
+        {/* {detectedData && (
+          <View style={{ paddingVertical: 12 }}>
+            <DetailCard
+              header={"කඳ අතු පිළිකාව"}
+              description={"කඳ අතු පිළිකාව හඳුනාගත්තා"}
+              button={{ label: "ඉස්සරහට යන්න", onClick: () => handleNext() }}
+              error
+            />
+          </View>
+        )} */}
+
       </View>
     </FullScreenLoader>
   );
