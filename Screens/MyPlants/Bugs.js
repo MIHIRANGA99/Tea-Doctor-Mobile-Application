@@ -278,14 +278,14 @@ const Bugs = ({ navigation, route }) => {
           {/* TODO: Restrict to choose only audio files */}
           <Button
             onClick={pickDocument}
-            label="Select an Audio File"
+            label="ශබ්ද පටයක් තෝරාගන්න"
             extraStyles={{ width: "60%" }}
           />
         </View>
         <View style={{ paddingVertical: 12 }}>
           {detectedData&& <DetailCard
-            header={ "Bugs Detected!" }
-            description={`bugs detected in the tree`}
+            header={ "කඳ ගුල්ලා!" }
+            description={`කඳ ගුල්ලන් හඳුනාගත්තා`}
             error
             button={{ label: "Next", onClick: () => handleNext() }}
           />}

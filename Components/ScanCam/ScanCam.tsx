@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import CameraStyles from "./CameraStyles";
 import Button from "../Button/Button";
@@ -32,11 +32,11 @@ const ScanCam = ({
   });
 
   if (!permission) {
-    return <Text>Loading...</Text>;
+    return <Text>මදක් රැදි සිටින්න...</Text>;
   }
 
   if (!permission.granted) {
-    return <Text>Camera permission not granted</Text>;
+    return <Text>කැමරා අවසරය ලබා දී නැත</Text>;
   }
 
   return (
@@ -82,7 +82,7 @@ const ScanCam = ({
             <View style={{ flex: 1, paddingHorizontal: 8 }}>
               <Button
                 disabled={captureLoading}
-                label="Flip"
+                label="පැත්ත හරවන්න"
                 onClick={() =>
                   setType((current) =>
                     current === CameraType.back
@@ -95,7 +95,7 @@ const ScanCam = ({
             <View style={{ flex: 1, paddingHorizontal: 8 }}>
               <Button
                 disabled={captureLoading}
-                label={captureLoading ? "Loading..." : "Capture"}
+                label={captureLoading ? "මදක් රැදි සිටින්න..." : "ඡායාරූපය ගන්න"}
                 onClick={onCapture && onCapture}
               />
             </View>

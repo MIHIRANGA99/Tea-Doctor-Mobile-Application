@@ -40,7 +40,7 @@ const AddTree = ({ navigation }: { navigation: any }) => {
         payload,
         (res) => {
           setIsLoading(false);
-          Toast.show('Tree Created!', ToastOptions.succsess);
+          Toast.show('සාර්ථකයි!', ToastOptions.succsess);
           navigation.pop();
         },
         (error: any) => {
@@ -59,15 +59,15 @@ const AddTree = ({ navigation }: { navigation: any }) => {
     <View style={{ ...mainStyles.main, marginTop: 20 }}>
       <TextField
         onChange={(text) => setName(text)}
-        placeholder="Give a name to your tree"
-        label="Tree Name"
+        placeholder="ගසට නමක් ලබා දෙන්න"
+        label="ගසේ නම"
         maxLength={20}
         dense
       />
       <TextField
         onChange={(text) => setAge(Number(text))}
-        placeholder="Age of your tree"
-        label="Age"
+        placeholder="ගසේ වයස ඇතුලත් කරන්න"
+        label="වයස"
         type="number-pad"
         maxLength={3}
         dense
@@ -76,7 +76,7 @@ const AddTree = ({ navigation }: { navigation: any }) => {
         <Button
           onClick={() => handleAddTree()}
           isLoading={isLoading}
-          label="Submit"
+          label="ඇතුල් කරන්න"
           extraStyles={{ marginVertical: 12, width: "40%" }}
         />
       </View>

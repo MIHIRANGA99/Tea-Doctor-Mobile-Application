@@ -11,6 +11,7 @@ import {
 } from "../../firebase/utils/firestore/firestore";
 import Toast from "react-native-root-toast";
 import { ToastOptions } from "../../constants/ToastOptions";
+import { useLanguageContext } from "../../Context/LanguageContext";
 
 const TreeDetails = ({
   route,
@@ -21,7 +22,7 @@ const TreeDetails = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [treeDetails, setTreeDetails] = useState<any>();
-
+  const { language } = useLanguageContext().state;
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -86,20 +87,22 @@ const TreeDetails = ({
         </Text>
       </View>
       <DetailCard
-        header="Suggestions"
-        description="Check the tea leaves and scan if you see any odd spots"
+        header={language === "English" ? "Suggestions" : "යෝජනා"}
+        description={
+          language === "English"
+            ? "Check the tea leaves and scan if you see any odd spots"
+            : "තේ දළු පරීක්ෂා කර ඔබට සැක ස්ථාන තිබේ නම් ස්කෑන් කරන්න"
+        }
       />
       <View style={{ paddingVertical: 12 }}>
         <DetailCard
-          header="Condition of Leaves"
-          description="Check the tea leaves"
+          header="තේ කොළ වල තත්වය"
           button={{
-            label: `${
-              Object.keys(treeDetails ? treeDetails.conditions.leaves : {})
-                .length
-                ? "Rescan"
-                : "Scan"
-            } Leaves`,
+            label: `${Object.keys(treeDetails ? treeDetails.conditions.leaves : {})
+              .length
+              ? "කොළය නැවත ස්කෑන් කරන්න"
+              : "කොළය ස්කෑන් කරන්න"
+              }`,
             onClick: () =>
               navigation.navigate("Scan", {
                 scanType: "blister",
@@ -109,31 +112,29 @@ const TreeDetails = ({
           }}
         />
         <DetailCard
-          header="Condition of Branches"
+          header="තේ අතුවල තත්වය"
           button={{
-            label: `${
-              Object.keys(
-                treeDetails ? treeDetails.conditions.stemAndBranches : {}
-              ).length
-                ? "Rescan"
-                : "Scan"
-            } Branches`,
+            label: `${Object.keys(
+              treeDetails ? treeDetails.conditions.stemAndBranches : {}
+            ).length
+              ? "අත්ත නැවත ස්කෑන් කරන්න"
+              : "අත්ත ස්කෑන් කරන්න"
+              }`,
             onClick: () =>
               navigation.navigate("Scan", {
                 scanType: "stem",
                 tree: route.params.tree,
               }),
-            icon: require("../../assets/icons/eco.png"),
+            icon: require("../../assets/icons/branch.png"),
           }}
         />
         <DetailCard
-          header="Existence of Bugs"
+          header="කඳ ගුල්ලන්ගෙ තත්වය"
           button={{
-            label: `${
-              Object.keys(treeDetails ? treeDetails.conditions.bugs : {}).length
-                ? "Rescan"
-                : "Scan"
-            } Bugs`,
+            label: `${Object.keys(treeDetails ? treeDetails.conditions.bugs : {}).length
+              ? "ශබ්දය නැවත ස්කෑන් කරන්න"
+              : "ශබ්දය ස්කෑන් කරන්න"
+              }`,
             onClick: () => navigation.navigate("Bugs", { scanType: "insect" }),
             icon: require("../../assets/icons/bug_report.png"),
           }}
@@ -144,7 +145,7 @@ const TreeDetails = ({
           isLoading={isLoading}
           onClick={() => handleDelete()}
           extraStyles={{ backgroundColor: "#AD0000" }}
-          label="Delete Tree"
+          label="තේ ගස ඉවත් කරන්න"
         />
       </View>
     </ScrollView>

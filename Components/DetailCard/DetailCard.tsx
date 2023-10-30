@@ -39,7 +39,7 @@ const DetailCard = ({
       {button && (
         <View style={cardStyles.buttonContainer}>
           <Button
-            extraStyles={{ width: "45%", marginRight: 12, marginTop: -36 }}
+            extraStyles={{ width: "45%", marginRight: 12, marginTop: -25 }}
             color={error ? COLOR_PALETTE.error.primary : COLOR_PALETTE.primary}
             onClick={button.onClick}
             label={button.label}

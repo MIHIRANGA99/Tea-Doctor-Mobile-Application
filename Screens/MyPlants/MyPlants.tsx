@@ -9,8 +9,10 @@ import ITree from "../../interfaces/ITree";
 import FullScreenLoader from "../../layouts/FullScreenLoader";
 import { COLOR_PALETTE } from "../../constants/colors";
 import { calculateConditions } from "../../utils/calculateHealth";
+import { useLanguageContext } from "../../Context/LanguageContext";
 
 const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
+  const { language } = useLanguageContext().state;
   const [trees, setTrees] = useState<ITree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const currentUser = useCurrentUser();
@@ -45,8 +47,12 @@ const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
         />
       </View>
       <DetailCard
-        header="Suggestions"
-        description="Check the tea leaves and scan if you see any odd spots"
+        header={language === "English" ? "Suggestions" : "යෝජනා"}
+        description={
+          language === "English"
+            ? "Check the tea leaves and scan if you see any odd spots"
+            : "තේ දළු පරීක්ෂා කර ඔබට සැක ස්ථාන තිබේ නම් ස්කෑන් කරන්න"
+        }
       />
       <Text
         style={{
@@ -84,13 +90,13 @@ const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
                   >
                     <View>
                       <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2 }}>
-                        Blister Blight
+                        බුබුලු අංගමාරය
                       </Text>
                       <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2 }}>
-                        Stem and Branch Canker
+                        කඳ අතු පිළිකාව
                       </Text>
                       <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2 }}>
-                        Bugs
+                        කඳ ගුල්ලා
                       </Text>
                     </View>
                     <View>
@@ -108,11 +114,11 @@ const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
                             marginVertical: 2, fontWeight: '600'
                           }}
                         >
-                          Not Scanned
+                          ස්කෑන් කර නැත
                         </Text>
                       )}
                       {Object.keys(tree.conditions.stemAndBranches).length !==
-                      0 ? (
+                        0 ? (
                         <Text style={{ color: COLOR_PALETTE.secondary, marginVertical: 2, fontWeight: '600' }}>
                           {tree.conditions.stemAndBranches.damageRatio}
                         </Text>
@@ -126,7 +132,7 @@ const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
                             marginVertical: 2, fontWeight: '600'
                           }}
                         >
-                          Not Scanned
+                          ස්කෑන් කර නැත
                         </Text>
                       )}
                       {Object.keys(tree.conditions.bugs).length !== 0 ? (
@@ -143,7 +149,7 @@ const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
                             marginVertical: 2, fontWeight: '600'
                           }}
                         >
-                          Not Scanned
+                          ස්කෑන් කර නැත
                         </Text>
                       )}
                     </View>
@@ -160,7 +166,7 @@ const MyPlants = ({ navigation }: { navigation: any; route: any }) => {
             <TreeCard
               onClick={() => navigation.navigate("AddTree")}
               style="outlined"
-              treeName="+ Add New Tree"
+              treeName="+ තව ගසක් පරික්ශා කරන්න"
             />
           </View>
         )}

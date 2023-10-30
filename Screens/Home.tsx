@@ -63,20 +63,30 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
           source={require("../assets/tea-doctor-logo.png")}
         />
         <Text style={{ color: COLOR_PALETTE.primary, fontWeight: "700" }}>
-          {user ? `Hi ${user.displayName || user.email}!` : "Loading..."}
+          {user ? (language === "English" ? `Hi ${'Chethana' || user.email}!` : `ආයූබෝවන් ${'චේතනා' || user.email}!`) : "Loading..."}
         </Text>
       </View>
       <DetailCard
-        header="About Your Tea State"
-        description={`${
+        header={
           language === "English"
-            ? "Overall Condition of Your Tea State"
-            : "ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය"
-        } ${stateHealth ? stateHealth.toFixed(2) : 0}%`}
+            ? "About Your Tea State"
+            : "ඔබගේ තේ වගාව ගැන"
+        }
+        description={`${language === "English"
+          ? "Overall Condition of Your Tea State"
+          : "ඔබගේ සමස්ත තේ වගාවේ ප්‍රගතිය"
+          } ${stateHealth ? stateHealth.toFixed(2) : 0}%`}
       />
       <DetailCard
-        header="Suggestions"
-        description="Choose a tea tree that you can see some diseases and let us decide the treatments."
+        header={
+          language === "English"
+            ? "Suggestions"
+            : "යෝජනා"
+        }
+        description={`${language === "English"
+          ? "Choose a tea tree that you can see some diseases and let us decide the treatments."
+          : "ඔබට රෝග දැකිය හැකි තේ ගසක් තෝරාගන්න. ප්‍රතිකාර අප තීරණය කරන්නෙමු."
+          }`}
       />
       <View
         style={{
@@ -99,7 +109,7 @@ const Home = ({ changeTab }: { changeTab: (number: number) => void }) => {
       </View>
       <View style={{ display: "flex", flexDirection: "column" }}>
         <Button
-          label={language === 'English'? "Learn More About Diseases" : "රෝග ගැන ඉගෙන ගන්න"}
+          label={language === 'English' ? "Learn More About Diseases" : "රෝග ගැන ඉගෙන ගන්න"}
           onClick={navigateToDiseaseDetails}
           color={COLOR_PALETTE.primary}
           extraStyles={{ height: 72, borderRadius: 12, marginVertical: 4 }}

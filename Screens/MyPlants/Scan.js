@@ -98,16 +98,14 @@ const Scan = ({ navigation, route }) => {
       setTimeout(() => {
         setDetectedData({
           data: {
-            label: 'blister',
+            label: "blister",
             ratio: "22.98%",
             score: 0.45,
             updatedAt: new Date(),
-          }
+          },
         });
         setIsLoading({ isLoading: false, status: "", image: "" });
       }, 1000);
-
-
     } else {
       console.error(
         "error with payload",
@@ -183,7 +181,7 @@ const Scan = ({ navigation, route }) => {
     // BLISTER BLIGHT
     navigation.navigate("Treatments", {
       percentage: 22.98,
-      scanType: 'blister',
+      scanType: "blister",
     });
   };
 
@@ -212,15 +210,15 @@ const Scan = ({ navigation, route }) => {
     >
       <View style={mainStyles.main}>
         <View style={{ paddingVertical: 12 }}>
-          <DetailCard header="Suggestions" description="sample suggestion" />
+          <DetailCard header="යෝජනා" description="නිසි ආලෝකය භාවිතාකර පැහැදිලි ප්‍රථිපල ලබාගන්න" />
         </View>
         <View style={{ height: 412 }}>
           {currentLocation && (
             <ScanCam
               label={
                 route.params.scanType === "blister"
-                  ? "Scanning Leaves"
-                  : "Scanning Stem"
+                  ? "ස්කෑන් වෙමින් පවතී"
+                  : "ස්කෑන් වෙමින් පවතී"
               }
               captureLoading={isTakingPicture}
               camRef={cameraRef}
@@ -252,23 +250,23 @@ const Scan = ({ navigation, route }) => {
         {/* {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={"Healthy"}
-              description={"No blister blight detected"}
+              header={"නිරෝගී"}
+              description={"බුබුලු අංගමාරය හඳුනාගත්තේ නැත"}
             />
           </View>
         )} */}
 
         {/* BISTER BLIGHT NOT HEALTHY TODO: ADD SOMETHING MEANING FULL FOR THE DESCRIPTION */}
-        {detectedData && (
+        {/* {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={"Blister Blight Detected!"}
-              description={"Blister Blight Detected detected"}
-              button={{label: 'Next', onClick: () => handleNext()}}
+              header={"බුබුලු අංගමාරය"}
+              description={"බුබුලු අංගමාරය හඳුනාගත්තා"}
+              button={{ label: "ඉස්සරහට යන්න", onClick: () => handleNext() }}
               error
             />
           </View>
-        )}
+        )} */}
       </View>
     </FullScreenLoader>
   );
