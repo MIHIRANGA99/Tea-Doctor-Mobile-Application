@@ -15,6 +15,7 @@ const FertilizerDetails = ({
   route: any;
 }) => {
   const [data, setData] = useState<IFertilizerDetails>();
+  const [ferPop, setFerPop] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
   const [n, setN] = useState<number>();
   const [p, setP] = useState<number>();
@@ -42,9 +43,9 @@ const FertilizerDetails = ({
           <Picker.Item key={index} label={type} value={type} />
         ))}
       </Picker>
-      <TextField label="Nitrogen Level" dense />
-      <TextField label="Phosphorous Level" dense />
-      <TextField label="Potassium Level" dense />
+      <TextField type="decimal-pad" value={n?.toString()} label="Nitrogen Level" dense />
+      <TextField type="decimal-pad" value={p?.toString()} label="Phosphorous Level" dense />
+      <TextField type="decimal-pad" value={k?.toString()} label="Potassium Level" dense />
       <TextField label="PH Value" dense />
       <TextField
         disabled
@@ -111,6 +112,50 @@ const FertilizerDetails = ({
             <Button
               onClick={() => setOpen(false)}
               label="ok"
+              extraStyles={{ marginTop: 12 }}
+            />
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="fade"
+        visible={ferPop}
+        transparent
+      >
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(244, 244, 224, 0.6)",
+            height: "100%",
+          }}
+        >
+          <View
+            style={{ backgroundColor: "white", padding: 12, borderRadius: 12 }}
+          >
+            <Text
+              style={{
+                color: COLOR_PALETTE.primary,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
+              Please Connect the IOT Device
+            </Text>
+            <View style={{ paddingVertical: 12 }}>
+              <Text>You need to connect the IOT device to the soil</Text>
+            </View>
+            <Button
+              onClick={() => {
+                setTimeout(() => {
+                  setFerPop(false);
+                  setN(155);
+                  setP(25);
+                  setK(250);
+                }, 3000);
+              }}
+              label="Get Data"
               extraStyles={{ marginTop: 12 }}
             />
           </View>

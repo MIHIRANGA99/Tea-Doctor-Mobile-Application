@@ -135,7 +135,7 @@ const TreeDetails = ({
               ? "ශබ්දය නැවත ස්කෑන් කරන්න"
               : "ශබ්දය ස්කෑන් කරන්න"
               }`,
-            onClick: () => navigation.navigate("Bugs", { scanType: "insect" }),
+            onClick: () => navigation.navigate("Bugs", { scanType: "insect", treeId: treeDetails.id }),
             icon: require("../../assets/icons/bug_report.png"),
           }}
         />
