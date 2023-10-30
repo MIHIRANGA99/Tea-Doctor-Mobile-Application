@@ -125,13 +125,13 @@ const Weather = ({ changeTab }: { changeTab: (number: number) => void }) => {
           source={require("../../assets/tea-doctor-logo.png")}
         />
       </View>
-      <DetailCard header="Suggestions" description="පොහොර දැමීමට සුදුසුයි" />
+      <DetailCard header="යෝජනා" description="පොහොර දැමීමට සුදුසුයි" />
       <FullScreenLoader isLoading={isLoading}>
         <View
           style={{ paddingVertical: 12, height: isLoading ? "60%" : "100%" }}
         >
           {weatherData && (
-            <DetailCard header="Weather on Rathganga">
+            <DetailCard header="පැල්මඩුල්ලේ කාලගුණය">
               <View style={styles.container}>
                 <Text style={styles.dateText}>දිනය: {formattedDate}</Text>
                 <View style={styles.infoContainer}>
