@@ -257,7 +257,7 @@ const Treatments = ({ navigation, route }: { navigation: any; route: any }) => {
         }}
       >
         {/* Change This According to your need */}
-        Damage Ratio: {Number(route.params.percentage)}
+        නිශ්චිතවම {Number(route.params.percentage)}ක් ඇත.
       </Text>
       <View style={{marginTop: 32}}>
         {route.params &&
