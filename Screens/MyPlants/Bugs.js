@@ -18,6 +18,7 @@ import { ToastOptions } from "../../constants/ToastOptions";
 const Bugs = ({ navigation, route }) => {
   const [recording, setRecording] = useState();
   const [isRecording, setIsRecording] = useState(false);
+  const [is200, setIs200] = useState(200);
   const [audioFile, setAudioFile] = useState();
   const [pickedAudioFile, setPickedAudioFile] = useState();
   const [isLoading, setIsLoading] = useState({
@@ -182,11 +183,12 @@ const Bugs = ({ navigation, route }) => {
           type: "audio/wav",
         });
       formData.append("user_Id", currentUser.uid);
+      formData.append("frequencyRate", is200? 200: 400);
       formData.append("lang", currentLocation.coords.latitude.toFixed(2));
       formData.append("long", currentLocation.coords.longitude.toFixed(2));
 
       await axios
-        .post(`http://18.183.148.238:8091/detection/uproute`, formData, {
+        .post(`http://3.112.151.120:8091/detection/uproute`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -223,10 +225,14 @@ const Bugs = ({ navigation, route }) => {
   const handleNext = () => {
     Toast.show("Successfully Updated!", ToastOptions.succsess);
     navigation.navigate("Treatments", {
-      percentage: 5,
+      percentage: detectedData.data.count,
       scanType: 'insect',
     });
   };
+
+  useEffect(() => {
+    console.log(is200? 200: 400);
+  }, [is200])
 
   return (
     <FullScreenLoader
@@ -281,13 +287,17 @@ const Bugs = ({ navigation, route }) => {
             label="ශබ්ද පටයක් තෝරාගන්න"
             extraStyles={{ width: "60%" }}
           />
+          {!detectedData&&<View style = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 100}}>
+          <Button label={'400'} extraStyles={{ opacity: 0, width: '50%' }} color={COLOR_PALETTE.secondary} onClick={() => setIs200(false)} />
+          <Button label={'200'} extraStyles={{ opacity: 0, width: '50%' }} color={COLOR_PALETTE.secondary} onClick={() => setIs200(true)} />
+          </View>}
         </View>
         <View style={{ paddingVertical: 12 }}>
           {detectedData&& <DetailCard
             header={ "කඳ ගුල්ලා!" }
-            description={`කඳ ගුල්ලන් හඳුනාගත්තා`}
-            error
-            button={{ label: "Next", onClick: () => handleNext() }}
+            description={detectedData.data.count === 0? 'Not Detected': `කඳ ගුල්ලන් හඳුනාගත්තා`}
+            error = {detectedData.data.count !== 0}
+            button={detectedData.data.count === 0? undefined: { label: "Next", onClick: () => handleNext() }}
           />}
         </View>
       </View>
