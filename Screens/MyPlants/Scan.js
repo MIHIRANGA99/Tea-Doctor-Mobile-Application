@@ -78,36 +78,23 @@ const Scan = ({ navigation, route }) => {
         image: capturedPic.uri,
       });
 
-      // ACTUAL GETTING DATA FROM API
-      // await axios
-      //   .post(`${default_URL}/detection/uproute`, formData, {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   })
-      //   .then((res) => {
-      //     setDetectedData(res.data);
-      //     setIsLoading({ isLoading: false, status: "", image: "" });
-      //   })
-      //   .catch((e) => {
-      //     Toast.show(e.response.data, ToastOptions.error);
-      //     setIsLoading(false);
-      //   });
-
-      // Bister Blight ( TODO: Change the time duration and detected data as you want )
-      setTimeout(() => {
-        setDetectedData({
-          data: {
-            label: "blister",
-            ratio: "22.98%",
-            score: 0.45,
-            updatedAt: new Date(),
+      await axios
+        .post(`${default_URL}/detection/uproute`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
           },
+        })
+        .then((res) => {
+          setDetectedData(res.data);
+          console.log(res.data);
+          setIsLoading({ isLoading: false, status: "", image: "" });
+        })
+        .catch((e) => {
+          Toast.show(e.response.data, ToastOptions.error);
+          setIsLoading(false);
         });
-        setIsLoading({ isLoading: false, status: "", image: "" });
-      }, 1000);
     } else {
-      console.error(
+      console.log(
         "error with payload",
         currentUser,
         currentLocation,
@@ -153,8 +140,6 @@ const Scan = ({ navigation, route }) => {
       ? (payload.conditions.leaves = diseaseData.leaves)
       : (payload.conditions.stemAndBranches = diseaseData.stemAndBranches);
 
-    //  ACTUAL CODE
-
     updateFromCollection(
       currentUser.uid,
       payload,
@@ -178,10 +163,9 @@ const Scan = ({ navigation, route }) => {
       }
     );
 
-    // BLISTER BLIGHT
     navigation.navigate("Treatments", {
-      percentage: 22.98,
-      scanType: "blister",
+      percentage: 22,
+      scanType: 'blister',
     });
   };
 
@@ -210,15 +194,15 @@ const Scan = ({ navigation, route }) => {
     >
       <View style={mainStyles.main}>
         <View style={{ paddingVertical: 12 }}>
-          <DetailCard header="යෝජනා" description="නිසි ආලෝකය භාවිතාකර පැහැදිලි ප්‍රථිපල ලබාගන්න" />
+          <DetailCard header="Suggestions" description="sample suggestion" />
         </View>
         <View style={{ height: 412 }}>
           {currentLocation && (
             <ScanCam
               label={
                 route.params.scanType === "blister"
-                  ? "ස්කෑන් වෙමින් පවතී"
-                  : "ස්කෑන් වෙමින් පවතී"
+                  ? "Scanning Leaves"
+                  : "Scanning Stem"
               }
               captureLoading={isTakingPicture}
               camRef={cameraRef}
@@ -245,51 +229,20 @@ const Scan = ({ navigation, route }) => {
             extraStyles={{ width: "40%" }}
           />
         </View> */}
-
-        {/* BISTER BLIGHT HEALTHY */}
-        {/* {detectedData && (
+        {detectedData && (
           <View style={{ paddingVertical: 12 }}>
             <DetailCard
-              header={"නිරෝගී"}
-              description={"බුබුලු අංගමාරය හඳුනාගත්තේ නැත"}
+              header={detectTreeLevel(detectedData.data.label).heading}
+              description={detectTreeLevel(detectedData.data.label).description}
+              error={!(detectedData.data.label === "healthy")}
+              button={
+                detectedData.data.label === "healthy"
+                  ? null
+                  : { label: "Next", onClick: () => handleNext() }
+              }
             />
           </View>
-        )} */}
-
-        {/* BISTER BLIGHT NOT HEALTHY TODO: ADD SOMETHING MEANING FULL FOR THE DESCRIPTION */}
-        {/* {detectedData && (
-          <View style={{ paddingVertical: 12 }}>
-            <DetailCard
-              header={"බුබුලු අංගමාරය"}
-              description={"බුබුලු අංගමාරය හඳුනාගත්තා"}
-              button={{ label: "ඉස්සරහට යන්න", onClick: () => handleNext() }}
-              error
-            />
-          </View>
-        )} */}
-
-         {/* CANKER HEALTHY */}
-        {/* {detectedData && (
-          <View style={{ paddingVertical: 12 }}>
-            <DetailCard
-              header={"නිරෝගී"}
-              description={"කඳ අතු පිළිකාව හඳුනාගත්තේ නැත"}
-            />
-          </View>
-        )} */}
-
-        {/* CANKER NOT HEALTHY TODO: ADD SOMETHING MEANING FULL FOR THE DESCRIPTION */}
-        {/* {detectedData && (
-          <View style={{ paddingVertical: 12 }}>
-            <DetailCard
-              header={"කඳ අතු පිළිකාව"}
-              description={"කඳ අතු පිළිකාව හඳුනාගත්තා"}
-              button={{ label: "ඉස්සරහට යන්න", onClick: () => handleNext() }}
-              error
-            />
-          </View>
-        )} */}
-
+        )}
       </View>
     </FullScreenLoader>
   );
